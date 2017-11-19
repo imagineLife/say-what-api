@@ -6,6 +6,6 @@ deploy:
   provider: heroku
   api_key:
     secure: Lqcx6Y/6W0HWH+whh2Q8pEKfIAsMJNyoVDINIb3MI3oDoluqjtDPuEandJxuyQvvg3+qZXX0hBTWg6dzguzWX3PkzZ/iCrPmJ8iMKeAAcEuGbr7vbSaR7hV+aTCzMA/ok1LdaXF7OJDtitni3qYXu6UBAGq7q0bzBxYjxgPlImVZ4IATovMCEiGoufZSANSREJPak1H7WuPiCdjmEfPt0lbl0DoIrBZ+QFmGN856xmxZQUdVGmYB55zaZlcKVldgA094mHpfRb+xXEnDqo8rdbzyKyU5y+S40JSVhqoTC148ZoiBLexwm4Ya8XlCWPWCvoMNHYpvtbt/LwGqEjImWmjYNwNCay2pDCpDQfXpaA15dLFWbsFHZz1l8ek2tDfb/NTCfPL/LvTLQRJmDfYGL7xZQMo1qjUbpiWoF8U4jfnkbVGWpGwI3Kp2nKU6aqZ6vRpaNrX34inzIfYhnuakHq1hjJ9+4/M2HjLUDCErFge+U8+X/rLvHUog5jVHiA0p2yaoRKc1oHs5y5juv0WzuuoMxFMCLBDUc/dtxp8nQpPg3Z51BIYYad7zcLQdQ8LhldT3kLYZeM8bwp0ojp8rCVqZyFJwVFQONJ31htwv/BjwLBlxNLdv+j91qxUx10RuuQxiZoBMsXCpjDcmeOn/rLVUqjx0BFYd9JbXlxfCEHI=
-  app: https://git.heroku.com/serene-eyrie-79176.git
+  app: https://serene-eyrie-79176.herokuapp.com/
   on:
     repo: imagineLife/say-what-api
