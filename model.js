@@ -22,8 +22,18 @@ const speechSchema = mongoose.Schema({
 		wordCount : Number,
 		uniqueWords : Number
 	},
-	mostUsedWords : [{}],
-	wordsBySize : [{}],
+	mostUsedWords : [
+		{
+			word : String,
+			occurances : Number
+		}
+	],
+	wordsBySize : [
+		{
+			size : Number,
+			occurances : Number
+		}
+	],
 	bigWords : [String]
 
 })
@@ -31,9 +41,14 @@ const speechSchema = mongoose.Schema({
 speechSchema.methods.apiRepr = function(){
 	return{
 		id: this._id,
-		milesTraveled: this.milesTraveled,
-		date: this.date,
-		user: this.user
+		title: this.title,
+		Orator: this.Orator,
+		Date: this.Date,
+		Audience: this.Audience,
+		numberOfWords: this.numberOfWords,
+		mostUsedWords: this.mostUsedWords,
+		wordsBySize: this.wordsBySize,
+		bigWords: this.bigWords
 	}
 }
 
