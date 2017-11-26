@@ -1,10 +1,14 @@
+const bodyParser = require('body-parser');
 const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
+const {PORT, DATABASE_URL} = require('./config');
 // const authRouter = require('./routes/auth');
+const speechRouter = require('./routes/speeches/router');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
+
+const app = express();
+app.use(bodyParser.json());
 
 // CORS
 app.use(function (req, res, next) {
@@ -19,6 +23,7 @@ app.use(function (req, res, next) {
 
 // app.use('/auth', authRouter);
 
+app.use('/api/speech', speechRouter);
 /*
 	create server var
 	runServer sets value
@@ -27,6 +32,7 @@ app.use(function (req, res, next) {
 let server;
 
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
+  console.log('databaseUrl->',databaseUrl);
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
       if (err) {
@@ -59,17 +65,10 @@ function closeServer() {
   });
 }
 
-
- app.get('/api/*', (req, res) => {
-   res.json({ok: true});
- });
-
 // if server.js is called directly (aka, with `node server.js`), this block
 // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
 if (require.main === module) {
   runServer().catch(err => console.error(err));
 };
-
- app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
  module.exports = {app, runServer, closeServer};

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const speechSchema = mongoose.Schema({
 	title : {
 		type: String,
@@ -52,6 +53,6 @@ speechSchema.methods.apiRepr = function(){
 	}
 }
 
-const Speech = mongoose.model('Speeche', speechSchema);
+const Stat = mongoose.model('quickstat', speechSchema);
 
-module.exports = {Speech};
+module.exports = {Stat};
