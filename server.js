@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const {PORT, DATABASE_URL} = require('./config');
-// const authRouter = require('./routes/auth');
+const authRouter = require('./routes/auth');
 const speechRouter = require('./routes/speeches/router');
 const mongoose = require('mongoose');
 
@@ -21,7 +21,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-// app.use('/auth', authRouter);
+app.use('/auth', authRouter);
 
 app.use('/api/speech', speechRouter);
 /*
