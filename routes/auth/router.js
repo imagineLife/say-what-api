@@ -24,10 +24,6 @@ router.post('/login',
   }
 );
 
-router.get('/', (req,res) => {
-  console.log('howdy');  
-});
-
 router.get('/add',
   // The user provides a jwt to login
   passport.authenticate('jwt', {session: false}),
