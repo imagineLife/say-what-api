@@ -38,7 +38,7 @@ describe('Users API resources page \n', function() {
     return User.remove({});
   });
 
-  describe('/api/user\n', function() {
+  describe('\n/api/user endpoint\n', function() {
     describe('POST', function() {
       it('Should reject users with missing username', function() {
         return chai.request(app)
@@ -370,47 +370,47 @@ describe('Users API resources page \n', function() {
       });
     });
 
-    describe('GET endpoint', function() {
-      it('Should return an empty array initially', function() {
-        return chai.request(app)
-          .get('/api/user/')
-          .then(res => {
-            expect(res).to.have.status(200);
-            expect(res.body).to.be.an('array');
-            expect(res.body).to.have.length(0);
-          });
-      });
-      it('Should return an array of users', function() {
-        return User.create({
-          username,
-          password,
-          firstName,
-          lastName
-        })//, {
-        //   username: usernameB,
-        //   password: passwordB,
-        //   firstName: firstNameB,
-        //   lastName: lastNameB,
-        // })
-        .then(() => chai.request(app).get('/api/user'))
-        .then(res => {
-          expect(res).to.have.status(200);
-          expect(res.body).to.be.an('array');
-          expect(res.body).to.have.length(1);
-          expect(res.body[0]).to.deep.equal({
-            username,
-            firstName,
-            lastName,
-            suggestions: []
-          });
-          // expect(res.body[1]).to.deep.equal({
-          //   username: usernameB,
-          //   firstName: firstNameB,
-          //   lastName: lastNameB,
-          //   suggestions: emptyTripB
-          // });
-        });
-      });
-    });
+    // describe('GET endpoint', function() {
+    //   it('Should return an empty array initially', function() {
+    //     return chai.request(app)
+    //       .get('/api/user/')
+    //       .then(res => {
+    //         expect(res).to.have.status(200);
+    //         expect(res.body).to.be.an('array');
+    //         expect(res.body).to.have.length(0);
+    //       });
+    //   });
+    //   it('Should return an array of users', function() {
+    //     return User.create({
+    //       username,
+    //       password,
+    //       firstName,
+    //       lastName
+    //     })//, {
+    //     //   username: usernameB,
+    //     //   password: passwordB,
+    //     //   firstName: firstNameB,
+    //     //   lastName: lastNameB,
+    //     // })
+    //     .then(() => chai.request(app).get('/api/user'))
+    //     .then(res => {
+    //       expect(res).to.have.status(200);
+    //       expect(res.body).to.be.an('array');
+    //       expect(res.body).to.have.length(1);
+    //       expect(res.body[0]).to.deep.equal({
+    //         username,
+    //         firstName,
+    //         lastName,
+    //         suggestions: []
+    //       });
+    //       // expect(res.body[1]).to.deep.equal({
+    //       //   username: usernameB,
+    //       //   firstName: firstNameB,
+    //       //   lastName: lastNameB,
+    //       //   suggestions: emptyTripB
+    //       // });
+    //     });
+    //   });
+    // });
   });
 });
