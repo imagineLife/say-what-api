@@ -4,7 +4,7 @@ const {Stat} = require('./models');
 
 
 router.get('/', (req, res) => {
-   res.json({ok: true});
+  return res.json({ok: true});
  });
 
 
@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 router.get('/default', (req,res) => {
 	Stat
 		.findById("5a1ab3a26b7b26dfb8aeade3")	//LOCAL
-		.findById("5a1ad99f978ca2681f42df12")	//CLOUD
+		// .findById("5a1ad99f978ca2681f42df12")	//CLOUD
 		.then(stat => res.json(stat.apiRepr()))
 		.catch(err => {
 			console.log(err);

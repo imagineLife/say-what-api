@@ -1,13 +1,15 @@
 const passport = require('passport');
 const {BasicStrategy} = require('passport-http');
 const {
-    // Assigns the Strategy export to the name JwtStrategy using object destructuring
+    // Assigns the Strategy export
+    //  to the name JwtStrategy
+    //   using object destructuring
     Strategy: JwtStrategy,
     ExtractJwt
 } = require('passport-jwt');
 
 const {User} = require('../users/models');
-const {JWT_SECRET} = require('../config');
+const {JWT_SECRET} = require('../../config');
 
 const basicStrategy = new BasicStrategy((username, password, callback) => {
   let user;

@@ -1,14 +1,34 @@
-const bodyParser = require('body-parser');
+require('dotenv').config();
 const express = require('express');
-const {PORT, DATABASE_URL} = require('./config');
-const authRouter = require('./routes/auth');
-const speechRouter = require('./routes/speeches/router');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const {PORT, DATABASE_URL} = require('./config');
 
 mongoose.Promise = global.Promise;
 
+/*
+Route Setup
+  using different file-paths per route
+*/
+// const authRouter = require('./routes/auth/router');
+const speechRouter = require('./routes/speeches/router');
+const userRouter = require('./routes/users/router');
+const {router:authRouter, basicStrategy, jwtStrategy} = require('./routes/auth/');
+
+/*
+APP setup
+  using passport, passport strategies,
+  & bodyParser
+*/
 const app = express();
+app.use('/api/auth', authRouter);
+app.use('/api/speech', speechRouter);
+app.use('/api/user', userRouter);
 app.use(bodyParser.json());
+app.use(passport.initialize());
+
+
 
 // CORS
 app.use(function (req, res, next) {
@@ -21,15 +41,17 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/auth', authRouter);
 
-app.use('/api/speech', speechRouter);
+passport.use(basicStrategy);
+passport.use(jwtStrategy);
+
 /*
 	create server var
 	runServer sets value
 	closeServer the var
 */
 let server;
+
 
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
   console.log('databaseUrl->',databaseUrl);
