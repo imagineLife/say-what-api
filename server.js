@@ -1,34 +1,19 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+// const path = require('path');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const {PORT, DATABASE_URL} = require('./config');
 
 mongoose.Promise = global.Promise;
 
-/*
-Route Setup
-  using different file-paths per route
-*/
-// const authRouter = require('./routes/auth/router');
-const speechRouter = require('./routes/speeches/router');
-const userRouter = require('./routes/users/router');
-const {router:authRouter, basicStrategy, jwtStrategy} = require('./routes/auth/');
+const {PORT, DATABASE_URL} = require('./config');
 
-/*
-APP setup
-  using passport, passport strategies,
-  & bodyParser
-*/
+const speechesRouter = require('./routes/speeches/router');
+const usersRouter = require('./routes/users/router');
+const {router: authRouter, basicStrategy, jwtStrategy} = require('./routes/auth');
+
 const app = express();
-app.use('/api/auth', authRouter);
-app.use('/api/speech', speechRouter);
-app.use('/api/user', userRouter);
-app.use(bodyParser.json());
-app.use(passport.initialize());
-
-
 
 // CORS
 app.use(function (req, res, next) {
@@ -41,20 +26,40 @@ app.use(function (req, res, next) {
   next();
 });
 
-
+app.use(passport.initialize());
 passport.use(basicStrategy);
 passport.use(jwtStrategy);
 
-/*
-	create server var
-	runServer sets value
-	closeServer the var
-*/
+app.use(bodyParser.json());
+app.use(express.static(__dirname +'/public'));
+app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/speeches', speechesRouter);
+
+// app.use('/login', (req,res) => {
+//   req.logout();
+//   res.clearCookie('authToken');
+//   res.sendFile(path.resolve('public/login.html'));
+// })
+
+// app.use('/logout', (req,res) => {
+//   req.logout();
+//   res.clearCookie('authToken');
+//   res.sendFile(path.resolve('public/splash.html'));
+// })
+
+app.use('*', function(req, res) {
+  res.status(404).json({message: 'Not Found'});
+});
+
+// closeServer needs access to a server object, but that only
+// gets created when `runServer` runs, so we declare `server` here
+// and then assign a value to it in run
 let server;
 
-
+// this function connects to our database, then starts the server
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
-  console.log('databaseUrl->',databaseUrl);
+
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
       if (err) {
@@ -72,7 +77,8 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
   });
 }
 
-//close the server
+// this function closes the server, and returns a promise. we'll
+// use it in our integration tests later.
 function closeServer() {
   return mongoose.disconnect().then(() => {
      return new Promise((resolve, reject) => {
@@ -93,4 +99,4 @@ if (require.main === module) {
   runServer().catch(err => console.error(err));
 };
 
- module.exports = {app, runServer, closeServer};
+module.exports = {app, runServer, closeServer};

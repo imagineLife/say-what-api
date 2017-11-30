@@ -38,11 +38,11 @@ describe('Users API resources page \n', function() {
     return User.remove({});
   });
 
-  describe('\n/api/user endpoint\n', function() {
+  describe('\n/api/users endpoint\n', function() {
     describe('POST', function() {
       it('Should reject users with missing username', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             password,
             firstName,
@@ -63,7 +63,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with missing password', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username,
             firstName,
@@ -84,7 +84,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with number-style username', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username: 1234,
             password,
@@ -106,7 +106,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with number-style password', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username,
             password: 1234,
@@ -128,7 +128,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with integer first name', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username,
             password,
@@ -150,7 +150,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with integer last name', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username,
             password,
@@ -172,7 +172,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with non-trimmed username', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username: ` ${username} `,
             password,
@@ -194,7 +194,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with non-trimmed password', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username,
             password: ` ${password} `,
@@ -216,7 +216,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with empty username', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username: '',
             password,
@@ -238,7 +238,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with password less than ten characters', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username,
             password: '123456789',
@@ -260,7 +260,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with password greater than 72 characters', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username,
             password: new Array(73).fill('a').join(''),
@@ -291,7 +291,7 @@ describe('Users API resources page \n', function() {
         .then(() =>
           // Try to create a second user with the same username
           chai.request(app)
-            .post('/api/user')
+            .post('/api/users')
             .send({
               username,
               password,
@@ -314,7 +314,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should create a new user', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username,
             password,
@@ -344,7 +344,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should trim firstName and lastName', function() {
         return chai.request(app)
-          .post('/api/user')
+          .post('/api/users')
           .send({
             username,
             password,
@@ -373,7 +373,7 @@ describe('Users API resources page \n', function() {
     // describe('GET endpoint', function() {
     //   it('Should return an empty array initially', function() {
     //     return chai.request(app)
-    //       .get('/api/user/')
+    //       .get('/api/users/')
     //       .then(res => {
     //         expect(res).to.have.status(200);
     //         expect(res.body).to.be.an('array');
@@ -392,7 +392,7 @@ describe('Users API resources page \n', function() {
     //     //   firstName: firstNameB,
     //     //   lastName: lastNameB,
     //     // })
-    //     .then(() => chai.request(app).get('/api/user'))
+    //     .then(() => chai.request(app).get('/api/users'))
     //     .then(res => {
     //       expect(res).to.have.status(200);
     //       expect(res.body).to.be.an('array');
