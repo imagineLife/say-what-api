@@ -26,17 +26,6 @@ router.post('/login',
   }
 );
 
-router.get('/add',
-  // The user provides a jwt to login
-  passport.authenticate('jwt', {session: false}),
-  (req, res) => {
-    const authToken = createAuthToken(req.user, function(err,token){
-      req.user.authToken = token;
-      return res.status(200).json(req.user);
-    });  
-  }
-);
-
 router.post('/refresh',
   // The user exchanges an existing valid JWT for a new one with a later
   // expiration
@@ -46,5 +35,7 @@ router.post('/refresh',
     return res.json({authToken});
   }
 );
+
+router.post('/', (req,res) => res.json({res:'delicious'}));
 
 module.exports = {router};
