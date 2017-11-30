@@ -35,7 +35,10 @@ const speechSchema = mongoose.Schema({
 			occurances : Number
 		}
 	],
-	bigWords : [String]
+	bigWords : [String],
+	speechTextLink: {
+		type: String
+	}
 
 })
 
@@ -49,7 +52,9 @@ speechSchema.methods.apiRepr = function(){
 		numberOfWords: this.numberOfWords,
 		mostUsedWords: this.mostUsedWords,
 		wordsBySize: this.wordsBySize,
-		bigWords: this.bigWords
+		bigWords: this.bigWords,
+		speechTextLink: this.speechTextLink
+
 	}
 }
 
