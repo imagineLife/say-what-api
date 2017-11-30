@@ -10,7 +10,7 @@ const jsonParser = bodyParser.json();
 
 
 // REGISTER a new user
-router.post('/', jsonParser, (req, res) => {
+router.post('/register', jsonParser, (req, res) => {
   // ensure that uName & pWord are defined
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
