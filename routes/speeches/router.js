@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 //Get Default Trump 2017 Speech, by ID
 router.get('/default', (req,res) => {
 	Stat
-		.findById("5a1ab3a26b7b26dfb8aeade3")	//LOCAL
+		.findById("5a1f441aee30112b4312157d")	//LOCAL
 		// .findById("5a1ad99f978ca2681f42df12")	//CLOUD
 		.then(stat => res.json(stat.apiRepr()))
 		.catch(err => {
@@ -33,5 +33,18 @@ router.get('/:id', (req, res) => {
       res.status(500).json({error: 'something went horribly awry'});
     });
 });
+
+
+// //Get TEXT of speech by given speech ID
+// router.get('/text/:id', (req, res) => {
+//   Stat
+//     .findById(req.params.id)
+//     .exec()
+//     .then(stat => res.json(stat.apiRepr()))
+//     .catch(err => {
+//       console.error(err);
+//       res.status(500).json({error: 'something went horribly awry'});
+//     });
+// });
 
 module.exports = router;
