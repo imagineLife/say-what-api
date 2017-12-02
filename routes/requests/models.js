@@ -21,7 +21,7 @@ const requestSchema = mongoose.Schema({
 	}
 })
 
-speechSchema.methods.apiRepr = function(){
+requestSchema.methods.apiRepr = function(){
 	return{
 		id: this._id,
 		type: this.type,
