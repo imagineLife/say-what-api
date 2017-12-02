@@ -16,7 +16,7 @@ const UserSchema = mongoose.Schema({
   },
   firstName: {type: String, default: ""},
   lastName: {type: String, default: ""},
-  suggestions: [{
+  requests: [{
     type: String, default: '',
   }],
   authToken: { type: String }
@@ -27,7 +27,7 @@ UserSchema.methods.apiRepr = function() {
     username: this.username || '',
     firstName: this.firstName || '',
     lastName: this.lastName || '',
-    suggestions: this.suggestions || ''
+    requests: this.requests || ''
   };
 }
 
