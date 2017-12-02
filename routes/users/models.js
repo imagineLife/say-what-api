@@ -17,8 +17,7 @@ const UserSchema = mongoose.Schema({
   firstName: {type: String, default: ""},
   lastName: {type: String, default: ""},
   suggestions: [{
-    type: Number, default: 0,
-    text: String, default: ""
+    type: String, default: '',
   }],
   authToken: { type: String }
 });
