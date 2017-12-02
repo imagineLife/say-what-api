@@ -1,56 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const {Stat} = require('./models');
+const {Request} = require('./models');
 const passport = require('passport');
 const {router: jwtStrategy} = require('../auth');
 
 passport.use(jwtStrategy);
 
-router.get('/', (req, res) => {
-  return res.json({ok: true});
- });
 
+//Get Request-list By user-ID
+// A PROTECTED endpoint which needs a valid JWT to access it
+router.get('/api/requests',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => {
+          Request
+          .findById(req.user._id)
+          .populate({path: 'suggestions'})
+          .exec()
+          .then(user => res.status(201).json(user.suggestions))
+          .catch(err => {
+            console.error(err);
+            res.status(500).json({error: 'something went terribly wrong'});
+          });
+    }
+);
 
-//Get Default Trump 2017 Speech, by ID
-router.get('/default', (req,res) => {
-	Stat
-		.findById("5a1ff02cb56e0347e480296a")	//LOCAL
-		// .findById("5a1ad99f978ca2681f42df12")	//CLOUD
-		.then(stat => res.json(stat.apiRepr()))
-		.catch(err => {
-			console.log(err);
-			res.status(500).json({message: 'Handwritten Error :/'})
-		});
-
-});
-
-
-//Get Stats By speech-ID
-router.get('/:id', (req, res) => {
-  Stat
-    .findById(req.params.id)
-    .exec()
-    .then(stat => res.json(stat.apiRepr()))
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({error: 'something went horribly awry'});
-    });
-});
-
-
-//Get TEXT of speech by given speech ID
-router.get('/text/:id', (req, res) => {
-  Stat
-    .findById(req.params.id)
-    .select("speechTextLink")
-    .exec()
-    .then(stat =>  fs.readFileSync(stat.speechTextLink, 'utf8'))
-    // .then(stat => res.json(stat.speechTextLink))
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({error: 'something went horribly awry'});
-    });
-});
 
 router.post('/request',
   passport.authenticate('jwt', {session: false, failWithError: true}),
