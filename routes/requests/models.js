@@ -15,10 +15,7 @@ const requestSchema = mongoose.Schema({
 		type: Date,
 		required: true
 	},
-	user : {
-		type: Schema.Types.ObjectId, ref: 'User',
-		required: true
-	}
+	user : { type: Schema.Types.ObjectId, ref: 'User'}
 })
 
 requestSchema.methods.apiRepr = function(){
@@ -31,6 +28,6 @@ requestSchema.methods.apiRepr = function(){
 	}
 }
 
-const Request = mongoose.model('request', requestSchema);
+const Request = mongoose.model('Request', requestSchema);
 
 module.exports = {Request};
