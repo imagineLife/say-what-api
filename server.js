@@ -9,9 +9,9 @@ mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config');
 
+const requestsRouter = require('./routes/requests/router');
 const speechesRouter = require('./routes/speeches/router');
 const usersRouter = require('./routes/users/router');
-const requestsRouter = require('./routes/requests/router');
 const {router: authRouter, basicStrategy, jwtStrategy} = require('./routes/auth');
 
 const app = express();
@@ -33,10 +33,10 @@ passport.use(jwtStrategy);
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname +'/public'));
+app.use('/api/requests', requestsRouter);
+app.use('/api/speeches', speechesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/speeches', speechesRouter);
-app.use('/api/requests', requestsRouter);
 
 // app.use('/login', (req,res) => {
 //   req.logout();
