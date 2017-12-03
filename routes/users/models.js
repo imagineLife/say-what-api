@@ -16,9 +16,7 @@ const UserSchema = mongoose.Schema({
   },
   firstName: {type: String, default: ""},
   lastName: {type: String, default: ""},
-  requests: [{
-    type: String, default: '',
-  }],
+  requests: [{ type: Schema.Types.ObjectId, ref: 'Request' }],
   authToken: { type: String }
 });
 
