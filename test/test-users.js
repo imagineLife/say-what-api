@@ -42,7 +42,7 @@ describe('Users API resources page \n', function() {
     describe('POST', function() {
       it('Should reject users with missing username', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             password,
             firstName,
@@ -63,7 +63,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with missing password', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username,
             firstName,
@@ -84,7 +84,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with number-style username', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username: 1234,
             password,
@@ -106,7 +106,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with number-style password', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username,
             password: 1234,
@@ -128,7 +128,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with integer first name', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username,
             password,
@@ -150,7 +150,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with integer last name', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username,
             password,
@@ -172,7 +172,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with non-trimmed username', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username: ` ${username} `,
             password,
@@ -194,7 +194,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with non-trimmed password', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username,
             password: ` ${password} `,
@@ -216,7 +216,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with empty username', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username: '',
             password,
@@ -238,7 +238,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with password less than ten characters', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username,
             password: '123456789',
@@ -260,7 +260,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should reject users with password greater than 72 characters', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username,
             password: new Array(73).fill('a').join(''),
@@ -291,7 +291,7 @@ describe('Users API resources page \n', function() {
         .then(() =>
           // Try to create a second user with the same username
           chai.request(app)
-            .post('/api/users')
+            .post('/api/users/register')
             .send({
               username,
               password,
@@ -314,7 +314,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should create a new user', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username,
             password,
@@ -324,7 +324,7 @@ describe('Users API resources page \n', function() {
           .then(res => {
             expect(res).to.have.status(201);
             expect(res.body).to.be.an('object');
-            expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'suggestions');
+            expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests');
             expect(res.body.username).to.equal(username);
             expect(res.body.firstName).to.equal(firstName);
             expect(res.body.lastName).to.equal(lastName);
@@ -344,7 +344,7 @@ describe('Users API resources page \n', function() {
       });
       it('Should trim firstName and lastName', function() {
         return chai.request(app)
-          .post('/api/users')
+          .post('/api/users/register')
           .send({
             username,
             password,
@@ -354,7 +354,7 @@ describe('Users API resources page \n', function() {
           .then(res => {
             expect(res).to.have.status(201);
             expect(res.body).to.be.an('object');
-            expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'suggestions');
+            expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests');
             expect(res.body.username).to.equal(username);
             expect(res.body.firstName).to.equal(firstName);
             expect(res.body.lastName).to.equal(lastName);
@@ -401,13 +401,13 @@ describe('Users API resources page \n', function() {
     //         username,
     //         firstName,
     //         lastName,
-    //         suggestions: []
+    //         requests: []
     //       });
     //       // expect(res.body[1]).to.deep.equal({
     //       //   username: usernameB,
     //       //   firstName: firstNameB,
     //       //   lastName: lastNameB,
-    //       //   suggestions: emptyTripB
+    //       //   requests: emptyTripB
     //       // });
     //     });
     //   });
