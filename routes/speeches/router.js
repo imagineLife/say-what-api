@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 //Get Default Trump 2017 Speech, by ID
 router.get('/default', (req,res) => {
 	Stat
-		.findById("5a1ff02cb56e0347e480296a")	//LOCAL
+		.findById("5a1f441aee30112b4312157d")	//LOCAL
 		// .findById("5a1ad99f978ca2681f42df12")	//CLOUD
 		.then(stat => res.json(stat.apiRepr()))
 		.catch(err => {
@@ -24,6 +24,18 @@ router.get('/default', (req,res) => {
 
 });
 
+
+//Get Default Trump 2017 Speech, by ID
+router.get('/speechList', (req,res) => {
+  Stat
+    .find().select('_id title') //LOCAL
+    .then(stat => res.json(stat))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({message: 'Handwritten Error :/'})
+    });
+
+});
 
 //Get Stats By speech-ID
 router.get('/:id', (req, res) => {
