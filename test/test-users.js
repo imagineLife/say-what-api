@@ -38,8 +38,8 @@ describe('Users API resources page \n', function() {
     return User.remove({});
   });
 
-  describe('\n/api/users endpoint\n', function() {
-    describe('POST', function() {
+  describe('\nPOST to /api/users/register endpoint\n', function() {
+    // describe('POST', function() {
       it('Should reject users with missing username', function() {
         return chai.request(app)
           .post('/api/users/register')
@@ -412,5 +412,5 @@ describe('Users API resources page \n', function() {
     //     });
     //   });
     // });
-  });
+  // });
 });
