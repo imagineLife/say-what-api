@@ -44,7 +44,7 @@ describe('\nAuth endpoints\n', function () {
     return User.remove({});
   });
 
-  describe('\nPOST to /api/auth/login\n', function () {
+  describe('\nPOST to /auth/login\n', function () {
     it('Should reject requests with no credentials: code 401', function () {
       return chai
         .request(app)
@@ -117,7 +117,7 @@ describe('\nAuth endpoints\n', function () {
     // });
   });
 
-  // describe('/api/auth/refresh', function () {
+  // describe('POST to /auth/refresh', function () {
   //   it('Should reject requests with no credentials', function () {
   //     return chai
   //       .request(app)
