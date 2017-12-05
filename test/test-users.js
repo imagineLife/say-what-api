@@ -11,7 +11,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Users API resources page \n', function() {
+describe('\nUsers API endpoints \n', function() {
   const username = 'exampleUser';
   const password = 'examplePass';
   const firstName = 'Example';
@@ -38,7 +38,7 @@ describe('Users API resources page \n', function() {
     return User.remove({});
   });
 
-  describe('\nPOST to /api/users/register endpoint\n', function() {
+  describe('\nPOST to /users/register endpoint\n', function() {
     it('Should reject users with missing username', function() {
       return chai.request(app)
         .post('/api/users/register')
