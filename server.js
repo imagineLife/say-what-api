@@ -89,6 +89,7 @@ function closeServer() {
            if (err) {
                return reject(err);
            }
+           console.log('sayWHAT?!');
            resolve();
        });
      });
