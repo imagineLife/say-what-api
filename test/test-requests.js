@@ -54,7 +54,7 @@ describe('\nRequest endpoints\n', function () {
     return User.remove({});
   });
 
-  describe('\nPOST request endpoint\n', function () {
+  describe('\nPOST to /api/requests\n', function () {
     it('Should reject requests with no credentials: code 401', function () {
       return chai
       .request(app)
