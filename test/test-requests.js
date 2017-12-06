@@ -24,10 +24,12 @@ describe('\nRequest endpoints\n', function () {
     "user" : "5a1ff02cb56e0347e480296a"
   };
 
-  const username = "biggieSmalls";
-  const password = "ReadyToDie";
+  const username = "exampleUser";
+  const password = "examplePass";
   const firstName = 'Christopher';
   const lastName = 'Wallace';
+  const myUN = "biggieSmalls";
+  const myPW = "ReadyToDie";
   
   before(function () {
     return runServer(TEST_DATABASE_URL, 8081);
@@ -53,56 +55,22 @@ describe('\nRequest endpoints\n', function () {
   });
 
   describe('\nPOST request endpoint\n', function () {
-    it.only('Should reject requests with no credentials: code 401', function () {
+    it('Should reject requests with no credentials: code 401', function () {
       return chai
-        .request(app)
-        .post('/api/requests')
-        .then(() =>
-          expect.fail(null, null, 'Request should not succeed')
-        )
-        .catch(err => {
-          if (err instanceof chai.AssertionError) {
-            throw err;
-          }
+      .request(app)
+      .post('/api/requests')
+      .then(() =>
+        expect.fail(null, null, 'Request should not succeed')
+      )
+      .catch(err => {
+        if (err instanceof chai.AssertionError) {
+          throw err;
+        }
 
-          const res = err.response;
-          expect(res).to.have.status(401);
-        })
-      });
-    // it('Should reject requests with incorrect usernames: code 401', function () {
-    //   return chai
-    //     .request(app)
-    //     .post('/api/auth/login')
-    //     .send({ username: 'wrongUsername', password })        
-    //     .then(() =>
-    //       expect.fail(null, null, 'Request should not succeed')
-    //     )
-    //     .catch(err => {
-    //       if (err instanceof chai.AssertionError) {
-    //         throw err;
-    //       }
-
-    //       const res = err.response;
-    //       expect(res).to.have.status(401);
-    //     });
-    // });
-    // it('Should reject requests with incorrect passwords', function () {
-    //   return chai
-    //     .request(app)
-    //     .post('/api/auth/login')
-    //     .send({ username, password: 'wrongPassword' })
-    //     .then(() =>
-    //       expect.fail(null, null, 'Request should not succeed')
-    //     )
-    //     .catch(err => {
-    //       if (err instanceof chai.AssertionError) {
-    //         throw err;
-    //       }
-
-    //       const res = err.response;
-    //       expect(res).to.have.status(401);
-    //     });
-    // });
+        const res = err.response;
+        expect(res).to.have.status(401);
+      })
+    });
     // it('Should return a valid auth token', function () {
     // /*
     //   ONCE the app is working, we need to retrieve the auth token. 
@@ -110,8 +78,8 @@ describe('\nRequest endpoints\n', function () {
     // */
     //   return chai
     //     .request(app)
-    //     .post('/api/auth/login')
-    //     .set('Authorization', 'Basic ZXhhbXBsZVVzZXI6ZXhhbXBsZVBhc3M=')
+    //     .post('/api/requests')
+    //     .set('Authorization', 'Bearer ZXhhbXBsZVVzZXI6ZXhhbXBsZVBhc3M=')
     //     .set('Content-Type', 'application/json')
     //     .send({ username, password })
     //     .then(res => {
@@ -124,6 +92,98 @@ describe('\nRequest endpoints\n', function () {
     //         algorithm: ['HS256']
     //       });
     //       expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests');
+    //     });
+    // });
+    it.only('Should send request & return proper response', function() {
+      const token = jwt.sign(
+        {
+          user: {
+            username,
+            firstName,
+            lastName
+          }
+        },
+        JWT_SECRET,
+        {
+          algorithm: 'HS256',
+          subject: username,
+          expiresIn: '7d'
+        }
+      );
+
+      return chai
+        .request(app)
+        .post('/api/requests')
+        .set('authorization', `Bearer ${token}`)
+        .send({"type" : 1, "text" : "Can you add a keyword-search, please?"})
+        .then(res => {
+          expect(res).to.have.status(201);
+          expect(res.body).to.have.keys('id', 'type', 'text', 'Date');
+          expect(res.body).to.be.an('object');
+          // expect(res.body.data).to.equal('rosebud');
+        });
+    });
+    // it('Should reject requests with an invalid token', function() {
+    //   const token = jwt.sign(
+    //     {
+    //       username,
+    //       firstName,
+    //       lastName
+    //     },
+    //     'wrongSecret',
+    //     {
+    //       algorithm: 'HS256',
+    //       expiresIn: '7d'
+    //     }
+    //   );
+
+    //   return chai
+    //     .request(app)
+    //     .post('/api/requests')
+    //     .set('Authorization', `Bearer ${token}`)
+    //     .then(() =>
+    //       expect.fail(null, null, 'Request should not succeed')
+    //     )
+    //     .catch(err => {
+    //       if (err instanceof chai.AssertionError) {
+    //         throw err;
+    //       }
+
+    //       const res = err.response;
+    //       expect(res).to.have.status(401);
+    //     });
+    // });
+    // it('Should reject requests with an expired token', function() {
+    //   const token = jwt.sign(
+    //     {
+    //       user: {
+    //         username,
+    //         firstName,
+    //         lastName
+    //       },
+    //       exp: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
+    //     },
+    //     JWT_SECRET,
+    //     {
+    //       algorithm: 'HS256',
+    //       subject: username
+    //     }
+    //   );
+
+    //   return chai
+    //     .request(app)
+    //     .get('/api/protected')
+    //     .set('authorization', `Bearer ${token}`)
+    //     .then(() =>
+    //       expect.fail(null, null, 'Request should not succeed')
+    //     )
+    //     .catch(err => {
+    //       if (err instanceof chai.AssertionError) {
+    //         throw err;
+    //       }
+
+    //       const res = err.response;
+    //       expect(res).to.have.status(401);
     //     });
     // });
   });
