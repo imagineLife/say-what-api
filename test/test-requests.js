@@ -94,7 +94,7 @@ describe('\nRequest endpoints\n', function () {
     //       expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests');
     //     });
     // });
-    it.only('Should send request & return proper response', function() {
+    it('Should send request & return proper response', function() {
       const token = jwt.sign(
         {
           user: {
