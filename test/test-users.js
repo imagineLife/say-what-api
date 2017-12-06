@@ -25,7 +25,6 @@ describe('\nUsers API endpoints \n', function() {
 
   before(function() {
     return runServer(TEST_DATABASE_URL, 8081);
-
   });
 
   after(function() {
