@@ -27,7 +27,7 @@ router.get('/',
 );
 
 router.post('/',
-  passport.authenticate('jwt', {session: false, failWithError: true}),
+  passport.authenticate('jwt', {session: false}),//, failWithError: true}),
   (req, res) => {
     const requiredFields = ['type', 'text'];
     for (let i=0; i<requiredFields.length; i++) {
