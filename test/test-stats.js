@@ -3,13 +3,11 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-
-
 const { app, runServer, closeServer } = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
 const {Stat} = require('../routes/speeches/models');
-const { JWT_SECRET } = require('../config');
-
+const {User} = require('../routes/users/models');
+const { JWT_SECRET, JWT_EXPIRY } = require('../config');
 const expect = chai.expect;
 
 // This let's us make HTTP requests
@@ -17,8 +15,22 @@ const expect = chai.expect;
 // see: https://github.com/chaijs/chai-http
 chai.use(chaiHttp);
 
-describe('\n\nSpeech/Stat Request endpoints', function () {
+describe('\nSpeech/Stat Request endpoints', function () {
 
+  const demoUser = {
+    "_id" : new mongoose.mongo.ObjectId('5a1ff02cb56e0347e480296a'),
+    "username" : "biggieSmalls",
+    "password" : "$2a$10$O4zYhxYd/9aKUfQg6M9y2e48kXA/W3Tu24TePZ/9NdqCvtLbnm76S",
+    "firstName" : "Notorious",
+    "lastName" : "Wallace",
+    "email" : "mretfaster@gmail.com",
+    "requests" : [
+      "5a22a4e4c8d9e8a18e8f1d1a",
+      "5a22a4e4c8d9e8a18e8f1d1b",
+      "5a22a4e4c8d9e8a18e8f1d1c",
+      "5a22a4e4c8d9e8a18e8f1d1d"
+    ]
+  };
 
   const demoSpeechStats = {
     "_id" : new mongoose.mongo.ObjectId('5a1f441aee30112b4312157d'),
@@ -110,7 +122,13 @@ describe('\n\nSpeech/Stat Request endpoints', function () {
     ],
     "speechTextLink" : "../speechText/t2017.txt"
   };
-  
+
+  const jwToken = jwt.sign({}, JWT_SECRET, {
+      subject: 'biggieSmalls',
+      expiresIn: JWT_EXPIRY,
+      algorithm: 'HS256'
+     });
+
   before(function () {
     return runServer(TEST_DATABASE_URL, 8081);
   });
@@ -120,50 +138,71 @@ describe('\n\nSpeech/Stat Request endpoints', function () {
   });
 
   beforeEach(function () {
-      
+      // User.insert(demoUser);
+      // User.create(demoUser);
       return Stat.create(demoSpeechStats)
       .then((stat) => {
+        // console.log('\nadded stat is ->\n',stat);
         return stat;
       });
-    // return User.hashPassword(password).then(password =>
-      
-    //   User.create({
-    //     username,
-    //     password,
-    //     firstName,
-    //     lastName
-    //   })
-    
-    // );
+
   });
 
   afterEach(function () {
     return Stat.remove();
   });
 
-  describe('GET from /api/requests', function () {
+  describe('GET from /api/speeches/:id', function () {
  
-    it('should return default speech stats', function() {
-      // strategy:
-      //    1. get back all stats returned by by GET request to `/stats`
-      //    2. prove res has right status, data type
-      //    3. prove the number of stats we got back is equal to number
-      //       in db.
-      // need to have access to mutate and access `res` across
-      // `.then()` calls below, so declare it here so can modify in place
-      let res;
-      return chai.request(app)
-        .get('/api/speeches/default')
-        .then(function(_res) {
-          // so subsequent .then blocks can access resp obj.
-          res = _res;
-          // res.should.have.status(200);
-          // otherwise our db seeding didn't work
-          // res.body.quickstats.should.have.length.of.at.least(1);
-          expect(res.body).to.contain.keys('title', 'Orator');
-          return Stat.count();
-        })
+    // it.only('should return speech stats by url-given speechID', function() {
+    //   // strategy:
+    //   //    1. get back all stats returned by by GET request to `/stats`
+    //   //    2. prove res has right status, data type
+    //   //    3. prove the number of stats we got back is equal to number
+    //   //       in db.
+    //   // need to have access to mutate and access `res` across
+    //   // `.then()` calls below, so declare it here so can modify in place
+    //   let res;
+    //   return chai.request(app)
+    //     .get('/api/speeches/5a1f441aee30112b4312157d')
+    //     .set('Authorization', `Bearer ${jwToken}`)
+    //     .then(function(_res) {
+    //       // so subsequent .then blocks can access resp obj.
+    //       res = _res;
+    //       // res.should.have.status(200);
+    //       // otherwise our db seeding didn't work
+    //       // res.body.quickstats.should.have.length.of.at.least(1);
+    //       expect(res.body).to.contain.keys('title', 'Orator');
+    //       return Stat.count();
+    //     })
+    // });
+    it.only('Should send protected data', function() {
+      const token = jwt.sign(
+        {
+          user: {
+            username: 'biggieSmalls',
+            firstName: 'Notorious',
+            lastName: 'Wallace'
+          }
+        },
+        JWT_SECRET,
+        {
+          algorithm: 'HS256',
+          subject: 'biggieSmalls',
+          expiresIn: '7d'
+        }
+      );
+
+      return chai
+        .request(app)
+        .get('/api/speeches/5a1f441aee30112b4312157d')
+        .set('authorization', `Bearer ${token}`)
+        .then(res => {
+          console.log('\nprotected res.body->\n',res.body);
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.an('object');
+        });
     });
-  
+
   });
 });
