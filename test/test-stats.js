@@ -176,7 +176,7 @@ describe('\nSpeech/Stat Request endpoints', function () {
     //       return Stat.count();
     //     })
     // });
-    it.only('Should send protected data', function() {
+    it('Should send protected data', function() {
       const token = jwt.sign(
         {
           user: {
@@ -198,7 +198,6 @@ describe('\nSpeech/Stat Request endpoints', function () {
         .get('/api/speeches/5a1f441aee30112b4312157d')
         .set('authorization', `Bearer ${token}`)
         .then(res => {
-          console.log('\nprotected res.body->\n',res.body);
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
         });
