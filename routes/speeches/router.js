@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
  });
 
 
-//Get Default Trump 2017 Speech, by ID
+//Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
 	Stat
 		.findById("5a1f441aee30112b4312157d")	//LOCAL
@@ -25,7 +25,7 @@ router.get('/default', (req,res) => {
 });
 
 
-//Get Default Trump 2017 Speech
+//Get Default Trump 2017 Speech, by ID
 router.get('/speechList', (req,res) => {
   Stat
     .find().select('_id title') //LOCAL
@@ -39,7 +39,7 @@ router.get('/speechList', (req,res) => {
 
 //Get Stats By speech-ID
 router.get('/:id', 
-  passport.authenticate('jwt', {session: false}),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
   Stat
     .findById(req.params.id)
