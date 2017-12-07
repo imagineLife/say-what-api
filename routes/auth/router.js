@@ -19,7 +19,7 @@ router.post('/login',
   (req, res) => {
     const authToken = createAuthToken(req.user, function(err,token){
       req.user.authToken = token;
-      console.log('CallBack ->',token);
+      // console.log('CallBack ->',token);
       return res.status(200).json(req.user);
     });  
   }
