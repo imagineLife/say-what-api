@@ -16,7 +16,7 @@ const expect = chai.expect;
 // see: https://github.com/chaijs/chai-http
 chai.use(chaiHttp);
 
-describe('\nRequest endpoints\n', function () {
+describe('\n\nRequests endpoints\n', function () {
   const demoReq = {
     "type" : 1,
     "text" : "Can you add a keyword-search?",
@@ -52,7 +52,7 @@ describe('\nRequest endpoints\n', function () {
     
     );
 
-    console.log('beforeEach', User);
+    // console.log('beforeEach', User);
   
   });
 
@@ -128,36 +128,37 @@ describe('\nRequest endpoints\n', function () {
           expect(res.body).to.be.an('object');
         });
     });
-    // it('Should reject requests with an invalid token', function() {
-    //   const token = jwt.sign(
-    //     {
-    //       username,
-    //       firstName,
-    //       lastName
-    //     },
-    //     'wrongSecret',
-    //     {
-    //       algorithm: 'HS256',
-    //       expiresIn: '7d'
-    //     }
-    //   );
 
-    //   return chai
-    //     .request(app)
-    //     .post('/api/requests')
-    //     .set('Authorization', `Bearer ${token}`)
-    //     .then(() =>
-    //       expect.fail(null, null, 'Request should not succeed')
-    //     )
-    //     .catch(err => {
-    //       if (err instanceof chai.AssertionError) {
-    //         throw err;
-    //       }
+    it('Should reject requests with an invalid token', function() {
+      const token = jwt.sign(
+        {
+          username,
+          firstName,
+          lastName
+        },
+        'wrongSecret',
+        {
+          algorithm: 'HS256',
+          expiresIn: '7d'
+        }
+      );
 
-    //       const res = err.response;
-    //       expect(res).to.have.status(401);
-    //     });
-    // });
+      return chai
+        .request(app)
+        .post('/api/requests')
+        .set('Authorization', `Bearer ${token}`)
+        .then(() =>
+          expect.fail(null, null, 'Request should not succeed')
+        )
+        .catch(err => {
+          if (err instanceof chai.AssertionError) {
+            throw err;
+          }
+
+          const res = err.response;
+          expect(res).to.have.status(401);
+        });
+    });
     // it('Should reject requests with an expired token', function() {
     //   const token = jwt.sign(
     //     {

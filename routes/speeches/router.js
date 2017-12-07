@@ -25,7 +25,7 @@ router.get('/default', (req,res) => {
 });
 
 
-//Get Default Trump 2017 Speech, by ID
+//Get Default Trump 2017 Speech
 router.get('/speechList', (req,res) => {
   Stat
     .find().select('_id title') //LOCAL
@@ -38,7 +38,9 @@ router.get('/speechList', (req,res) => {
 });
 
 //Get Stats By speech-ID
-router.get('/:id', (req, res) => {
+router.get('/:id', 
+  passport.authenticate('jwt', {session: false}),
+  (req, res) => {
   Stat
     .findById(req.params.id)
     .exec()
