@@ -50,7 +50,9 @@ router.get('/:id',
 
 
 //Get TEXT of speech by given speech ID
-router.get('/text/:id', (req, res) => {
+router.get('/text/:id', 
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
   Stat
     .findById(req.params.id)
     .select("speechTextLink")
