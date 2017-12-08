@@ -15,22 +15,24 @@ const expect = chai.expect;
 // see: https://github.com/chaijs/chai-http
 chai.use(chaiHttp);
 
-describe('\nSpeech/Stat Request endpoints', function () {
+describe('\nSpeech/Stat Request endpoints\n', function () {
 
-  const demoUser = {
-    "_id" : new mongoose.mongo.ObjectId('5a1ff02cb56e0347e480296a'),
-    "username" : "biggieSmalls",
-    "password" : "$2a$10$O4zYhxYd/9aKUfQg6M9y2e48kXA/W3Tu24TePZ/9NdqCvtLbnm76S",
-    "firstName" : "Notorious",
-    "lastName" : "Wallace",
-    "email" : "mretfaster@gmail.com",
-    "requests" : [
-      "5a22a4e4c8d9e8a18e8f1d1a",
-      "5a22a4e4c8d9e8a18e8f1d1b",
-      "5a22a4e4c8d9e8a18e8f1d1c",
-      "5a22a4e4c8d9e8a18e8f1d1d"
-    ]
-  };
+//ask Jack perhaps?
+
+  // const demoUser = {
+  //   "_id" : new mongoose.mongo.ObjectId('5a1ff02cb56e0347e480296a'),
+  //   "username" : "biggieSmalls",
+  //   "password" : "$2a$10$O4zYhxYd/9aKUfQg6M9y2e48kXA/W3Tu24TePZ/9NdqCvtLbnm76S",
+  //   "firstName" : "Notorious",
+  //   "lastName" : "Wallace",
+  //   "email" : "mretfaster@gmail.com",
+  //   "requests" : [
+  //     "5a22a4e4c8d9e8a18e8f1d1a",
+  //     "5a22a4e4c8d9e8a18e8f1d1b",
+  //     "5a22a4e4c8d9e8a18e8f1d1c",
+  //     "5a22a4e4c8d9e8a18e8f1d1d"
+  //   ]
+  // };
 
   const demoSpeechStats = {
     "_id" : new mongoose.mongo.ObjectId('5a1f441aee30112b4312157d'),
@@ -138,11 +140,7 @@ describe('\nSpeech/Stat Request endpoints', function () {
   });
 
   beforeEach(function () {
-      return Stat.create(demoSpeechStats)
-      .then((stat) => {
-        return stat;
-      });
-
+      return Stat.create(demoSpeechStats);
   });
 
   afterEach(function () {
@@ -153,7 +151,7 @@ describe('\nSpeech/Stat Request endpoints', function () {
  
 //ask Jack perhaps?
 
-    // it.only('should return speech stats by url-given speechID', function() {
+    // it('should return speech stats by url-given speechID', function() {
     //   // strategy:
     //   //    1. get back all stats returned by by GET request to `/stats`
     //   //    2. prove res has right status, data type
@@ -175,7 +173,7 @@ describe('\nSpeech/Stat Request endpoints', function () {
     //       return Stat.count();
     //     })
     // });
-    it('GET from /api/speeches/:id', function() {
+    it('expects status, specific type, and specific id', function() {
       const token = jwt.sign(
         {
           user: {
@@ -203,7 +201,7 @@ describe('\nSpeech/Stat Request endpoints', function () {
     });
   });
   describe('GET from /api/speeches/default', function () {
-    it('Should return default speechStats', function() {
+    it('expects status, type==, id==, keyMatching', function() {
       return chai
         .request(app)
         .get('/api/speeches/default')
@@ -215,19 +213,59 @@ describe('\nSpeech/Stat Request endpoints', function () {
         });
     });
   });
-  // describe('GET from /api/speeches/text/5a1f441aee30112b4312157d', function () {
-  //   it.only('Should return speech text', function() {
-  //     return chai
-  //       .request(app)
-  //       .get('/api/speeches/text/5a1f441aee30112b4312157d')
-  //       .then(res => {
-  //         console.log('textStringREs->',res);
-  //         expect(res).to.have.status(200);
-  //         // expect(res.body).to.be.an('object');
-  //         // expect(res.body.id).to.equal('5a1f441aee30112b4312157d');
-  //         // expect(res.body)
-  //         expect(res.body).to.have.keys('text')
-  //       });
-  //   });
-  // });
+  describe('GET from /api/speeches/text/5a1f441aee30112b4312157d', function () {
+    it('expects status, type', function() {
+       const token = jwt.sign(
+        {
+          user: {
+            username: 'biggieSmalls',
+            firstName: 'Notorious',
+            lastName: 'Wallace'
+          }
+        },
+        JWT_SECRET,
+        {
+          algorithm: 'HS256',
+          subject: 'biggieSmalls',
+          expiresIn: '7d'
+        }
+      );
+      return chai
+        .request(app)
+        .get('/api/speeches/text/5a1f441aee30112b4312157d')
+        .set('authorization', `Bearer ${token}`)
+        .then(res => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('string');
+      });
+    });
+  });
+  describe('GET from /api/speeches/speechList', function () {
+    it('expects status, type, specific array keys', function() {
+       const token = jwt.sign(
+        {
+          user: {
+            username: 'biggieSmalls',
+            firstName: 'Notorious',
+            lastName: 'Wallace'
+          }
+        },
+        JWT_SECRET,
+        {
+          algorithm: 'HS256',
+          subject: 'biggieSmalls',
+          expiresIn: '7d'
+        }
+      );
+      return chai
+        .request(app)
+        .get('/api/speeches/speechList')
+        .set('authorization', `Bearer ${token}`)
+        .then(res => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body[0]).to.have.keys('_id', 'title');
+      });
+    });
+  });
 });
