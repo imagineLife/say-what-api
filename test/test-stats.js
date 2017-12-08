@@ -138,11 +138,8 @@ describe('\nSpeech/Stat Request endpoints', function () {
   });
 
   beforeEach(function () {
-      // User.insert(demoUser);
-      // User.create(demoUser);
       return Stat.create(demoSpeechStats)
       .then((stat) => {
-        // console.log('\nadded stat is ->\n',stat);
         return stat;
       });
 
