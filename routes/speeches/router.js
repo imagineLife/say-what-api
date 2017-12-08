@@ -3,7 +3,7 @@ const router = express.Router();
 const {Stat} = require('./models');
 const passport = require('passport');
 const {router: jwtStrategy} = require('../auth');
-
+const fs = require('fs');
 passport.use(jwtStrategy);
 
 //Get Default Trump 2017 Speech
@@ -51,13 +51,13 @@ router.get('/:id',
 
 //Get TEXT of speech by given speech ID
 router.get('/text/:id', 
-  passport.authenticate('jwt', { session: false }),
+  // passport.authenticate('jwt', { session: false }),
   (req, res) => {
   Stat
     .findById(req.params.id)
-    .select("speechTextLink")
     .exec()
     .then(stat =>  fs.readFileSync(stat.speechTextLink, 'utf8'))
+    .then(speechText => res.json(speechText))
     // .then(stat => res.json(stat.speechTextLink))
     .catch(err => {
       console.error(err);
