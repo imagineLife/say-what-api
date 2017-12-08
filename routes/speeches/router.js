@@ -59,7 +59,6 @@ router.get('/text/:id',
     .exec()
     .then(stat =>  fs.readFileSync(path.join(__dirname, '../'+stat.speechTextLink), 'utf8'))
     .then(speechText => res.json(speechText))
-    // .then(stat => res.json(stat.speechTextLink))
     .catch(err => {
       console.error(err);
       res.status(500).json({error: 'something went horribly awry'});
