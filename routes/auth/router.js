@@ -35,6 +35,4 @@ router.post('/refresh',
   }
 );
 
-router.post('/', (req,res) => res.json({res:'delicious'}));
-
 module.exports = {router};
