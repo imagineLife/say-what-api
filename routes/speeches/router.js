@@ -6,11 +6,6 @@ const {router: jwtStrategy} = require('../auth');
 
 passport.use(jwtStrategy);
 
-router.get('/', (req, res) => {
-  return res.json({ok: true});
- });
-
-
 //Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
 	Stat
