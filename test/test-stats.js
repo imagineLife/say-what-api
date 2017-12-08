@@ -151,6 +151,8 @@ describe('\nSpeech/Stat Request endpoints', function () {
 
   describe('GET from /api/speeches/:id', function () {
  
+//ask Jack perhaps?
+
     // it.only('should return speech stats by url-given speechID', function() {
     //   // strategy:
     //   //    1. get back all stats returned by by GET request to `/stats`
@@ -173,7 +175,7 @@ describe('\nSpeech/Stat Request endpoints', function () {
     //       return Stat.count();
     //     })
     // });
-    it('Should send protected data', function() {
+    it('GET from /api/speeches/:id', function() {
       const token = jwt.sign(
         {
           user: {
@@ -189,7 +191,6 @@ describe('\nSpeech/Stat Request endpoints', function () {
           expiresIn: '7d'
         }
       );
-
       return chai
         .request(app)
         .get('/api/speeches/5a1f441aee30112b4312157d')
@@ -197,13 +198,12 @@ describe('\nSpeech/Stat Request endpoints', function () {
         .then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
+          expect(res.body.id).to.equal('5a1f441aee30112b4312157d');
         });
     });
-
   });
   describe('GET from /api/speeches/default', function () {
- 
-    it.only('Should return default speechStats', function() {
+    it('Should return default speechStats', function() {
       return chai
         .request(app)
         .get('/api/speeches/default')
@@ -211,11 +211,23 @@ describe('\nSpeech/Stat Request endpoints', function () {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
           expect(res.body.id).to.equal('5a1f441aee30112b4312157d');
-          expect(res.body)
           expect(res.body).to.have.keys('id', 'title', 'Date', 'Orator', 'Audience', 'numberOfWords', 'mostUsedWords', 'wordsBySize', 'bigWords', 'speechTextLink')
         });
     });
-
   });
-
+  // describe('GET from /api/speeches/text/5a1f441aee30112b4312157d', function () {
+  //   it.only('Should return speech text', function() {
+  //     return chai
+  //       .request(app)
+  //       .get('/api/speeches/text/5a1f441aee30112b4312157d')
+  //       .then(res => {
+  //         console.log('textStringREs->',res);
+  //         expect(res).to.have.status(200);
+  //         // expect(res.body).to.be.an('object');
+  //         // expect(res.body.id).to.equal('5a1f441aee30112b4312157d');
+  //         // expect(res.body)
+  //         expect(res.body).to.have.keys('text')
+  //       });
+  //   });
+  // });
 });
