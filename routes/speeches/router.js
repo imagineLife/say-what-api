@@ -5,6 +5,7 @@ const passport = require('passport');
 const {router: jwtStrategy} = require('../auth');
 const fs = require('fs');
 passport.use(jwtStrategy);
+var path = require('path');
 
 //Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
@@ -51,12 +52,12 @@ router.get('/:id',
 
 //Get TEXT of speech by given speech ID
 router.get('/text/:id', 
-  // passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
   Stat
     .findById(req.params.id)
     .exec()
-    .then(stat =>  fs.readFileSync(stat.speechTextLink, 'utf8'))
+    .then(stat =>  fs.readFileSync(path.join(__dirname, '../'+stat.speechTextLink), 'utf8'))
     .then(speechText => res.json(speechText))
     // .then(stat => res.json(stat.speechTextLink))
     .catch(err => {
