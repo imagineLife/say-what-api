@@ -10,8 +10,8 @@ var path = require('path');
 //Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
 	Stat
-		.findById("5a1f441aee30112b4312157d")	//LOCAL
-		// .findById("5a1ad99f978ca2681f42df12")	//CLOUD
+		// .findById("5a1f441aee30112b4312157d")	//LOCAL
+		.findById("5a1ad99f978ca2681f42df12")	//CLOUD
 		.then(stat => res.json(stat.apiRepr()))
 		.catch(err => {
 			console.log(err);
