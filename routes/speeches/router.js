@@ -11,7 +11,7 @@ var path = require('path');
 router.get('/default', (req,res) => {
 	Stat
 		// .findById("5a1f441aee30112b4312157d")	//LOCAL
-		.findById("5a1ad99f978ca2681f42df12")	//CLOUD
+		.findById("5a1f441aee30112b4312157d")	//CLOUD
 		.then(stat => res.json(stat.apiRepr()))
 		.catch(err => {
 			console.log(err);
