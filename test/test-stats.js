@@ -35,7 +35,7 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
   // };
 
   const demoSpeechStats = {
-    "_id" : new mongoose.mongo.ObjectId('5a1f441aee30112b4312157d'),
+    "_id" : new mongoose.mongo.ObjectId('5a1ad99f978ca2681f42df12'),
     "title" : "Trump 2017 Inaugural Address",
     "Orator" : "Donald Trump",
     "Date" : "Friday January 20, 2017",
@@ -161,7 +161,7 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
     //   // `.then()` calls below, so declare it here so can modify in place
     //   let res;
     //   return chai.request(app)
-    //     .get('/api/speeches/5a1f441aee30112b4312157d')
+    //     .get('/api/speeches/5a1ad99f978ca2681f42df12')
     //     .set('Authorization', `Bearer ${jwToken}`)
     //     .then(function(_res) {
     //       // so subsequent .then blocks can access resp obj.
@@ -191,12 +191,12 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
       );
       return chai
         .request(app)
-        .get('/api/speeches/5a1f441aee30112b4312157d')
+        .get('/api/speeches/5a1ad99f978ca2681f42df12')
         .set('authorization', `Bearer ${token}`)
         .then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
-          expect(res.body.id).to.equal('5a1f441aee30112b4312157d');     //mLab
+          expect(res.body.id).to.equal('5a1ad99f978ca2681f42df12');     //mLab
           
         });
     });
@@ -209,12 +209,12 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
         .then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
-          expect(res.body.id).to.equal('5a1f441aee30112b4312157d');     //mLab
+          expect(res.body.id).to.equal('5a1ad99f978ca2681f42df12');     //mLab
           expect(res.body).to.have.keys('id', 'title', 'Orator', 'Date', 'Audience', 'numberOfWords', 'mostUsedWords', 'wordsBySize', 'bigWords', 'speechTextLink')
         });
     });
   });
-  describe('GET from /api/speeches/text/5a1f441aee30112b4312157d', function () {
+  describe('GET from /api/speeches/text/5a1ad99f978ca2681f42df12', function () {
     it('expects status, type', function() {
        const token = jwt.sign(
         {
@@ -233,7 +233,7 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
       );
       return chai
         .request(app)
-        .get('/api/speeches/text/5a1f441aee30112b4312157d')
+        .get('/api/speeches/text/5a1ad99f978ca2681f42df12')
         .set('authorization', `Bearer ${token}`)
         .then(res => {
           expect(res).to.have.status(200);
