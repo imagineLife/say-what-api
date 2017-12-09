@@ -206,6 +206,7 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
         .request(app)
         .get('/api/speeches/default')
         .then(res => {
+          console.log('default resBod =>',res.body);
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
           expect(res.body.id).to.equal('5a1f441aee30112b4312157d');
