@@ -210,7 +210,7 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
           expect(res.body.id).to.equal('5a1f441aee30112b4312157d');
-          expect(res.body).to.have.keys('id', 'title', 'Date', 'Orator', 'Audience', 'numberOfWords', 'mostUsedWords', 'wordsBySize', 'bigWords', 'speechTextLink')
+          expect(res.body).to.have.keys('id', 'title', 'Orator', 'Date', 'Audience', 'numberOfWords', 'mostUsedWords', 'wordsBySize', 'bigWords', 'speechTextLink')
         });
     });
   });
