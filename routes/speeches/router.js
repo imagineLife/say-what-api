@@ -12,13 +12,28 @@ router.get('/default', (req,res) => {
 	Stat
 		// .findById("5a1f441aee30112b4312157d")	//LOCAL
 		.findById("5a1ad99f978ca2681f42df12")	//CLOUD
-		.then(stat => res.json(stat.apiRepr()))
+		.then(stat => res.status(200).json(stat.apiRepr()))
 		.catch(err => {
 			console.log(err);
 			res.status(500).json({message: 'Handwritten Error :/'})
 		});
-
 });
+
+
+//Get TEXT of speech by given speech ID
+router.get('/default/text', 
+  (req, res) => {
+  Stat
+    .findById("5a1ad99f978ca2681f42df12")
+    .exec()
+    .then(stat =>  fs.readFileSync(path.join(__dirname, '../'+stat.speechTextLink), 'utf8'))
+    .then(speechText => res.json(speechText))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({error: 'something went horribly awry'});
+    });
+});
+
 
 
 //Get Default Trump 2017 Speech, by ID
