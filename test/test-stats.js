@@ -265,7 +265,7 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
         .then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('array');
-          expect(res.body[0]).to.have.keys('_id', 'title');
+          expect(res.body[0]).to.have.keys('_id', 'title', 'Orator');
       });
     });
   });
