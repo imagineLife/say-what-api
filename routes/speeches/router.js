@@ -23,9 +23,15 @@ router.get('/default', (req,res) => {
 router.get('/text/default', 
   (req, res) => {
   Stat
-    .findById("5a1ad99f978ca2681f42df12")
+    .findById("5a1ad99f978ca2681f42df12", ['title', 'speechTextLink'], (err, docs) => {
+    })
     .exec()
-    .then(stat =>  fs.readFileSync(path.join(__dirname, '../'+stat.speechTextLink), 'utf8'))
+    .then((stat) =>  {
+     return ({
+      text  : fs.readFileSync(path.join(__dirname, '../'+stat.speechTextLink), 'utf8'),
+      title : stat.title 
+     })
+    })
     .then(speechText => res.json(speechText))
     .catch(err => {
       console.error(err);
@@ -40,13 +46,12 @@ router.get('/speechList',
   passport.authenticate('jwt', { session: false }),
  (req,res) => {
   Stat
-    .find().select('_id title') //LOCAL
+    .find().select('_id title Orator') //LOCAL
     .then(stat => res.json(stat))
     .catch(err => {
       console.log(err);
       res.status(500).json({message: 'Handwritten Error :/'})
     });
-
 });
 
 //Get Stats By speech-ID
