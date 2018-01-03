@@ -237,7 +237,7 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
         .set('authorization', `Bearer ${token}`)
         .then(res => {
           expect(res).to.have.status(200);
-          expect(res.body).to.be.a('string');
+          expect(res.body).to.be.a('object');
       });
     });
   });
