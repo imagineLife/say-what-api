@@ -76,7 +76,12 @@ router.get('/text/:id',
   Stat
     .findById(req.params.id)
     .exec()
-    .then(stat =>  fs.readFileSync(path.join(__dirname, '../'+stat.speechTextLink), 'utf8'))
+    .then((stat) =>  {
+     return ({
+      text  : fs.readFileSync(path.join(__dirname, '../'+stat.speechTextLink), 'utf8'),
+      title : stat.title 
+     })
+    })
     .then(speechText => res.json(speechText))
     .catch(err => {
       console.error(err);
