@@ -41,6 +41,9 @@ const speechSchema = mongoose.Schema({
 	},
 	imageLink: {
 		type: String
+	},
+	eventOverview: {
+		type: String
 	}
 })
 
@@ -56,7 +59,8 @@ speechSchema.methods.apiRepr = function(){
 		wordsBySize: this.wordsBySize,
 		bigWords: this.bigWords,
 		speechTextLink: this.speechTextLink,
-		imageLink: this.imageLink
+		imageLink: this.imageLink,
+		eventOverview: this.eventOverview
 	}
 }
 
