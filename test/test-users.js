@@ -16,6 +16,7 @@ describe('\nUsers API endpoints \n', function() {
   const password = 'examplePass';
   const firstName = 'Example';
   const lastName = 'User';
+  const email = 'dummyemail@gmail.com';
   const emptyTrip = [];
   const usernameB = 'exampleUserB';
   const passwordB = 'examplePassB';
@@ -38,14 +39,15 @@ describe('\nUsers API endpoints \n', function() {
     return User.remove({});
   });
 
-  describe('\nPOST to /users/register endpoint\n', function() {
+  describe.only('\nPOST to /users/register endpoint\n', function() {
     it('Should reject users with missing username', function() {
       return chai.request(app)
         .post('/api/users/register')
         .send({
           password,
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -66,7 +68,8 @@ describe('\nUsers API endpoints \n', function() {
         .send({
           username,
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -88,7 +91,8 @@ describe('\nUsers API endpoints \n', function() {
           username: 1234,
           password,
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -110,7 +114,8 @@ describe('\nUsers API endpoints \n', function() {
           username,
           password: 1234,
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -132,7 +137,8 @@ describe('\nUsers API endpoints \n', function() {
           username,
           password,
           firstName: 1234,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -154,7 +160,8 @@ describe('\nUsers API endpoints \n', function() {
           username,
           password,
           firstName,
-          lastName: 1234
+          lastName: 1234,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -176,7 +183,8 @@ describe('\nUsers API endpoints \n', function() {
           username: ` ${username} `,
           password,
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -198,7 +206,8 @@ describe('\nUsers API endpoints \n', function() {
           username,
           password: ` ${password} `,
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -220,7 +229,8 @@ describe('\nUsers API endpoints \n', function() {
           username: '',
           password,
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -242,7 +252,8 @@ describe('\nUsers API endpoints \n', function() {
           username,
           password: '123456789',
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -264,7 +275,8 @@ describe('\nUsers API endpoints \n', function() {
           username,
           password: new Array(73).fill('a').join(''),
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(() => expect.fail(null, null, 'Request should not succeed'))
         .catch(err => {
@@ -285,7 +297,8 @@ describe('\nUsers API endpoints \n', function() {
         username,
         password,
         firstName,
-        lastName
+        lastName,
+        email
       })
       .then(() =>
         // Try to create a second user with the same username
@@ -295,7 +308,8 @@ describe('\nUsers API endpoints \n', function() {
             username,
             password,
             firstName,
-            lastName
+            lastName,
+            email
           })
       )
       .then(() => expect.fail(null, null, 'Request should not succeed'))
@@ -318,12 +332,13 @@ describe('\nUsers API endpoints \n', function() {
           username,
           password,
           firstName,
-          lastName
+          lastName,
+          email
         })
         .then(res => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests');
+          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests', 'email');
           expect(res.body.username).to.equal(username);
           expect(res.body.firstName).to.equal(firstName);
           expect(res.body.lastName).to.equal(lastName);
@@ -348,12 +363,13 @@ describe('\nUsers API endpoints \n', function() {
           username,
           password,
           firstName: ` ${firstName} `,
-          lastName: ` ${lastName} `
+          lastName: ` ${lastName} `,
+          email
         })
         .then(res => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests');
+          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests', 'email');
           expect(res.body.username).to.equal(username);
           expect(res.body.firstName).to.equal(firstName);
           expect(res.body.lastName).to.equal(lastName);
