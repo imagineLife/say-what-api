@@ -39,7 +39,7 @@ describe('\nUsers API endpoints \n', function() {
     return User.remove({});
   });
 
-  describe.only('\nPOST to /users/register endpoint\n', function() {
+  describe('\nPOST to /users/register endpoint\n', function() {
     it('Should reject users with missing username', function() {
       return chai.request(app)
         .post('/api/users/register')
