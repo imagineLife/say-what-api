@@ -12,7 +12,7 @@ const jsonParser = bodyParser.json();
 // REGISTER a new user
 router.post('/register', jsonParser, (req, res) => {
   // ensure that uName & pWord are defined
-  const requiredFields = ['username', 'password'];
+  const requiredFields = ['username', 'password', 'email'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
   if (missingField) {

@@ -17,7 +17,8 @@ const UserSchema = mongoose.Schema({
   firstName: {type: String, default: ""},
   lastName: {type: String, default: ""},
   requests: [{ type: Schema.Types.ObjectId, ref: 'Request' }],
-  authToken: { type: String }
+  authToken: { type: String },
+  email: {type: String, default: ""}
 });
 
 UserSchema.methods.apiRepr = function() {
@@ -25,7 +26,8 @@ UserSchema.methods.apiRepr = function() {
     username: this.username || '',
     firstName: this.firstName || '',
     lastName: this.lastName || '',
-    requests: this.requests || ''
+    requests: this.requests || '',
+    email: this.email || ''
   };
 }
 
