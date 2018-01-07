@@ -17,6 +17,7 @@ describe('Auth endpoints\n', function () {
   const password = 'examplePass';
   const firstName = 'Example';
   const lastName = 'User';
+  const email = 'dummyemail@gmail.com';
 
 
   before(function () {
@@ -33,7 +34,8 @@ describe('Auth endpoints\n', function () {
         username,
         password,
         firstName,
-        lastName
+        lastName,
+        email
       })
     );
   });
@@ -113,7 +115,7 @@ describe('Auth endpoints\n', function () {
           const payload = jwt.verify(token, JWT_SECRET, {
             algorithm: ['HS256']
           });
-          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests', 'authToken', 'password', '_id', '__v');
+          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'email', 'requests', 'authToken', 'password', '_id', '__v');
         });
     });
   });
@@ -140,7 +142,8 @@ describe('Auth endpoints\n', function () {
         {
           username,
           firstName,
-          lastName
+          lastName,
+          email
         },
         'wrongSecret',
         {
@@ -171,7 +174,8 @@ describe('Auth endpoints\n', function () {
           user: {
             username,
             firstName,
-            lastName
+            lastName,
+            email
           },
           exp: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
         },
