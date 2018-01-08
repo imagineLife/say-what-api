@@ -46,7 +46,7 @@ router.get('/speechList',
   passport.authenticate('jwt', { session: false }),
  (req,res) => {
   Stat
-    .find().select('_id title Orator') //LOCAL
+    .find().select('_id title Orator Date') //LOCAL
     .then(stat => res.json(stat))
     .catch(err => {
       console.log(err);
