@@ -107,7 +107,6 @@ describe('Auth endpoints\n', function () {
         .set('Content-Type', 'application/json')
         .send({ username, password })
         .then(res => {
-          // console.log('\nres.status & body->',res.status,res.body);
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
           const token = res.body.authToken;
