@@ -41,12 +41,12 @@ router.get('/text/default',
 
 
 
-//Get Default Trump 2017 Speech, by ID
+//Get speech List
 router.get('/speechList',
   passport.authenticate('jwt', { session: false }),
  (req,res) => {
   Stat
-    .find().select('_id title Orator Date').sort('-date') //LOCAL
+    .find().select('_id title Orator Date').sort('-Date') //LOCAL
     .then(stat => res.json(stat))
     .catch(err => {
       console.log(err);
