@@ -44,9 +44,21 @@ paths:
     get:
       tags:
       - "speech"
-      summary: "Create speech"
+      summary: "Get default speech"
       description: "Get the 'default speech'"
       operationId: "get default speech"
+      produces:
+      - "application/json"
+      responses:
+        default:
+          description: "successful operation"
+  "/speeches/text/default":
+    get:
+      tags:
+      - "speech"
+      summary: "Get text of default speech"
+      description: "Get the 'default speech' text"
+      operationId: "get default speech text"
       produces:
       - "application/json"
       responses:
