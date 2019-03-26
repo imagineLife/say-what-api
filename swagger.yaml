@@ -83,6 +83,46 @@ paths:
       responses:
         default:
           description: "successful operation"
+  /users/register:
+    post:
+      tags:
+      - "user"
+      summary: "Registers a new user"
+      description: ""
+      operationId: "registerUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "The register post object"
+        required: true
+        schema:
+          type: "object"
+          required:
+            - username
+            - password
+            - email
+          properties:
+            username:
+              type: "string"
+            password:
+              type: "string"
+            firstName:
+              type: "string"
+            lastName:
+              type: "string"
+            email:
+              type: "string"
+      responses:
+        201:
+          description: "User registered"
+          schema:
+            $ref: "#/definitions/User"
+        500:
+          description: "internal server error"
+        400:
+          description: "Invalid username/password supplied"
   /user/createWithArray:
     post:
       tags:
@@ -160,46 +200,6 @@ paths:
           description: "Invalid username/password supplied"
       security:
         - basic_auth: []
-  /auth/register:
-    post:
-      tags:
-      - "user"
-      summary: "Registers a new user"
-      description: ""
-      operationId: "registerUser"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "The register post object"
-        required: true
-        schema:
-          type: "object"
-          required:
-            - username
-            - password
-            - email
-          properties:
-            username:
-              type: "string"
-            password:
-              type: "string"
-            firstName:
-              type: "string"
-            lastName:
-              type: "string"
-            email:
-              type: "string"
-      responses:
-        201:
-          description: "User registered"
-          schema:
-            $ref: "#/definitions/User"
-        500:
-          description: "internal server error"
-        400:
-          description: "Invalid username/password supplied"
   /user/logout:
     get:
       tags:
