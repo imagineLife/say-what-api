@@ -64,7 +64,21 @@ paths:
       responses:
         default:
           description: "successful operation"
-  "/speech/:id":
+  "/speeches/speechList":
+    get:
+      tags:
+      - "speech"
+      summary: "Get list of available speeches"
+      description: "Get list of speeched"
+      operationId: "getSpeechList"
+      produces:
+      - "application/json"
+      responses:
+        default:
+          description: "successful operation"
+      security:
+        - jwt_auth: []
+  "/speeches/:id":
     get:
       tags:
       - "speech"
@@ -83,6 +97,8 @@ paths:
       responses:
         default:
           description: "successful operation"
+      security:
+        - jwt_auth: []
   /users/register:
     post:
       tags:
