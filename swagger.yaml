@@ -21,25 +21,6 @@ schemes:
 - "https"
 - "http"
 paths:
-  "/speech":
-    post:
-      tags:
-      - "speech"
-      summary: "Create speech"
-      description: "This can only be done by the logged in user."
-      operationId: "createSpeech"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Created speech object"
-        required: true
-        schema:
-          $ref: "#/definitions/Speech"
-      responses:
-        default:
-          description: "successful operation"
   "/speeches/default":
     get:
       tags:
@@ -64,6 +45,20 @@ paths:
       responses:
         default:
           description: "successful operation"
+  "/speeches/text/:id":
+    get:
+      tags:
+      - "speech"
+      summary: "Get text of speech by speechID"
+      description: "GetSpeechTextByID"
+      operationId: "GetSpeechTextByID"
+      produces:
+      - "application/json"
+      responses:
+        default:
+          description: "successful operation"
+      security:
+        - jwt_auth: []          
   "/speeches/speechList":
     get:
       tags:
