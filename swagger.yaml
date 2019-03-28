@@ -296,6 +296,26 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
+  /requests:
+    get:
+      tags:
+      - "requests"
+      summary: "get requests by userID"
+      description: "get requests by userID"
+      operationId: "getRequestsByUserIRd"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user"
+        in: "path"
+        description: "The User Object"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
 securityDefinitions:
   basic_auth:
     type: "basic"
@@ -342,6 +362,19 @@ definitions:
         items: 
           type: "string"
       authToken:
+        type: "string"
+    xml:
+      name: "User"
+  Request:
+    type: "object"
+    properties:
+      type:
+        type: "integer"
+      text:
+        type: "string"
+      Date:
+        type: "string"
+      user:
         type: "string"
     xml:
       name: "User"
