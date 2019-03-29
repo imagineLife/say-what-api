@@ -300,9 +300,9 @@ paths:
     get:
       tags:
       - "requests"
-      summary: "get requests by userID"
-      description: "get requests by userID"
-      operationId: "getRequestsByUserIRd"
+      summary: "get user requests by userID"
+      description: "get user requests by userID"
+      operationId: "getUserRequestsByUserIRd"
       produces:
       - "application/json"
       parameters:
@@ -316,6 +316,8 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
+      security:
+        - jwt_auth: []
 securityDefinitions:
   basic_auth:
     type: "basic"
