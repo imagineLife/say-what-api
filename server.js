@@ -54,16 +54,15 @@ app.use('*', function(req, res) {
   res.status(404).json({message: 'Not Found'});
 });
 
-// closeServer needs access to a server object, but that only
-// gets created when `runServer` runs, so we declare `server` here
-// and then assign a value to it in run
+// for closeServer access to server object, 
+// storing the app.listen in this var
 let server;
 
 // this function connects to our database, then starts the server
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
 
   return new Promise((resolve, reject) => {
-    mongoose.connect(databaseUrl, err => {
+    mongoose.connect(databaseUrl, {useNewUrlParser: true}, err => {
       if (err) {
         return reject(err);
       }
