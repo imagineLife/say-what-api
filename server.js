@@ -64,7 +64,10 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
   return new Promise((resolve, reject) => {
 
     //  https://mongoosejs.com/docs/connections.html
-    mongoose.connect(databaseUrl, {useNewUrlParser: true}, err => {
+    mongoose.connect(databaseUrl, {
+      useNewUrlParser: true,
+      useCreateIndex: true
+    }, err => {
       if (err) {
         return reject(err);
       }
