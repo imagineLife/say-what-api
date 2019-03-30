@@ -89,6 +89,10 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Speech"
+      - in: "query"
+        name: "stat"
+        required: false
+        type: string
       responses:
         default:
           description: "successful operation"
@@ -343,6 +347,19 @@ definitions:
       dateGiven:
         type: "string"
         example: "2018-05-05"
+      stats:
+        type: "object"
+  Stats:
+    type: "object"
+    properties:
+      numberOfWords:
+        type: "object"
+      mostUsedWords:
+        type: "object"
+      wordsBySize:
+        type: "object"
+      bigWords:
+        type: "object"
   User:
     type: "object"
     properties:
