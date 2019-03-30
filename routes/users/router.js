@@ -134,7 +134,13 @@ router.post('/register', jsonParser, (req, res) => {
         })
     })
     .then(user => {
-      return res.status(201).json(user.apiRepr());
+      let resObj = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username
+      }
+      return res.status(201).json(resObj);
     })
     /*
       if a user already exists, reject the promise with an error.
