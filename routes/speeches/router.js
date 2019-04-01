@@ -108,7 +108,8 @@ router.get('/text/:id',
 router.post('/',
   passport.authenticate('jwt', {session: false}),
   (req, res) => {
-    //update with post code
+
+    //validate required fields
     const requiredFields = ['author', 'text'];
     requiredFields.forEach(field => {
       if (!(field in req.body)) {
@@ -117,6 +118,12 @@ router.post('/',
         return res.status(418).send(message);
       }
     });
+
+    console.log('validFields!')
+    console.log('req.body')
+    console.log(req.body)
+    return res.status(200).send('Valid request');
+    
   })
 
 module.exports = router;
