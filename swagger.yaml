@@ -73,7 +73,7 @@ paths:
           description: "successful operation"
       security:
         - jwt_auth: []
-  "/speeches/:id":
+  /speeches/:id:
     get:
       tags:
       - "speech"
@@ -98,6 +98,41 @@ paths:
           description: "successful operation"
       security:
         - jwt_auth: []
+  /speeches/:
+    post:
+      tags:
+      - "speech"
+      summary: "post a speech"
+      description: "This can only be done by the logged in user."
+      operationId: "postSpeechText"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "The register post object"
+        required: true
+        schema:
+          type: "object"
+          required:
+            - text
+            - orator
+          properties:
+            text:
+              type: "string"
+            orator:
+              type: "string"
+            date:
+              type: 'string'
+            title:
+              type: "string"
+            imageLink:
+              type: 'string'
+      responses:
+        default:
+          description: "successful operation"
+      security:
+        - jwt_auth: []        
   /users/register:
     post:
       tags:
@@ -310,11 +345,12 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "user"
-        in: "path"
-        description: "The User Object"
+      - in: "body"
+        name: "body"
+        description: "userID in body"
         required: true
-        type: "string"
+        schema:
+          $ref: "#/definitions/Request"
       responses:
         400:
           description: "Invalid username supplied"
@@ -336,6 +372,7 @@ definitions:
       - text
       - orator
       - dateGiven
+      - textURL
     properties: 
       id:
         type: "integer"
@@ -349,6 +386,8 @@ definitions:
         example: "2018-05-05"
       stats:
         type: "object"
+      textURL:
+        type: "string"
   Stats:
     type: "object"
     properties:
