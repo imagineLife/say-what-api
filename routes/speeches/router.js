@@ -32,7 +32,7 @@ router.get('/text/default',
       title : stat.title 
      })
     })
-    .then(speechText => res.json(speechText))
+    .then(speechText => res.status(200).json(speechText))
     .catch(err => {
       console.error(err);
       res.status(500).json({error: 'something went horribly awry'});
@@ -40,6 +40,22 @@ router.get('/text/default',
 });
 
 
+/*
+
+  speech/:id 
+
+    **import stats js file @ top
+  
+  
+
+  router.get(speech/id:stats=wawebrfaf,
+    - get speech from db
+    - .then => res
+      pass speech text to statsFn(res)
+      .then(res.status(200)
+  )
+
+*/
 
 //Get speech List
 router.get('/speechList',
@@ -88,5 +104,11 @@ router.get('/text/:id',
       res.status(500).json({error: 'something went horribly awry'});
     });
 });
+
+router.post('/',
+  passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    //update with post code
+  })
 
 module.exports = router;
