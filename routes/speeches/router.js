@@ -109,6 +109,14 @@ router.post('/',
   passport.authenticate('jwt', {session: false}),
   (req, res) => {
     //update with post code
+    const requiredFields = ['author', 'text'];
+    requiredFields.forEach(field => {
+      if (!(field in req.body)) {
+        const message = `Missing \`${field}\` in request body`;
+        console.error(message);
+        return res.status(418).send(message);
+      }
+    });
   })
 
 module.exports = router;
