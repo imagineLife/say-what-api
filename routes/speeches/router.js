@@ -70,6 +70,41 @@ router.get('/speechList',
     });
 });
 
+//Get Default
+router.get('/', 
+  (req, res) => {
+    console.log('GET BLANK default here')
+
+    //stole from default, will need some re-modeling
+    /*
+      returns ... 
+      {
+        "id": "5a1ad99f978ca2681f42df12",
+        "title": "Inaugural Address",
+        "Orator": "Donald Trump",
+        "Date": "2017-01-20T05:00:00.000Z",
+        "speechTextLink": "../speechText/t2017.txt",
+        "imageLink": "../../imgs/trump.jpg",
+        "eventOverview": "Donald Trump marks the commencement of a new four-year term as the President of the United States"
+      }
+    */
+    Stat
+    .findById("5a1ad99f978ca2681f42df12")
+    .then(stat => res.status(200).json(stat.apiRepr()))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({message: 'Handwritten Error :/'})
+    });
+  // Stat
+  //   .findById(req.params.id)
+  //   .exec()
+  //   .then(stat => res.json(stat.apiRepr()))
+  //   .catch(err => {
+  //     console.error(err);
+  //     res.status(500).json({error: 'something went horribly awry'});
+  //   });
+});
+
 //Get Stats By speech-ID
 router.get('/:id', 
   passport.authenticate('jwt', { session: false }),
