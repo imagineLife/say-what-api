@@ -9,6 +9,7 @@ mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config');
 
+const oratorsRouter = require('./routes/orators/router');
 const requestsRouter = require('./routes/requests/router');
 const speechesRouter = require('./routes/speeches/router');
 const usersRouter = require('./routes/users/router');
@@ -35,6 +36,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname +'/public'));
 app.use('/api/requests', requestsRouter);
 app.use('/api/speeches', speechesRouter);
+app.use('/api/orators', oratorsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 

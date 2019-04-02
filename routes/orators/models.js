@@ -14,7 +14,7 @@ const oratorSchema = mongoose.Schema({
 	dob : {
 		type: Date
 	},
-	speeches: [type: Schema.Types.ObjectId, ref: 'Stat']
+	speeches: [ {type: Schema.Types.ObjectId, ref: 'Stat'} ]
 })
 
 oratorSchema.methods.apiRepr = function(){
