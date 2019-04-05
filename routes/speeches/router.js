@@ -74,6 +74,17 @@ router.get('/speechList',
 router.get('/', 
   (req, res) => {
     console.log('GET BLANK default here')
+    let queryParams = req.query
+    console.log('queryParams')
+    console.log(queryParams)
+    
+    /*
+      NEED TO
+      hanlde optional parameters
+      - GET speech Text
+      -  IF no parameters, process & return ALL stats
+      - If parameters, get ONLY passed parameters
+    */
 
     //stole from default, will need some re-modeling
     /*
