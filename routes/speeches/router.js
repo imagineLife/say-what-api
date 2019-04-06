@@ -7,6 +7,8 @@ const fs = require('fs');
 passport.use(jwtStrategy);
 var path = require('path');
 
+const { getWordCount } = require('../../stats')
+
 //Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
 	Stat
@@ -97,23 +99,44 @@ router.get('/',
         "speechTextLink": "../speechText/t2017.txt",
         "imageLink": "../../imgs/trump.jpg",
         "eventOverview": "Donald Trump marks the commencement of a new four-year term as the President of the United States"
+        "stats" : {
+          "wordCount" : ,
+          "longestWords" : ,
+        }
       }
     */
     Stat
     .findById("5a1ad99f978ca2681f42df12")
-    .then(stat => res.status(200).json(stat.apiRepr()))
+    .then(stat => {
+    
+      //store the result
+      const srcResult = stat.apiRepr();
+
+      //get speech text from text file
+      srcResult.text = fs.readFileSync(path.join(__dirname, '../'+srcResult.speechTextLink), 'utf8')
+
+      //build stats object
+      srcResult.stats = {
+       wordCount : getWordCount(srcResult.text)
+        //etc
+      }
+      /*
+          speech stats magic
+          - take stat.apiRepr()
+          - append "stats" : {}
+
+      */
+      return res.status(200).json(srcResult)
+    })
     .catch(err => {
       console.log(err);
       res.status(500).json({message: 'Handwritten Error :/'})
     });
-  // Stat
-  //   .findById(req.params.id)
-  //   .exec()
-  //   .then(stat => res.json(stat.apiRepr()))
-  //   .catch(err => {
-  //     console.error(err);
-  //     res.status(500).json({error: 'something went horribly awry'});
-  //   });
+
+    /*
+    add in stats
+    - 
+    */
 });
 
 //Get Stats By speech-ID
