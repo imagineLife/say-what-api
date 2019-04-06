@@ -115,6 +115,10 @@ router.get('/',
       //get speech text from text file
       srcResult.text = fs.readFileSync(path.join(__dirname, '../'+srcResult.speechTextLink), 'utf8')
 
+
+      //CAN pull the txtToArr here && use results from here
+
+
       //build stats object
       srcResult.stats = {
        wordCount : getWordCount(srcResult.text)
