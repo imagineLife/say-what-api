@@ -117,11 +117,12 @@ router.get('/',
 
 
       //CAN pull the txtToArr here && use results from here
-
+      let arrOfText =  srcResult.text.replace(/(\\n(\\n)?)/g," ").split(" ") }
 
       //build stats object
       srcResult.stats = {
-       wordCount : getWordCount(srcResult.text)
+       wordCount : arrOfText.length,
+       longestTwenty: getLongestTwenty(txtToArr)
         //etc
       }
       /*
