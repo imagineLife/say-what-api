@@ -7,7 +7,7 @@ const fs = require('fs');
 passport.use(jwtStrategy);
 var path = require('path');
 
-const { getWordCount } = require('../../stats')
+const { getWordCount, getLongestTwenty } = require('../../stats')
 
 //Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
@@ -77,8 +77,6 @@ router.get('/',
   (req, res) => {
     console.log('GET BLANK default here')
     let queryParams = req.query
-    console.log('queryParams')
-    console.log(queryParams)
     
     /*
       NEED TO
@@ -115,14 +113,12 @@ router.get('/',
       //get speech text from text file
       srcResult.text = fs.readFileSync(path.join(__dirname, '../'+srcResult.speechTextLink), 'utf8')
 
-
-      //CAN pull the txtToArr here && use results from here
       let arrOfText =  srcResult.text.replace(/(\\n(\\n)?)/g," ").split(" ")
 
       //build stats object
       srcResult.stats = {
        wordCount : arrOfText.length,
-       // longestTwenty: getLongestTwenty(txtToArr)
+       longestTwenty: getLongestTwenty(arrOfText)
         //etc
       }
       /*
