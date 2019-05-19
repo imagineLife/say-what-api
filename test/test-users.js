@@ -338,7 +338,7 @@ describe('\nUsers API endpoints \n', function() {
         .then(res => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests', 'email');
+          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'email'); // had 'requests',
           expect(res.body.username).to.equal(username);
           expect(res.body.firstName).to.equal(firstName);
           expect(res.body.lastName).to.equal(lastName);
@@ -369,7 +369,7 @@ describe('\nUsers API endpoints \n', function() {
         .then(res => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'requests', 'email');
+          expect(res.body).to.have.keys('username', 'firstName', 'lastName', 'email'); // had 'requests',
           expect(res.body.username).to.equal(username);
           expect(res.body.firstName).to.equal(firstName);
           expect(res.body.lastName).to.equal(lastName);
