@@ -1,25 +1,27 @@
-// function txtToArr(txt){ return txt.replace(/(\\n(\\n)?)/g," ").split(" ") }
-
-function getWordCount(txt){
-    //'whatever' and 'whatever.'
-    //replace removes "\n"s
-    return txtToArr(txt).length;
-}
-
-// creates an object of the USEFUL words occuring most freuqntly
-function getFreqUsedWords(wordarr) {
-  var freqUsedWords = {};
-  wordarr.forEach(function(singleWord){
-      if (freqUsedWords.hasOwnProperty(singleWord)) {
-        freqUsedWords[singleWord] +=1
+// creates an object of the most-frequent words occuring
+function getWordsByCount(srcWordArr) {
+  var freqUsedWords = [];
+  srcWordArr.forEach(function(singleWord){
+      let thisIndex = null
+      // check if this word is already   in array
+      if (freqUsedWords.some((arrObj, arrObjInd) => {
+            if(arrObj.word == singleWord.toLowerCase()){
+              thisIndex = arrObjInd
+            }
+            return arrObj.word == singleWord.toLowerCase()
+          })
+      ) {
+        freqUsedWords[thisIndex].occurances +=1
       } else {
-        freqUsedWords[singleWord] = 1
+        freqUsedWords.push({word: singleWord.toLowerCase(), occurances: 1})
       }
   });
+
+  freqUsedWords.sort((a, b) => b.occurances - a.occurances)
   return freqUsedWords;
 }
 
-function makeTop20LongestWords(arr){
+function getLongestTwenty(arr){
  
   //make NO REPEATS
   let uniqueWords = Array.from(new Set(arr));
@@ -38,4 +40,4 @@ function makeTop20LongestWords(arr){
   return topTewnty;
 }
 
-module.exports = { getWordCount }
+module.exports = { getLongestTwenty, getWordsByCount }
