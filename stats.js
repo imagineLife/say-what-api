@@ -1,6 +1,6 @@
 // creates an object of the most-frequent words occuring
 function getWordsByCount(srcWordArr) {
-  var freqUsedWords = [];
+  let freqUsedWords = [];
   srcWordArr.forEach(function(singleWord){
       let thisIndex = null
       // check if this word is already   in array
@@ -19,6 +19,29 @@ function getWordsByCount(srcWordArr) {
 
   freqUsedWords.sort((a, b) => b.occurances - a.occurances)
   return freqUsedWords;
+}
+
+function getWordsByLength(srcWordArr){
+  let wordsByLength = [];
+
+  srcWordArr.forEach(function(singleWord){
+      let thisIndex = null
+      // check if this word is already in array
+      let thisWordLength = singleWord.length
+      if (wordsByLength.some((arrObj, arrObjInd) => {
+            if(arrObj.length == thisWordLength){
+              thisIndex = arrObjInd
+            }
+            return arrObj.length == thisWordLength
+          })
+      ) {
+        wordsByLength[thisIndex].count +=1
+      } else {
+        wordsByLength.push({length: thisWordLength, count: 1})
+      }
+  });
+
+  return wordsByLength.sort((a,b) => b.count - a.count);
 }
 
 function getLongestTwenty(arr){
@@ -40,4 +63,4 @@ function getLongestTwenty(arr){
   return topTewnty;
 }
 
-module.exports = { getLongestTwenty, getWordsByCount }
+module.exports = { getLongestTwenty, getWordsByCount, getWordsByLength }
