@@ -7,7 +7,7 @@ const fs = require('fs');
 passport.use(jwtStrategy);
 var path = require('path');
 
-const { getWordCount, getLongestTwenty, getWordsByCount } = require('../../stats')
+const { getLongestTwenty, getWordsByCount, getWordsByLength } = require('../../stats')
 
 //Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
@@ -107,6 +107,9 @@ router.get('/',
     .findById("5a1ad99f978ca2681f42df12")
     .then(stat => {
     
+      console.log('stat')
+      console.log(stat)
+      
       //store the result
       const srcResult = stat.apiRepr();
 
@@ -119,7 +122,8 @@ router.get('/',
       srcResult.stats = {
        wordCount : arrOfText.length,
        longestTwenty: getLongestTwenty(arrOfText),
-       frequentWords: getWordsByCount(arrOfText),
+       frequentWords: getWordsByCount(arrOfText).slice(0,20),
+       wordsByLength: getWordsByLength(arrOfText),
         //etc
       }
       /*
