@@ -11,7 +11,8 @@ const {
   getLongestThirty, 
   getWordsByCount, 
   getWordsByLength, 
-  ingWords } = require('../../stats')
+  ingWords,
+  getSentences } = require('../../stats')
 
 //Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
@@ -109,6 +110,10 @@ router.get('/',
     Stat
     .findById("5a1ad99f978ca2681f42df12")
     .then(stat => {
+
+      // console.log('stat initial Result -> ')
+      // console.log(stat)
+      
       
       //store the result
       const srcResult = stat.apiRepr();
@@ -145,6 +150,7 @@ router.get('/',
        frequentWords: getWordsByCount(arrOfText).slice(0,30),
        wordsByLength: getWordsByLength(arrOfText),
        actonWords: ingWords(srcResult.text),
+       sentences: getSentences(srcResult.text)
         //etc
       }
       /*
@@ -153,7 +159,7 @@ router.get('/',
           - append "stats" : {}
 
       */
-      return res.status(200).json(srcResult)
+      return res.status(200).json(srcResult.stats) //was only srcResult
     })
     .catch(err => {
       console.log(err);
