@@ -21,7 +21,7 @@ schemes:
 - "https"
 - "http"
 paths:
-  "/speeches/default":
+  /speeches:
     get:
       tags:
       - "speech"
@@ -33,47 +33,7 @@ paths:
       responses:
         default:
           description: "successful operation"
-  "/speeches/text/default":
-    get:
-      tags:
-      - "speech"
-      summary: "Get text of default speech"
-      description: "Get the 'default speech' text"
-      operationId: "get default speech text"
-      produces:
-      - "application/json"
-      responses:
-        default:
-          description: "successful operation"
-  "/speeches/text/:id":
-    get:
-      tags:
-      - "speech"
-      summary: "Get text of speech by speechID"
-      description: "GetSpeechTextByID"
-      operationId: "GetSpeechTextByID"
-      produces:
-      - "application/json"
-      responses:
-        default:
-          description: "successful operation"
-      security:
-        - jwt_auth: []          
-  "/speeches/speechList":
-    get:
-      tags:
-      - "speech"
-      summary: "Get list of available speeches"
-      description: "Get list of speeched"
-      operationId: "getSpeechList"
-      produces:
-      - "application/json"
-      responses:
-        default:
-          description: "successful operation"
-      security:
-        - jwt_auth: []
-  /speeches/:id:
+  /speeches/{id}:
     get:
       tags:
       - "speech"
@@ -83,16 +43,33 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
+      - in: "path"
+        name: "id"
         description: "speech ID as parameter"
         required: true
-        schema:
-          $ref: "#/definitions/Speech"
+        type: string
       - in: "query"
         name: "stat"
+        description: "stats keys"
         required: false
         type: string
+        enum: ["longest-word", "big-words", "b"]
+      responses:
+        default:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Speech"
+      security:
+        - jwt_auth: []          
+  /speeches/speechList:
+    get:
+      tags:
+      - "speech"
+      summary: "Get list of available speeches"
+      description: "Get list of speeched"
+      operationId: "getSpeechList"
+      produces:
+      - "application/json"
       responses:
         default:
           description: "successful operation"
@@ -132,7 +109,30 @@ paths:
         default:
           description: "successful operation"
       security:
-        - jwt_auth: []        
+        - jwt_auth: []
+  /compare/{type}:
+    get:
+      tags:
+      - "compare"
+      summary: "Compare Speech Content"
+      description: "This can only be done by the logged in user."
+      operationId: "compareSpeeches"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "type"
+        description: "comparison type"
+        required: true
+        type: "string"
+        enum: [ "speeches",  "statistics"]
+      responses:
+        default:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Speech"
+      security:
+        - jwt_auth: []
   /users/register:
     post:
       tags:
@@ -358,6 +358,13 @@ paths:
           description: "User not found"
       security:
         - jwt_auth: []
+  /orators:
+    get:
+      tags:
+      - "orators"
+      responses:
+        default:
+          description: "successful operation"
 securityDefinitions:
   basic_auth:
     type: "basic"
@@ -385,7 +392,7 @@ definitions:
         type: "string"
         example: "2018-05-05"
       stats:
-        type: "object"
+        $ref: "#/definitions/Stats"
       textURL:
         type: "string"
   Stats:
@@ -398,7 +405,14 @@ definitions:
       wordsBySize:
         type: "object"
       bigWords:
-        type: "object"
+        $ref: "#/definitions/bigWords"
+  bigWords:
+    type: "object"
+    properties:
+      word:
+        type: "string"
+      length:
+        type: "integer"
   User:
     type: "object"
     properties:
