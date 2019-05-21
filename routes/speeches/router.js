@@ -7,7 +7,11 @@ const fs = require('fs');
 passport.use(jwtStrategy);
 var path = require('path');
 
-const { getLongestTwenty, getWordsByCount, getWordsByLength } = require('../../stats')
+const { 
+  getLongestThirty, 
+  getWordsByCount, 
+  getWordsByLength, 
+  ingWords } = require('../../stats')
 
 //Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
@@ -75,7 +79,6 @@ router.get('/speechList',
 //Get Default
 router.get('/', 
   (req, res) => {
-    console.log('GET BLANK default here')
     let queryParams = req.query
     
     /*
@@ -106,9 +109,6 @@ router.get('/',
     Stat
     .findById("5a1ad99f978ca2681f42df12")
     .then(stat => {
-    
-      console.log('stat')
-      console.log(stat)
       
       //store the result
       const srcResult = stat.apiRepr();
@@ -116,14 +116,35 @@ router.get('/',
       //get speech text from text file
       srcResult.text = fs.readFileSync(path.join(__dirname, '../'+srcResult.speechTextLink), 'utf8')
 
-      let arrOfText =  srcResult.text.replace(/(\\n(\\n)?)/g," ").split(" ")
+      /*
+        () ===> a capture group
+        / ( \\n (\\n) ?) /
+      */
+
+      let reg = /^\s*$/gm;
+      /**/
+      let regStart = /(\\n(\\n)?)/g;
+
+      //gets rid of line-break or whatever
+      let newReg = /(^)?\s*$/gm;
+      // let newReg = /[([.,-])((^)?\s*$)]/gm;
+
+
+      //remove some punc
+      let puncRegEx = /[.,-]/g
+
+
+      const regexTxt = srcResult.text.replace(newReg," ").replace(puncRegEx, "")
+      
+      let arrOfText =  regexTxt.split(" ")
 
       //build stats object
       srcResult.stats = {
        wordCount : arrOfText.length,
-       longestTwenty: getLongestTwenty(arrOfText),
-       frequentWords: getWordsByCount(arrOfText).slice(0,20),
+       longestTwenty: getLongestThirty(arrOfText),
+       frequentWords: getWordsByCount(arrOfText).slice(0,30),
        wordsByLength: getWordsByLength(arrOfText),
+       actonWords: ingWords(srcResult.text),
         //etc
       }
       /*
@@ -194,9 +215,6 @@ router.post('/',
       }
     });
 
-    console.log('validFields!')
-    console.log('req.body')
-    console.log(req.body)
     return res.status(200).send('Valid request');
     
   })
