@@ -44,7 +44,7 @@ function getWordsByLength(srcWordArr){
   return wordsByLength.sort((a,b) => b.count - a.count);
 }
 
-function getLongestTwenty(arr){
+function getLongestThirty(arr){
  
   //make NO REPEATS
   let uniqueWords = Array.from(new Set(arr));
@@ -57,10 +57,26 @@ function getLongestTwenty(arr){
   
   });
 
-  let topTewnty = uniqueWords.slice(0,20);
-  console.log('sorted array is =>',topTewnty);
+  let topTewnty = uniqueWords.slice(0,30);
 
   return topTewnty;
 }
 
-module.exports = { getLongestTwenty, getWordsByCount, getWordsByLength }
+function ingWords(str){
+  
+  let findEndingInING = /\w*ing\b/g;
+  let res = str.match(findEndingInING);
+  return res;
+}
+
+function ingWordsAndNextWord(str){
+  let regex = /\w*ing\b\s*(\S+)/g;
+  return str.match(regex)
+}
+
+module.exports = { 
+  getLongestThirty, 
+  getWordsByCount, 
+  getWordsByLength, 
+  ingWords
+}
