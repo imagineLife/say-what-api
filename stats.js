@@ -74,9 +74,15 @@ function ingWordsAndNextWord(str){
   return str.match(regex)
 }
 
+function getSentences(srcTxt){
+  let sentences = srcTxt.match(/([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g);
+  return sentences
+}
+
 module.exports = { 
   getLongestThirty, 
   getWordsByCount, 
   getWordsByLength, 
-  ingWords
+  ingWords,
+  getSentences
 }
