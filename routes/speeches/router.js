@@ -132,34 +132,39 @@ router.get('/',
 
       //gets rid of line-break or whatever
       let newReg = /(^)?\s*$/gm;
+
       // let newReg = /[([.,-])((^)?\s*$)]/gm;
 
+      //unique word count?!
+      let uniqueWordRegex = /(^)?\s*$/gm;
 
       //remove some punc
       let puncRegEx = /[.,-]/g
 
 
       const regexTxt = srcResult.text.replace(newReg," ").replace(puncRegEx, "")
-      
+      const uniqueWordCount = srcResult.text.match(uniqueWordRegex)
       let arrOfText =  regexTxt.split(" ")
+      let arrOfUniqueWords = 
 
-      //build stats object
-      srcResult.stats = {
-       wordCount : arrOfText.length,
-       longestTwenty: getLongestThirty(arrOfText),
-       frequentWords: getWordsByCount(arrOfText).slice(0,30),
-       wordsByLength: getWordsByLength(arrOfText),
-       actonWords: ingWords(srcResult.text),
-       sentences: getSentences(srcResult.text)
-        //etc
-      }
-      /*
-          speech stats magic
-          - take stat.apiRepr()
-          - append "stats" : {}
-
-      */
-      return res.status(200).json(srcResult.stats) //was only srcResult
+      console.log('srcResult')
+      console.log(srcResult)
+      
+      return res.status(200).json({
+        id: srcResult.id,
+        title: srcResult.title,
+        Orator: srcResult.Orator,
+        Date: srcResult.Date,
+        speechTextLink: srcResult.speechTextLink,
+        imageLink: srcResult.imageLink,
+        eventOverview: srcResult.eventOverview,
+        numberOfWords : {uniqueWords: uniqueWordCount, wordCount : arrOfText.length},
+        bigWords: getLongestThirty(arrOfText),
+        mostUsedWords: getWordsByCount(arrOfText).slice(0,8),
+        wordsBySize: getWordsByLength(arrOfText),
+        actonWords: ingWords(srcResult.text),
+        sentences: getSentences(srcResult.text)
+      })
     })
     .catch(err => {
       console.log(err);
