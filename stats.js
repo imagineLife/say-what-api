@@ -29,19 +29,19 @@ function getWordsByLength(srcWordArr){
       // check if this word is already in array
       let thisWordLength = singleWord.length
       if (wordsByLength.some((arrObj, arrObjInd) => {
-            if(arrObj.length == thisWordLength){
+            if(arrObj.size == thisWordLength){
               thisIndex = arrObjInd
             }
-            return arrObj.length == thisWordLength
+            return arrObj.size == thisWordLength
           })
       ) {
-        wordsByLength[thisIndex].count +=1
+        wordsByLength[thisIndex].occurances +=1
       } else {
-        wordsByLength.push({length: thisWordLength, count: 1})
+        wordsByLength.push({size: thisWordLength, occurances: 1})
       }
   });
 
-  return wordsByLength.sort((a,b) => b.count - a.count);
+  return wordsByLength.sort((a,b) => b.occurances - a.occurances).slice(0,5);
 }
 
 function getLongestThirty(arr){
