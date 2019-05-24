@@ -121,34 +121,19 @@ router.get('/',
       //get speech text from text file
       srcResult.text = fs.readFileSync(path.join(__dirname, '../'+srcResult.speechTextLink), 'utf8')
 
-      /*
-        () ===> a capture group
-        / ( \\n (\\n) ?) /
-      */
-
-      let reg = /^\s*$/gm;
-      /**/
-      let regStart = /(\\n(\\n)?)/g;
-
       //gets rid of line-break or whatever
       let newReg = /(^)?\s*$/gm;
 
-      // let newReg = /[([.,-])((^)?\s*$)]/gm;
-
-      //unique word count?!
-      let uniqueWordRegex = /(^)?\s*$/gm;
+      let uniqueWordRegex = /([a-z]\w+)(?![\s\S]*\1)/gi
 
       //remove some punc
       let puncRegEx = /[.,-]/g
 
 
       const regexTxt = srcResult.text.replace(newReg," ").replace(puncRegEx, "")
-      const uniqueWordCount = srcResult.text.match(uniqueWordRegex)
+      const uniqueWordCount = srcResult.text.match(uniqueWordRegex).length
+      
       let arrOfText =  regexTxt.split(" ")
-      let arrOfUniqueWords = 
-
-      console.log('srcResult')
-      console.log(srcResult)
       
       return res.status(200).json({
         id: srcResult.id,
