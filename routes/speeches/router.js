@@ -12,6 +12,7 @@ const {
   getWordsByCount, 
   getWordsByLength, 
   ingWords,
+  edWords,
   getSentences } = require('../../stats')
 
 //Get Default Trump 2017 Speech
@@ -144,11 +145,13 @@ router.get('/',
         imageLink: srcResult.imageLink,
         eventOverview: srcResult.eventOverview,
         numberOfWords : {uniqueWords: uniqueWordCount, wordCount : arrOfText.length},
-        bigWords: getLongestThirty(arrOfText),
+        bigWords: getLongestThirty(arrOfText).slice(0,12),
         mostUsedWords: getWordsByCount(arrOfText).slice(0,8),
         wordsBySize: getWordsByLength(arrOfText),
-        actonWords: ingWords(srcResult.text),
-        sentences: getSentences(srcResult.text)
+        actionWords: getWordsByCount(ingWords(srcResult.text)),
+        pastTenseWords: getWordsByCount(edWords(srcResult.text)),
+        sentences: getSentences(srcResult.text),
+        sentenceCount: getSentences(srcResult.text).length
       })
     })
     .catch(err => {
