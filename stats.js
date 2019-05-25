@@ -64,8 +64,15 @@ function getLongestThirty(arr){
 
 function ingWords(str){
   
-  let findEndingInING = /\w*ing\b/g;
-  let res = str.match(findEndingInING);
+  let findEnding = /\w*ing\b/g;
+  let res = str.match(findEnding);
+  return res;
+}
+
+function edWords(str){
+  
+  let findEnding = /\w*ed\b/g;
+  let res = str.match(findEnding).sort();
   return res;
 }
 
@@ -75,7 +82,51 @@ function ingWordsAndNextWord(str){
 }
 
 function getSentences(srcTxt){
-  let sentences = srcTxt.match(/([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g);
+
+  /*gets rid of line-break or \n etc.
+    \s => space-character (tab, new-line, carraige return etc)
+    * => means 0x or more (two line-breaks & a space, two-line-breaks etc)
+        $ => at end of line
+    ()? mean optional, was (^)?\s*$/gm but the m makes this redundant
+  */
+
+  // /\s*m/gm
+
+  //removes double \n 
+  // OR
+  //\n @ beginng
+  // OR 
+  // \n at end
+  //
+  let newReg = /(\s{2})|(^\s)|(\s$)/g;
+
+  //
+  /*
+  
+  LAST SHOT => [\s\S].$
+
+  
+    1. @ beginning
+      anything accept ., !, or ?
+    2. [find-anything-in-here]
+      2b. [^find-anything-ACCEPT-these-chars]
+    3.+ mean make the match at least 1x
+    4. overall 1-3 - find 2 chars in a row that aren't . ! ?
+    5.| OR
+    6. find one char that is NOT a . ! ? @ the end
+      6b. +$ that is right before the end of the line
+    () => are capture groups
+
+    ^ means...
+      INSIDE a [^etc...] DONT FIND
+      /^etc... start @ beginning of the line (the first character)
+
+
+  */
+  
+  let sentRegex = /([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g;
+
+  let sentences = srcTxt.replace(newReg, "");//.match(sentRegex);
   return sentences
 }
 
@@ -84,5 +135,6 @@ module.exports = {
   getWordsByCount, 
   getWordsByLength, 
   ingWords,
+  edWords,
   getSentences
 }
