@@ -85,12 +85,33 @@ router.get('/compare',
   let speechList = null;
   Stat
     .find().select('_id Orator speechTextLink')
-    .then(stat => {
-      let arrOfSpeeches = stat.map(singleSpeech => singleSpeech)
-      console.log('arrOfSpeeches')
-      console.log(arrOfSpeeches)
+    .exec()
+    .then(stats => {
+      // let theseStats = stats.apiRepr();
+      console.log('stats')
+      console.log(stats)
       
-      res.json(arrOfSpeeches)
+      let newStats = stats.map(singleStat => {
+
+        //make new obj
+        let newSingleStat = Object.assign({}, singleStat._doc);
+        
+        //get && prep text-to-mostUsedWords
+        let thisText = fs.readFileSync(path.join(__dirname, '../'+singleStat._doc.speechTextLink), 'utf8')
+        
+        //remove some punc
+        let puncRegEx = /[.,-]/g
+        //gets rid of line-break or whatever
+        let newReg = /(^)?\s*$/gm;
+        
+        //apply regex's to text
+        const regexTxt = thisText.replace(newReg," ").replace(puncRegEx, "")
+        const arrOfText =  regexTxt.split(" ")
+        newSingleStat.wordsByCount = getWordsByCount(arrOfText)
+        return newSingleStat
+      })
+      
+      res.json(newStats)
     })
     .catch(err => {
       console.log(err);
