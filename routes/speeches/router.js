@@ -80,27 +80,27 @@ router.get('/speechList',
 
 //Get stat comparison
 router.get('/compare',
-  passport.authenticate('jwt', { session: false }),
+  // passport.authenticate('jwt', { session: false }),
  (req,res) => {
   let speechList = null;
   Stat
     .find().select('_id Orator speechTextLink')
     .exec()
     .then(stats => {
-      // let theseStats = stats.apiRepr();
-      console.log('stats')
-      console.log(stats)
       
       let newStats = stats.map(singleStat => {
 
         //make new obj
-        let newSingleStat = Object.assign({}, singleStat._doc);
+        /*
+          Why do i need _doc?!
+        */
+        let newSingleStat = Object.assign({}, {orator: singleStat._doc.Orator });
         
         //get && prep text-to-mostUsedWords
         let thisText = fs.readFileSync(path.join(__dirname, '../'+singleStat._doc.speechTextLink), 'utf8')
         
         //remove some punc
-        let puncRegEx = /[.,-]/g
+        let puncRegEx = /[\?".,-]/g
         //gets rid of line-break or whatever
         let newReg = /(^)?\s*$/gm;
         
