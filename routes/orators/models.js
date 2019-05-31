@@ -1,32 +1,26 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-
-const oratorSchema = mongoose.Schema({
-	firstName : {
+const oratorsSchema = mongoose.Schema({
+	first : {
 		type: String,
 		required: true
 	},
-	lastName : {
+	middleInitial: {
 		type: String,
 		required: true
 	},
-	dob : {
-		type: Date
+	last : {
+		type: String,
+		required: true
 	},
-	speeches: [ {type: Schema.Types.ObjectId, ref: 'Stat'} ]
-})
+	dob : { type: String },
+	party: { type: String }
+});
 
-oratorSchema.methods.apiRepr = function(){
-	return{
-		id: this._id,
-		type: this.type,
-		text: this.text,
-		Date: this.Date,
-		user: this.user
-	}
-}
+oratorsSchema.virtual('fullName').get(() => {
+  return `${this.first} ${this.middleInitial} ${this.last}`.trim();
+});
 
-const Orator = mongoose.model('Orator', oratorSchema);
+const Orator = mongoose.model('orator', oratorsSchema);
 
-module.exports = {Orator};
+module.exports = Orator;
