@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {Stat} = require('./models');
+const {Orator} = require('../orators');
 const passport = require('passport');
 const {router: jwtStrategy} = require('../auth');
 const fs = require('fs');
@@ -70,7 +71,8 @@ router.get('/speechList',
   passport.authenticate('jwt', { session: false }),
  (req,res) => {
   Stat
-    .find().select('_id title Orator Date oratorID').sort({Date: -1}) //LOCAL
+    .find().select('_id title Orator Date oratorID').sort({Date: -1})
+    .populate({ path: 'oratorID', model: Orator })
     .then(stat => res.json(stat))
     .catch(err => {
       console.log(err);
