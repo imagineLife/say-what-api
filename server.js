@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname +'/public'));
 app.use('/api/requests', requestsRouter);
 app.use('/api/speeches', speechesRouter);
-app.use('/api/orators', oratorsRouter);
+app.use('/orators', oratorsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 
@@ -65,7 +65,7 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
 
   return new Promise((resolve, reject) => {
 
-    //  https://mongoosejs.com/docs/connections.html
+    // https://mongoosejs.com/docs/connections.html
     mongoose.connect(databaseUrl, {
       useNewUrlParser: true,
       useCreateIndex: true
