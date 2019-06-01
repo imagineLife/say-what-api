@@ -100,7 +100,7 @@ router.get('/compare',
         let thisText = fs.readFileSync(path.join(__dirname, '../'+singleStat._doc.speechTextLink), 'utf8')
         
         //remove some punc
-        let puncRegEx = /[\?".,-]/g
+        let puncRegEx = /[\?;".,-]/g
         //gets rid of line-break or whatever
         let newReg = /(^)?\s*$/gm;
         
