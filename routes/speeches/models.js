@@ -23,7 +23,8 @@ const speechSchema = mongoose.Schema({
 	},
 	eventOverview: {
 		type: String
-	}
+	},
+	oratorID: { type: Schema.Types.ObjectId, ref: 'Orator'}
 })
 
 speechSchema.methods.apiRepr = function(){
