@@ -70,7 +70,7 @@ router.get('/speechList',
   passport.authenticate('jwt', { session: false }),
  (req,res) => {
   Stat
-    .find().select('_id title Orator Date').sort({Date: -1}) //LOCAL
+    .find().select('_id title Orator Date oratorID').sort({Date: -1}) //LOCAL
     .then(stat => res.json(stat))
     .catch(err => {
       console.log(err);
