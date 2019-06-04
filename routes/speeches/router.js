@@ -18,13 +18,13 @@ const {
 
 //Get Default Trump 2017 Speech
 router.get('/default', (req,res) => {
-	Stat
-		.findById("5a1ad99f978ca2681f42df12")
-		.then(stat => res.status(200).json(stat.apiRepr()))
-		.catch(err => {
-			console.log(err);
-			res.status(500).json({message: 'Handwritten Error :/'})
-		});
+  Stat
+    .findById("5a1ad99f978ca2681f42df12")
+    .then(stat => res.status(200).json(stat.apiRepr()))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({message: 'Handwritten Error :/'})
+    });
 });
 
 
@@ -204,11 +204,8 @@ router.get('/',
     .findById("5a1ad99f978ca2681f42df12")
     .then(stat => {
       
-      //store the result
-      const srcResult = stat.apiRepr();
-
       //get speech text from text file
-      srcResult.text = fs.readFileSync(path.join(__dirname, '../'+srcResult.speechTextLink), 'utf8')
+      let resText = fs.readFileSync(path.join(__dirname, '../../speechText/'+stat.speechTextFile), 'utf8')
 
       //gets rid of line-break or whatever
       let newReg = /(^)?\s*$/gm;
@@ -219,27 +216,28 @@ router.get('/',
       let puncRegEx = /[.,-]/g
 
 
-      const regexTxt = srcResult.text.replace(newReg," ").replace(puncRegEx, "")
-      const uniqueWordCount = srcResult.text.match(uniqueWordRegex).length
+      const regexTxt = resText.replace(newReg," ").replace(puncRegEx, "")
+      const uniqueWordCount = resText.match(uniqueWordRegex).length
       
       let arrOfText =  regexTxt.split(" ")
       
       return res.status(200).json({
-        id: srcResult.id,
-        title: srcResult.title,
-        Orator: srcResult.Orator,
-        Date: srcResult.Date,
-        speechTextLink: srcResult.speechTextLink,
-        imageLink: srcResult.imageLink,
-        eventOverview: srcResult.eventOverview,
+        id: stat.id,
+        title: stat.title,
+        Orator: stat.Orator,
+        Date: stat.Date,
+        speechTextLink: stat.speechTextFile,
+        text: resText,
+        imageLink: stat.imageLink,
+        eventOverview: stat.eventOverview,
         numberOfWords : {uniqueWords: uniqueWordCount, wordCount : arrOfText.length},
         bigWords: getLongestThirty(arrOfText).slice(0,12),
         mostUsedWords: getWordsByCount(arrOfText).slice(0,8),
         wordsBySize: getWordsByLength(arrOfText),
-        actionWords: getWordsByCount(ingWords(srcResult.text)),
-        pastTenseWords: getWordsByCount(edWords(srcResult.text)),
-        sentences: getSentences(srcResult.text),
-        sentenceCount: getSentences(srcResult.text).length
+        actionWords: getWordsByCount(ingWords(resText)),
+        pastTenseWords: getWordsByCount(edWords(resText)),
+        sentences: getSentences(resText),
+        sentenceCount: getSentences(resText).length
       })
     })
     .catch(err => {
