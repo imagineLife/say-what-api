@@ -105,7 +105,7 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
       "immigration",
       "magnificent"
     ],
-    "speechTextLink" : "../speechText/t2017.txt"
+    "speechTextFile" : "t2017.txt"
   };
 
   const jwToken = jwt.sign({}, JWT_SECRET, {
@@ -160,19 +160,6 @@ describe('\nSpeech/Stat Request endpoints\n', function () {
         });
     });
   });
-  // describe('GET from /api/speeches/default', function () {
-  //   it('expects status, type==, id==, keyMatching', function() {
-  //     return chai
-  //       .request(app)
-  //       .get('/api/speeches/default')
-  //       .then(res => {
-  //         expect(res).to.have.status(200);
-  //         expect(res.body).to.be.an('object');
-  //         expect(res.body.id).to.equal('5a1ad99f978ca2681f42df12');     //mLab
-  //         expect(res.body).to.have.keys('id', 'title', 'Orator', 'Date', 'Audience', 'numberOfWords', 'mostUsedWords', 'wordsBySize', 'bigWords', 'speechTextLink')
-  //       });
-  //   });
-  // });
   describe('GET from /api/speeches/text/5a1ad99f978ca2681f42df12', function () {
     it('expects status, type', function() {
        const token = jwt.sign(
