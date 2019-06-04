@@ -32,12 +32,12 @@ router.get('/default', (req,res) => {
 router.get('/text/default', 
   (req, res) => {
   Stat
-    .findById("5a1ad99f978ca2681f42df12", ['title', 'speechTextLink'], (err, docs) => {
+    .findById("5a1ad99f978ca2681f42df12", ['title', 'speechTextFile'], (err, docs) => {
     })
     .exec()
     .then((stat) =>  {
      return ({
-      text  : fs.readFileSync(path.join(__dirname, '../'+stat.speechTextLink), 'utf8'),
+      text  : fs.readFileSync(path.join(__dirname, '../../speechText/'+stat.speechTextFile), 'utf8'),
       title : stat.title 
      })
     })
@@ -86,7 +86,7 @@ router.get('/compare',
  (req,res) => {
   let speechList = null;
   Stat
-    .find().select('_id Orator speechTextLink')
+    .find().select('_id Orator speechTextFile')
     .exec()
     .then(stats => {
       
@@ -99,7 +99,7 @@ router.get('/compare',
         let newSingleStat = Object.assign({}, {orator: singleStat._doc.Orator });
         
         //get && prep text-to-mostUsedWords
-        let thisText = fs.readFileSync(path.join(__dirname, '../'+singleStat._doc.speechTextLink), 'utf8')
+        let thisText = fs.readFileSync(path.join(__dirname, '../../speechText/'+singleStat._doc.speechTextFile), 'utf8')
         
         //remove some punc
         let puncRegEx = /[\?;".,-]/g
@@ -179,9 +179,12 @@ router.get('/text/:id',
   Stat
     .findById(req.params.id)
     .exec()
-    .then((stat) =>  {
+    .then(stat =>  {
+      console.log('stat')
+      console.log(stat)
+      
      return ({
-      text  : fs.readFileSync(path.join(__dirname, '../'+stat.speechTextLink), 'utf8'),
+      text  : fs.readFileSync(path.join(__dirname, '../../speechText/'+stat.speechTextFile), 'utf8'),
       title : stat.title 
      })
     })
