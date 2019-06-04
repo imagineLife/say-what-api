@@ -15,10 +15,10 @@ const speechSchema = mongoose.Schema({
 		type: Date,
 		required: true
 	},
-	speechTextLink: {
+	speechTextFile: {
 		type: String
 	},
-	imageLink: {
+	imageFile: {
 		type: String
 	},
 	eventOverview: {
@@ -33,8 +33,8 @@ speechSchema.methods.apiRepr = function(){
 		title: this.title,
 		Orator: this.Orator,
 		Date: this.Date,
-		speechTextLink: this.speechTextLink,
-		imageLink: this.imageLink,
+		speechTextFile: this.speechTextFile,
+		imageFile: this.imageFile,
 		eventOverview: this.eventOverview
 	}
 }
