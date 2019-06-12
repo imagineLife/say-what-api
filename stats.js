@@ -41,7 +41,7 @@ function getWordsByLength(srcWordArr){
       }
   });
 
-  return wordsByLength.sort((a,b) => b.occurances - a.occurances).slice(0,5);
+  return wordsByLength.sort((a,b) => b.occurances - a.occurances).slice(0,8);
 }
 
 function getLongestThirty(arr){
@@ -85,20 +85,39 @@ function getSentences(srcTxt){
 
   /*gets rid of line-break or \n etc.
     \s => space-character (tab, new-line, carraige return etc)
-    * => means 0x or more (two line-breaks & a space, two-line-breaks etc)
-        $ => at end of line
-    ()? mean optional, was (^)?\s*$/gm but the m makes this redundant
+    * =>  0x or more (two line-breaks & a space, two-line-breaks etc)
+    $ => at end of line
+    ()? => optional, was (^)?\s*$/gm but the m makes this redundant
+
+   /\s*m/gm
+
+  /*removes double \n 
+   OR
+  \n @ beginng
+   OR 
+   \n at end
+  
+    \s{2} == \n\n
+    ^\s   == beginning with whitespace
+
+    m flag == multi-line, each line is a new instance to treat separately
+
+   ([?!.]\s.)
+    ==> find a ?!. if it has a space behind it, thats ok :)
+    MATCH 
+
+
+  */  
+  // let twoWhiteSpaces = /(\s{2})/gm;
+  // let standarizeWS = /([?!.]\s)(.)/gm;
+  /*
+    needs updating to deal with  ==> "blah blah blah D.C.,"
+    maybe convert * to + (+ at least 1 exists), converting OPTIONAL spae to REQUIRED space
+    * = 0 or more
+    + = 1 or more
+
   */
-
-  // /\s*m/gm
-
-  //removes double \n 
-  // OR
-  //\n @ beginng
-  // OR 
-  // \n at end
-  //
-  let newReg = /(\s{2})|(^\s)|(\s$)/g;
+  let standarizeWS = /([?!.]\s+)(.)/gm;
 
   //
   /*
@@ -122,11 +141,16 @@ function getSentences(srcTxt){
       /^etc... start @ beginning of the line (the first character)
 
 
+  when character-counting sentences, remove whitespaces!
   */
   
-  let sentRegex = /([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g;
+  // needs updating, stop breaking D.C., into 3 arrays
+  // let sentRegex = /([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g;
+  // plus a negative lookahead and add * 
+  let sentRegex = /\.~x~/g;
 
-  let sentences = srcTxt.replace(newReg, "");//.match(sentRegex);
+  // let sentences = srcTxt.replace(twoWhiteSpaces, "").replace(standarizeWS, ". $2").match(sentRegex);
+  let sentences = srcTxt.replace(standarizeWS, ".~x~$2").match(sentRegex);
   return sentences
 }
 
