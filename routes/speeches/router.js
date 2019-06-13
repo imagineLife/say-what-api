@@ -72,7 +72,7 @@ router.get('/speechList',
  (req,res) => {
   Stat
     .find().select('_id title Orator Date oratorID').sort({Date: -1})
-    .populate({ path: 'oratorID', model: Orator })
+    .populate({ path: '_id', model: Orator })
     .then(stat => res.json(stat))
     .catch(err => {
       console.log(err);
@@ -102,13 +102,16 @@ router.get('/compare',
         let thisText = fs.readFileSync(path.join(__dirname, '../../speechText/'+singleStat._doc.speechTextFile), 'utf8')
         
         //remove some punc
-        let puncRegEx = /[\?;".,-]/g
-        //gets rid of line-break or whatever
+        let puncRegEx = /[\?;".,-:]/g
+        
+        //gets rid of line-breaks
         let newReg = /(^)?\s*$/gm;
         
-        //apply regex's to text
+        //apply regexs to text
         const regexTxt = thisText.replace(newReg," ").replace(puncRegEx, "")
         const arrOfText =  regexTxt.split(" ")
+        
+        //loop, count && group words
         newSingleStat.wordsByCount = getWordsByCount(arrOfText)
         return newSingleStat
       })
@@ -145,6 +148,9 @@ router.get('/:id',
       const uniqueWordCount = resText.match(uniqueWordRegex).length
       
       let arrOfText =  regexTxt.split(" ")
+      
+      console.log('getWordsByCount(arrOfText).slice(0,8)')
+      console.log(getWordsByCount(arrOfText).slice(0,8))
       
       return res.status(200).json({
         id: stat.id,
