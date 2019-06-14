@@ -47,7 +47,10 @@ function getWordsByLength(srcWordArr){
 function getLongestThirty(arr){
  
   //make NO REPEATS
-  let uniqueWords = Array.from(new Set(arr));
+  let uniqueWords = arr.reduce(function(acc,val){
+    if (acc.indexOf(val.toLowerCase()) < 0 ) acc.push(val.toLowerCase());
+    return acc;
+  },[]);
   
   //sort the word by longest-at-the-top
   uniqueWords.sort(function(a, b){
