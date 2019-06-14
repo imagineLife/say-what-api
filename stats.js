@@ -1,19 +1,28 @@
 // creates an object of the most-frequent words occuring
 function getWordsByCount(srcWordArr) {
+  let topTwenty = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at']
   let freqUsedWords = [];
+
   srcWordArr.forEach(function(singleWord){
+      let lowerCaseWord = singleWord.toLowerCase()
       let thisIndex = null
-      // check if this word is already   in array
+      // check if this word is already in array
       if (freqUsedWords.some((arrObj, arrObjInd) => {
-            if(arrObj.word == singleWord.toLowerCase()){
+
+            if(arrObj.word == lowerCaseWord){
               thisIndex = arrObjInd
             }
-            return arrObj.word == singleWord.toLowerCase()
+            return arrObj.word == lowerCaseWord
           })
       ) {
         freqUsedWords[thisIndex].occurances +=1
       } else {
-        freqUsedWords.push({word: singleWord.toLowerCase(), occurances: 1})
+
+        //if this word is NOT in the topTwenty array, add to freqWords
+        if(!topTwenty.includes(lowerCaseWord)){
+          freqUsedWords.push({word: singleWord.toLowerCase(), occurances: 1})
+        }
+        else return
       }
   });
 
