@@ -86,11 +86,12 @@ router.get('/compare',
  (req,res) => {
   let speechList = null;
   Stat
-    .find().select('_id Orator speechTextFile')
+    .find({}, ['_id', 'Orator', 'speechTextFile'])
     .exec()
     .then(stats => {
       
       let newStats = stats.map(singleStat => {
+        
 
         //make new obj
         /*
