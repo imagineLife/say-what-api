@@ -1,6 +1,6 @@
 // creates an object of the most-frequent words occuring
 function getWordsByCount(srcWordArr) {
-  let topTwenty = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at']
+  let topTwenty = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', '']
   let freqUsedWords = [];
 
   srcWordArr.forEach(function(singleWord){
