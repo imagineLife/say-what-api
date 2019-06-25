@@ -9,13 +9,37 @@ mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config');
 
+//routes
 const oratorsRouter = require('./routes/orators/router');
 const requestsRouter = require('./routes/requests/router');
 const speechesRouter = require('./routes/speeches/router');
 const usersRouter = require('./routes/users/router');
 const {router: authRouter, basicStrategy, jwtStrategy} = require('./routes/auth');
 
+//swagger
+const swaggerJSDoc = require('swagger-jsdoc')
+const swaggerUI = require('swagger-ui-express')
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
+
 const app = express();
+
+const swaggerDefinition = {
+  info: {
+    title: 'Say-What-API',
+    version: '0.0.1',
+    description: 'Dummy description here...'
+  },
+  host: `localhost:${PORT}`,
+  basePath: '/'
+}
+
+const swagOpts = {
+  swaggerDefinition,
+  apis: [`./routes/**/*.js`],
+}
+
+const swagSpec = swaggerJSDoc(swagOpts);
 
 // CORS
 app.use(function (req, res, next) {
@@ -40,17 +64,18 @@ app.use('/orators', oratorsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 
-// app.use('/login', (req,res) => {
-//   req.logout();
-//   res.clearCookie('authToken');
-//   res.sendFile(path.resolve('public/login.html'));
-// })
 
-// app.use('/logout', (req,res) => {
-//   req.logout();
-//   res.clearCookie('authToken');
-//   res.sendFile(path.resolve('public/splash.html'));
-// })
+//shows swagger specs in json object
+app.use('/doc-specs', (req, res) => {
+  res.setHeader('Content-Type', 'application/json')
+  res.send(swagSpec)
+})
+
+//Loads swagger file-by-file
+// app.use('/docs', swaggerUI.serve, swaggerUI.setup(swagSpec))
+
+//load swagger by single-yaml file
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use('*', function(req, res) {
   res.status(404).json({message: 'Not Found'});
