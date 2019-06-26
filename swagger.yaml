@@ -21,7 +21,7 @@ schemes:
 - "https"
 - "http"
 paths:
-  /speeches:
+  "/speeches":
     get:
       tags:
       - "speech"
@@ -32,8 +32,10 @@ paths:
       - "application/json"
       responses:
         default:
-          description: "successful operation"
-  /speeches/{id}:
+          description: "success"
+          schema:
+            $ref: "#/definitions/Speech"
+  "/speeches/{id}":
     get:
       tags:
       - "speech"
@@ -61,7 +63,7 @@ paths:
             $ref: "#/definitions/Speech"
       security:
         - jwt_auth: []          
-  /speeches/speechList:
+  "/speeches/speechList":
     get:
       tags:
       - "speech"
@@ -75,7 +77,7 @@ paths:
           description: "successful operation"
       security:
         - jwt_auth: []
-  /speeches/:
+  "/speeches/":
     post:
       tags:
       - "speech"
@@ -110,7 +112,7 @@ paths:
           description: "successful operation"
       security:
         - jwt_auth: []
-  /compare/{type}:
+  "/compare/{type}":
     get:
       tags:
       - "compare"
@@ -133,7 +135,7 @@ paths:
             $ref: "#/definitions/Speech"
       security:
         - jwt_auth: []
-  /users/register:
+  "/users/register":
     post:
       tags:
       - "user"
@@ -173,7 +175,7 @@ paths:
           description: "internal server error"
         400:
           description: "Invalid username/password supplied"
-  /user/createWithArray:
+  "/user/createWithArray":
     post:
       tags:
       - "user"
@@ -195,7 +197,7 @@ paths:
       responses:
         default:
           description: "successful operation"
-  /user/createWithList:
+  "/user/createWithList":
     post:
       tags:
       - "user"
@@ -217,7 +219,7 @@ paths:
       responses:
         default:
           description: "successful operation"
-  /auth/login:
+  "/auth/login":
     post:
       tags:
       - "user"
@@ -250,7 +252,7 @@ paths:
           description: "Invalid username/password supplied"
       security:
         - basic_auth: []
-  /user/logout:
+  "/user/logout":
     get:
       tags:
       - "user"
@@ -264,7 +266,7 @@ paths:
       responses:
         default:
           description: "successful operation"
-  /user/{username}:
+  "/user/{username}":
     get:
       tags:
       - "user"
@@ -335,7 +337,7 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-  /requests:
+  "/requests":
     get:
       tags:
       - "requests"
@@ -358,7 +360,7 @@ paths:
           description: "User not found"
       security:
         - jwt_auth: []
-  /orators:
+  "/orators":
     get:
       tags:
       - "orators"
@@ -386,15 +388,37 @@ definitions:
         format: "int64"
       text:
         type: "string"
-      orator:
+      Orator:
         type: "string"
-      dateGiven:
+      Date:
         type: "string"
         example: "2018-05-05"
-      stats:
-        $ref: "#/definitions/Stats"
-      textURL:
+      actionWords:
+        $ref: "#/definitions/actionWords"
+      bigWords:
+        $ref: "#/definitions/actionWords"  
+      eventOverview:
         type: "string"
+      imageFile:
+        type: "string"
+      mostUsedWords:
+        $ref: "#/definitions/bigWords"
+      numberOfWords:
+        $ref: "#/definitions/numberOfWords"
+      pastTenseWords:
+        $ref: "#/definitions/pastTenseWords"
+      sentenceCount:
+        type: "integer"
+      sentences:
+        $ref: "#/definitions/sentences"
+      speechTextLink:
+        $ref: "#/definitions/sentences"
+      text:
+        type: "string"
+      title:
+        type: "string"
+      wordsBySize:
+        type: "#/definitions/wordsBySize"
   Stats:
     type: "object"
     properties:
