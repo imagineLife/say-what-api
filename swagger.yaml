@@ -396,7 +396,9 @@ definitions:
       actionWords:
         $ref: "#/definitions/actionWords"
       bigWords:
-        $ref: "#/definitions/actionWords"  
+        type: "array"
+        items: 
+          type: "string"
       eventOverview:
         type: "string"
       imageFile:
@@ -419,23 +421,23 @@ definitions:
         type: "string"
       wordsBySize:
         type: "#/definitions/wordsBySize"
-  Stats:
-    type: "object"
-    properties:
-      numberOfWords:
-        type: "object"
-      mostUsedWords:
-        type: "object"
-      wordsBySize:
-        type: "object"
-      bigWords:
-        $ref: "#/definitions/bigWords"
   bigWords:
     type: "object"
     properties:
       word:
         type: "string"
       length:
+        type: "integer"
+  actionWords:
+    type: "array"
+    items:
+      $ref: "/#/definitions/WordAndCount"
+  WordAndCount:
+    type: "object"
+    properties:
+      word: 
+        type: "string"
+      occurances:
         type: "integer"
   User:
     type: "object"
