@@ -394,7 +394,8 @@ definitions:
         type: "string"
         example: "2018-05-05"
       actionWords:
-        $ref: "#/definitions/actionWords"
+        type: array
+        $ref: "#/definitions/wordAndCount"
       bigWords:
         type: "array"
         items: 
@@ -406,6 +407,7 @@ definitions:
       mostUsedWords:
         $ref: "#/definitions/bigWords"
       numberOfWords:
+        type: object
         $ref: "#/definitions/numberOfWords"
       pastTenseWords:
         $ref: "#/definitions/pastTenseWords"
@@ -431,7 +433,21 @@ definitions:
   actionWords:
     type: "array"
     items:
-      $ref: "/#/components/wordAndCount"
+      $ref: "/#/definitions/wordAndCount"
+  numberOfWords:
+    type: "object"
+    properties:
+      uniqueWords: 
+        type: "integer"
+      wordCount: 
+        type: "integer"
+  wordAndCount:
+    type: "object"
+    properties:
+      word: 
+        type: "string"
+      occurances:
+        type: "integer"
   User:
     type: "object"
     properties:
@@ -472,11 +488,3 @@ definitions:
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
-components:
-  wordAndCount:
-    type: "object"
-    properties:
-      word: 
-        type: "string"
-      occurances:
-        type: "integer"
