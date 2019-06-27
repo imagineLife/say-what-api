@@ -410,7 +410,7 @@ definitions:
         type: object
         $ref: "#/definitions/numberOfWords"
       pastTenseWords:
-        $ref: "#/definitions/pastTenseWords"
+        $ref: "#/definitions/wordAndCount"
       sentenceCount:
         type: "integer"
       sentences:
