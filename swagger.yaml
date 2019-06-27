@@ -431,14 +431,7 @@ definitions:
   actionWords:
     type: "array"
     items:
-      $ref: "/#/definitions/WordAndCount"
-  WordAndCount:
-    type: "object"
-    properties:
-      word: 
-        type: "string"
-      occurances:
-        type: "integer"
+      $ref: "/#/components/wordAndCount"
   User:
     type: "object"
     properties:
@@ -479,3 +472,11 @@ definitions:
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
+components:
+  wordAndCount:
+    type: "object"
+    properties:
+      word: 
+        type: "string"
+      occurances:
+        type: "integer"
