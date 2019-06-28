@@ -378,30 +378,36 @@ definitions:
   Speech:
     type: "object"
     required: 
+      - actionWords
+      - bigWords
+      - Date
+      - imageFile      
+      - mostUsedWords
+      - numberOfWords
+      - Orator
+      - pastTenseWords
+      - sentenceCount
+      - sentences
+      - speechTextLink
       - text
-      - orator
-      - dateGiven
-      - textURL
-    properties: 
-      id:
-        type: "integer"
-        format: "int64"
-      text:
-        type: "string"
-      Orator:
-        type: "string"
-      Date:
-        type: "string"
-        example: "2018-05-05"
+      - title
+      - wordsBySize      
+    properties:        
       actionWords:
         type: array
-        $ref: "#/definitions/wordAndCount"
+        $ref: "#/components/wordAndCount"
       bigWords:
         type: "array"
         items: 
           type: "string"
+      Date:
+        type: "string"
+        example: "2018-05-05"          
       eventOverview:
         type: "string"
+      id:
+        type: "integer"
+        format: "int64"        
       imageFile:
         type: "string"
       mostUsedWords:
@@ -409,8 +415,10 @@ definitions:
       numberOfWords:
         type: object
         $ref: "#/definitions/numberOfWords"
+      Orator:
+        type: "string"
       pastTenseWords:
-        $ref: "#/definitions/wordAndCount"
+        $ref: "#/components/wordAndCount"
       sentenceCount:
         type: "integer"
       sentences:
@@ -418,7 +426,7 @@ definitions:
       speechTextLink:
         $ref: "#/definitions/sentences"
       text:
-        type: "string"
+        type: "string"  
       title:
         type: "string"
       wordsBySize:
@@ -433,7 +441,7 @@ definitions:
   actionWords:
     type: "array"
     items:
-      $ref: "/#/definitions/wordAndCount"
+      $ref: "/#/components/wordAndCount"
   numberOfWords:
     type: "object"
     properties:
@@ -441,12 +449,12 @@ definitions:
         type: "integer"
       wordCount: 
         type: "integer"
-  wordAndCount:
+  sentences:
     type: "object"
     properties:
-      word: 
+      text: 
         type: "string"
-      occurances:
+      wordCount:
         type: "integer"
   User:
     type: "object"
@@ -485,6 +493,14 @@ definitions:
         type: "string"
     xml:
       name: "User"
+components:
+  wordAndCount:
+    type: "object"
+    properties:
+      word: 
+        type: "string"
+      occurances:
+        type: "integer"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
