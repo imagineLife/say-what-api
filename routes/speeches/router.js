@@ -113,7 +113,7 @@ router.get('/compare',
         const arrOfText =  regexTxt.split(" ")
         
         //loop, count && group words
-        newSingleStat.wordsByCount = getWordsByCount(arrOfText)
+        newSingleStat.comparison = getWordsByCount(arrOfText)
         return newSingleStat
       })
       
