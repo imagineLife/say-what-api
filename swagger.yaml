@@ -438,10 +438,6 @@ definitions:
         type: "string"
       length:
         type: "integer"
-  actionWords:
-    type: "array"
-    items:
-      $ref: "/#/components/wordAndCount"
   numberOfWords:
     type: "object"
     properties:
