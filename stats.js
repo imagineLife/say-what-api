@@ -120,8 +120,8 @@ function getSentences(srcTxt){
 
 
   */  
-  // let twoWhiteSpaces = /(\s{2})/gm;
-  // let standarizeWS = /([?!.]\s)(.)/gm;
+  let twoWhiteSpaces = /(\s{2})/gm;
+  let standarizeWS = /([?!.]\s)(.)/gm;
   /*
     needs updating to deal with  ==> "blah blah blah D.C.,"
     maybe convert * to + (+ at least 1 exists), converting OPTIONAL spae to REQUIRED space
@@ -129,14 +129,13 @@ function getSentences(srcTxt){
     + = 1 or more
 
   */
-  let standarizeWS = /([?!.]\s+)(.)/gm;
+
+  //Was in use?
+  // let standarizeWS = /([?!.]\s+)(.)/gm;
 
   //
   /*
-  
-  LAST SHOT => [\s\S].$
 
-  
     1. @ beginning
       anything accept ., !, or ?
     2. [find-anything-in-here]
@@ -157,12 +156,20 @@ function getSentences(srcTxt){
   */
   
   // needs updating, stop breaking D.C., into 3 arrays
-  // let sentRegex = /([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g;
+  let sentRegex = /([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g;
   // plus a negative lookahead and add * 
-  let sentRegex = /\.~x~/g;
+  // let sentRegex = /\.~x~/g;
 
-  // let sentences = srcTxt.replace(twoWhiteSpaces, "").replace(standarizeWS, ". $2").match(sentRegex);
-  let sentences = srcTxt.replace(standarizeWS, ".~x~$2").match(sentRegex);
+  let sentences = srcTxt.replace(twoWhiteSpaces, "").replace(standarizeWS, ". $2").match(sentRegex);
+  
+  // let sentences = srcTxt.replace(standarizeWS, ".~x~$2").match(sentRegex);
+
+  sentences = sentences.map(s => {
+    return {
+      text: s.trim(),
+      wordCount: s.trim().split(' ').length
+    }
+  })
   return sentences
 }
 
