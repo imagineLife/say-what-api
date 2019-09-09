@@ -1,6 +1,13 @@
 // creates an object of the most-frequent words occuring
 function getWordsByCount(srcWordArr) {
-  let topTwenty = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', '']
+
+  // https://en.wikipedia.org/wiki/Most_common_words_in_English
+  let topThirty = ['the', 'be', 'to', 'of', 'and', 
+  'a', 'in', 'that', 'have', 'i',
+  'it', 'for', 'not', 'on', 'with',
+  'he', 'as', 'you', 'do', 'at', '',
+  'this', 'but', 'his', 'by', 'from',
+  'they', 'we', 'say', 'her', 'she' ]
   let freqUsedWords = [];
 
   srcWordArr.forEach(function(singleWord){
@@ -18,8 +25,8 @@ function getWordsByCount(srcWordArr) {
         freqUsedWords[thisIndex].occurances +=1
       } else {
 
-        //if this word is NOT in the topTwenty array, add to freqWords
-        if(!topTwenty.includes(lowerCaseWord)){
+        //if this word is NOT in the topThirty array, add to freqWords
+        if(!topThirty.includes(lowerCaseWord)){
           freqUsedWords.push({word: singleWord.toLowerCase(), occurances: 1})
         }
         else return
@@ -155,10 +162,9 @@ function getSentences(srcTxt){
   when character-counting sentences, remove whitespaces!
   */
   
-  // needs updating, stop breaking D.C., into 3 arrays
-  let sentRegex = /([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g;
-  // plus a negative lookahead and add * 
-  // let sentRegex = /\.~x~/g;
+  // updated RegEx, stop breaking D.C., into 3 arrays
+  let sentRegex = /(([A-Z][a-z])|\s)+[^.!?]*([^.!?].[^.!?]|[^.!?])/g;
+  // let sentRegex = /([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/g;
 
   let sentences = srcTxt.replace(twoWhiteSpaces, "").replace(standarizeWS, ". $2").match(sentRegex);
   
