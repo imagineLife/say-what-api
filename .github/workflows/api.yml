@@ -1,0 +1,66 @@
+name: 'API pipeline'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+jobs:
+  api-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: '4.2'
+
+      # cache BEFORE npm i to leverage cache
+      # DOCS: 
+      #   https://github.com/actions/cache
+      # TODO: update to v2 
+      - name: cache node-mods
+        uses: actions/cache@v3
+        with:
+          # OS-dependent + package-manager dependent path val
+          # NPM Cache docs:
+          #   https://docs.npmjs.com/cli/v7/configuring-npm/folders#cache
+          path: ~/.npm
+          # key docs: https://github.com/actions/cache#creating-a-cache-key
+          #   os type
+          #   hashing package-lock file for changes
+          key: ${{runner.os}}-server-node-mods-key-${{ hashFiles('**/package-lock.json') }}
+          # restore-keys docs: https://github.com/actions/cache#inputs
+          # same value as previous key
+          # first time it runs the cache, github wont find anything for the cache
+          # prefix-only - the hash will be different each cache
+          # must be regex matching or something
+          restore-keys:  | 
+            ${{runner.os}}-server-node-mods-key-
+          # ONCE workflow is done, github caches the hashed package-lock with the key :) 
+          #   a post cache step gets added to the workflow by this action lib
+      
+      #  install deps
+      - run: cd server && npm ci && cd ..
+        
+      - name: API Unit Tests
+        run: cd server && npm run test:coverage
+      # - uses: ArtiomTr/jest-coverage-report-action@v2
+      #     annotations: none
+      - uses: codecov/codecov-action@v2
+        with:
+          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          # files: ./coverage1.xml,./coverage2.xml # optional
+          # flags: unittests # optional
+          name: Upload Coverage to CodeCov # optional
+          files: ./server/coverage/clover.xml
+  # build-and-deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: ["api-coverage"]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: akhileshns/heroku-deploy@v3.12.12
+  #       with:
+  #         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #         heroku_app_name: ${{secrets.HEROKU_API_NAME}} #Must be unique in Heroku
+  #         heroku_email: ${{secrets.HEROKU_EMAIL_ADDR}}
+  #         appdir: "server"
