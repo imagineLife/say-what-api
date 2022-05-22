@@ -1,4 +1,20 @@
-const {User} = require('./models');
-const {router} = require('./router');
+/*
+  dependencies
+*/ 
+const router = require('express').Router({ mergeParams: true })
+const {
+  routes: {
+    USERS
+  }
+} = require('./../../global/constants');
+const rootRouter = require('./root');
+const byIdRouter = require('./byId');
 
-module.exports = {User, router};
+
+/*
+  register handlers
+*/ 
+router.use(USERS.BY_ID, byIdRouter)
+router.use(`/?`, rootRouter)
+
+module.exports = router;

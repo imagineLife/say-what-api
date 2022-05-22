@@ -1,0 +1,37 @@
+# 
+# Use for local development
+# NOTES: 
+#   - Spins up a mongo instance (unauth'd)
+#   - Builds the API through the "dev-dependencies" stage
+#   - Sets entrypont here in this file
+# 
+version: "3.8"
+services:
+  mongobox:
+    image: mongo:5.0.2
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+    environment:
+      - NODE_ENV=development
+  api:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+      target: dev-dependencies
+    depends_on:
+      - mongobox
+    entrypoint: ['nodemon', '.']
+    environment:
+      MONGO_DB_HOST: mongobox
+      MONGO_DB_PORT: "27017"
+      MONGO_AUTH: "false"
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - ${PWD}:/server
+volumes:
+  mongodb:

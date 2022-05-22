@@ -1,4 +1,14 @@
-const {Stat} = require('./models');
-const {router} = require('./router');
+const router = require('express').Router({mergeParams: true})
+const {
+  routes: {
+    SPEECHES
+  }
+} = require('./../../global/constants');
+const rootRouter = require('./root');
+const byIdRouter = require('./byId');
 
-module.exports = {Stat, router};
+
+router.use(`/:speechId`, byIdRouter)
+router.use(`/?`, rootRouter)
+
+module.exports = router;
