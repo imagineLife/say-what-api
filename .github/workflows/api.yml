@@ -40,10 +40,10 @@ jobs:
           #   a post cache step gets added to the workflow by this action lib
       
       #  install deps
-      - run: cd server && npm ci && cd ..
+      - run: npm ci
         
       - name: API Unit Tests
-        run: cd server && npm run test:coverage
+        run: npm run test:coverage
       # - uses: ArtiomTr/jest-coverage-report-action@v2
       #     annotations: none
       - uses: codecov/codecov-action@v2
