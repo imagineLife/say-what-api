@@ -12,8 +12,8 @@
     "start": "PORT=$PORT DB=false node .",
     "start-local": "NODE_ENV=development PORT=3000 MONGO_AUTH=false MONGO_DB_HOST=localhost MONGO_DB_PORT=27017 MONGO_DB_AUTH_DB=admin node .",
     "test": "jest",
-    "test:coverage": "jest --coverage --maxWorkers=1 --verbose --config='jest.config.js' --detectOpenHandles",
-    "tcw": "jest --coverage --maxWorkers=1 --verbose --watch --config='jest.config.js' --detectOpenHandles"
+    "test:coverage": "jest --coverage --maxWorkers=1 --verbose --detectOpenHandles",
+    "tcw": "jest --coverage --maxWorkers=1 --verbose --watch --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
   "devDependencies": {
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
-    "jest": "^27.5.1",
+    "jest": "^28.1.0",
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2",
     "webpack-node-externals": "^3.0.0"
