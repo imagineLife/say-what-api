@@ -66,9 +66,6 @@ describe('assertParams middleware', () => {
       },
     };
 
-    const mockObj = {
-      horse: 'cat',
-    };
     const asserted = assertParams({ body: ['horse'] });
     asserted({ body: { horse: 'cat' } }, mockResponse, mockNext);
     expect(mockNext).toHaveBeenCalled();
@@ -87,10 +84,6 @@ describe('assertParams middleware', () => {
           json: (jsonRes) => mockOne(jsonRes),
         };
       },
-    };
-
-    const mockObj = {
-      horse: 'cat',
     };
 
     try {
