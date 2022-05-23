@@ -8,6 +8,12 @@ class UserAuth extends Crud {
     this.collectionName = props.collection;
     this.registration_exp_duration = 60 * 60 * 1000;
     this.hashType = 'sha512';
+    this.isAnEmailString = (str) =>
+      String(str)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
   }
 
   async createOne(obj) {
@@ -25,15 +31,6 @@ class UserAuth extends Crud {
       console.log(`${this.collectionName} createOne error`);
       throw new Error(e);
     }
-  }
-
-  // regex validates that string is indeed an email address string
-  isAnEmailString(str) {
-    return String(str)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
   }
 
   oneHourFromNow() {
@@ -168,7 +165,7 @@ class UserAuth extends Crud {
 
     const userPW = this.hashVal(params.pw);
     const res = await this.readOne({ _id: params.email }, { _id: 0, pw: 1 });
-    return userPW == res.pw;
+    return userPW === res.pw;
   }
 
   /*
@@ -180,9 +177,9 @@ class UserAuth extends Crud {
     - set pw_reset_expires
     - sends email with button to reset pw or something?!
   */
-  requestPwReset() {
-    return `UserAuth requestPwReset Here`;
-  }
+  // requestPwReset() {
+  //   return `UserAuth requestPwReset Here`;
+  // }
 }
 
 module.exports = {

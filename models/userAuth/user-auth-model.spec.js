@@ -7,14 +7,13 @@ describe('UserAuth Model', () => {
   let TestMongoClient;
   let TestSayWhat;
   let Cat;
-  let testCreatedObject;
-  const db_obj = {
+  const dbObj = {
     host: 'localhost',
     port: '27017',
   };
   beforeAll(async () => {
     process.env.MONGO_AUTH = false;
-    TestMongoClient = await setupDB({ ...db_obj });
+    TestMongoClient = await setupDB({ ...dbObj });
     TestSayWhat = TestMongoClient.registerDB(DB_NAME);
     Cat = new UserAuth({ db: TestSayWhat, collection: COLL_NAME });
     await Cat.deleteOne({ id: 'horse@sauce.com' });
@@ -183,7 +182,7 @@ describe('UserAuth Model', () => {
         it('bad user email address', async () => {
           createUserRes = await Cat.registerEmail({ email: validateEmailStr });
           try {
-            const res = await Cat.validateEmail({ email: 'water@mel-uhn' });
+            await Cat.validateEmail({ email: 'water@mel-uhn' });
           } catch (e) {
             expect(e.message).toBe(
               'Cannot call validateEmail without a valid email address'
@@ -203,7 +202,7 @@ describe('UserAuth Model', () => {
           const nowMS = Date.parse(now);
           const severalHoursAgo = nowMS - Cat.registration_exp_duration * 7;
           const parsedOlderDate = new Date(severalHoursAgo);
-          const updateRes = await Cat.updateOne(
+          await Cat.updateOne(
             { _id: validateEmailStr },
             { $set: { registration_expires: parsedOlderDate } }
           );
@@ -257,7 +256,7 @@ describe('UserAuth Model', () => {
 
       it('succeeds', async () => {
         createUserRes = await Cat.registerEmail({ email: validateEmailStr });
-        const validateEmailRes = await Cat.validateEmail({
+        await Cat.validateEmail({
           email: createUserRes.insertedId,
         });
         const res = await Cat.setPW({
@@ -314,7 +313,7 @@ describe('UserAuth Model', () => {
         });
         it('returns false when pw is incorrect', async () => {
           createUserRes = await Cat.registerEmail({ email: validatePW });
-          const setPWRes = await Cat.setPW({
+          await Cat.setPW({
             email: createUserRes.insertedId,
             pw: 'new-pw-who-dis',
           });
@@ -327,7 +326,7 @@ describe('UserAuth Model', () => {
 
         it('returns true when pw is correct', async () => {
           createUserRes = await Cat.registerEmail({ email: validatePW });
-          const setPWRes = await Cat.setPW({
+          await Cat.setPW({
             email: createUserRes.insertedId,
             pw: 'new-pw-who-dis',
           });
