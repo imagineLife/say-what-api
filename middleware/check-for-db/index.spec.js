@@ -29,7 +29,7 @@ describe('checkForDbConnection', () => {
     };
     const mockRes = mockResponse();
     const mockNxt = jest.fn();
-    const res = checkForDbConnection(mockReq, mockRes, mockNxt);
+    checkForDbConnection(mockReq, mockRes, mockNxt);
     expect(mockNxt).toHaveBeenCalledTimes(1);
   });
 });
