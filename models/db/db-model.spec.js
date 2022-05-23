@@ -58,7 +58,7 @@ describe('DB Model', () => {
 
     it('gets and logs dbs', async () => {
       await MockDB.connect();
-      const dbs = await MockDB.getAndLogDBs();
+      await MockDB.getAndLogDBs();
       expect(console.table).toHaveBeenCalledTimes(1);
     });
 
