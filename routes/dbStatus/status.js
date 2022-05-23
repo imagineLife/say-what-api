@@ -1,6 +1,6 @@
 const GLOBAL_STATE = require("../../global/state");
 
-function statusHandler(req, res, nxt) {
+function statusHandler(req, res) {
   res
     .status(200)
     .send({

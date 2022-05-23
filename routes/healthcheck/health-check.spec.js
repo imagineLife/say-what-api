@@ -8,7 +8,6 @@ const {
   startServer,
   stopServer,
   expressObj,
-  setupDB,
 } = require("../../server-setup");
 
 describe(HEALTH_CHECK, () => {

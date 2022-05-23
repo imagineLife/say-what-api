@@ -20,7 +20,6 @@ describe(`${ROOT}:/speechId : GET`, () => {
   let TestMongoClient;
   let localServerObj;
   let TestSpeechCollection;
-  let insertedSpeech;
   let reqURL;
   beforeAll(async () => {
     process.env.MONGO_AUTH = false;
@@ -32,13 +31,13 @@ describe(`${ROOT}:/speechId : GET`, () => {
     }
     localServerObj = await startServer(expressObj);
 
-    const db_obj = {
+    const dbObj = {
       host: 'localhost',
       port: '27017',
     };
-    TestMongoClient = await setupDB({ ...db_obj });
+    TestMongoClient = await setupDB({ ...dbObj });
 
-    TestSayWhat = TestMongoClient.registerDB('TestSayWhat');
+    const TestSayWhat = TestMongoClient.registerDB('TestSayWhat');
     TestSpeechCollection = new Crud({
       db: TestSayWhat,
       collection: 'TestSpeeches',
@@ -66,7 +65,6 @@ describe(`${ROOT}:/speechId : GET`, () => {
     try {
       // insert
       const { insertedId } = await TestSpeechCollection.createOne(mockSpeech);
-      insertedSpeech = insertedId;
       reqURL = `${ROOT}/${insertedId}`;
       const apiRes = await chai.request(localServerObj).get(reqURL);
       expect(apiRes.body.orator).toBeTruthy();
