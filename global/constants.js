@@ -3,27 +3,27 @@ const state = {
     HEALTH_CHECK: '/health-check',
     DB: {
       KILL: '/kill',
-      RESTART:'/restart',
+      RESTART: '/restart',
       ROOT: '/db',
-      STATUS: '/status'
+      STATUS: '/status',
     },
     USERS: {
       ROOT: '/users',
       BY_ID: '/:userId',
-      AUTH: '/auth'
+      AUTH: '/auth',
     },
     SPEECHES: {
       ROOT: '/speeches',
-      BY_ID: '/:speechId'
-    }
+      BY_ID: '/:speechId',
+    },
   },
   db: {
     NAME: 'SayWhat',
     collections: {
       USERS: 'Users',
-      SPEECHES: 'Speeches'
-    }
-  }
-}
+      SPEECHES: 'Speeches',
+    },
+  },
+};
 
 module.exports = state;

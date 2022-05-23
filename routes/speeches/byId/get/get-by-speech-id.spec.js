@@ -1,9 +1,18 @@
 // dependencies
 const chai = require('chai');
-const chaiHttp= require('chai-http');
-const { routes: { SPEECHES: { ROOT } } } = require('./../../../../global/constants');
-const { GLOBAL_STATE } = require('./../../../../global')
-const { startServer, stopServer, expressObj, setupDB } = require('./../../../../server-setup');
+const chaiHttp = require('chai-http');
+const {
+  routes: {
+    SPEECHES: { ROOT },
+  },
+} = require('./../../../../global/constants');
+const { GLOBAL_STATE } = require('./../../../../global');
+const {
+  startServer,
+  stopServer,
+  expressObj,
+  setupDB,
+} = require('./../../../../server-setup');
 const { Crud } = require('../../../../models');
 describe(`${ROOT}:/speechId : GET`, function () {
   chai.use(chaiHttp);
@@ -63,19 +72,17 @@ describe(`${ROOT}:/speechId : GET`, function () {
       expect(apiRes.body.date).toBeTruthy();
       expect(apiRes.body.text).toBeTruthy();
     } catch (e) {
-      throw new Error(e)
+      throw new Error(e);
     } finally {
-      await TestSpeechCollection.remove()
+      await TestSpeechCollection.remove();
     }
   });
 
-   it('returns err when collection is not stored in global state', async () => {
+  it('returns err when collection is not stored in global state', async () => {
+    GLOBAL_STATE.Collections.Speeches = null;
 
-     GLOBAL_STATE.Collections.Speeches = null;
-
-     const res = await chai.request(localServerObj).get(reqURL);
-     expect(res.status).toBe(500);
-     expect(res.body.Error).toBe('get speech by id');
-   });
+    const res = await chai.request(localServerObj).get(reqURL);
+    expect(res.status).toBe(500);
+    expect(res.body.Error).toBe('get speech by id');
+  });
 });
-

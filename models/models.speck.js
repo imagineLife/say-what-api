@@ -1,7 +1,7 @@
-const { Users } = require('.')
+const { Users } = require('.');
 describe('User model CRUD', () => {
   let dbClient;
-  // beforeAll(async () => { 
+  // beforeAll(async () => {
   //   // unauthenticated db connection
   //   dbClient = await setupDB({
   //     host: 'localhost',
@@ -14,14 +14,14 @@ describe('User model CRUD', () => {
   const mockUser = {
     first: 'joe',
     last: 'jones',
-    email: 'horse@cat.com'
-  }
+    email: 'horse@cat.com',
+  };
 
   it('Creates a user', async () => {
-    let userObj = await Users.createOne({ ...mockUser })
-    console.log('userObj')
-    console.log(userObj)
-    
-    expect(userObj.first).toBe(mockUser.first)
-  })
-})
+    let userObj = await Users.createOne({ ...mockUser });
+    console.log('userObj');
+    console.log(userObj);
+
+    expect(userObj.first).toBe(mockUser.first);
+  });
+});

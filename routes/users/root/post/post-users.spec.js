@@ -3,7 +3,12 @@ const chaiHttp = require('chai-http');
 const { expectMissingParams } = require('./../../../../lib');
 const postUsers = require('./');
 const { Crud } = require('../../../../models');
-const { setupDB, startServer, stopServer, expressObj } = require('./../../../../server-setup');
+const {
+  setupDB,
+  startServer,
+  stopServer,
+  expressObj,
+} = require('./../../../../server-setup');
 
 const {
   GLOBAL_STATE: { Collections },
@@ -19,7 +24,6 @@ describe('Users POST handler', () => {
   let TestMongoClient;
   let TestSayWhat;
   let TestUserCollection;
-  
 
   beforeAll(async () => {
     process.env.MONGO_AUTH = false;
@@ -61,36 +65,42 @@ describe('Users POST handler', () => {
   describe('fails when', () => {
     it('no request body', async () => {
       const res = await chai.request(localServerObj).post(routes.USERS.ROOT);
-      expectMissingParams(res)
+      expectMissingParams(res);
     });
     it('missing email address', async () => {
-      const res = await chai.request(localServerObj).post(routes.USERS.ROOT).send({first: 'Joe'});
-      expectMissingParams(res)
+      const res = await chai
+        .request(localServerObj)
+        .post(routes.USERS.ROOT)
+        .send({ first: 'Joe' });
+      expectMissingParams(res);
     });
-   it('missing first address', async () => {
-     const res = await chai
-       .request(localServerObj)
-       .post(routes.USERS.ROOT)
-       .set('content-type', 'application/json')
-       .send({ email: 'walker@texas.ranger' });
-     expectMissingParams(res);
-   });
+    it('missing first address', async () => {
+      const res = await chai
+        .request(localServerObj)
+        .post(routes.USERS.ROOT)
+        .set('content-type', 'application/json')
+        .send({ email: 'walker@texas.ranger' });
+      expectMissingParams(res);
+    });
   });
 
   it('succeeds', async () => {
     const EMAIL = 'test@email.address';
     const FIRST = 'mockFirstName';
-    const res = await chai.request(localServerObj).post(routes.USERS.ROOT).send({email: EMAIL, first: FIRST});
-    const { body, status } = res
+    const res = await chai
+      .request(localServerObj)
+      .post(routes.USERS.ROOT)
+      .send({ email: EMAIL, first: FIRST });
+    const { body, status } = res;
     expect(status).toBe(200);
-    expect(JSON.stringify(body)).toBe(JSON.stringify({works: 'qwer'}));
-  })
-    
-  it('ERROR when db is disconnected', async () => { 
+    expect(JSON.stringify(body)).toBe(JSON.stringify({ works: 'qwer' }));
+  });
+
+  it('ERROR when db is disconnected', async () => {
     const FAILABLE_EMAIL = 'failable@email.address';
     const FIRST = 'mockFirstName';
     await TestUserCollection.deleteOne({ id: FAILABLE_EMAIL });
-    
+
     // trigger an error with no global User val
     Collections.Users = null;
 
@@ -99,7 +109,7 @@ describe('Users POST handler', () => {
       .request(localServerObj)
       .post(routes.USERS.ROOT)
       .send({ email: FAILABLE_EMAIL, first: FIRST });
-    expect(res.status).toBe(500)
-    expect(res.body.Error).toBe('postUsers error');  
-  })
+    expect(res.status).toBe(500);
+    expect(res.body.Error).toBe('postUsers error');
+  });
 });

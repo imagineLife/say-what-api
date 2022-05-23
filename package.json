@@ -6,6 +6,10 @@
   "scripts": {
     "build": "webpack",
     "build:dev": "webpack --env mode=development",
+    "fc": "prettier --check .",
+    "f": "prettier --write .",
+    "lc": "eslint .",
+    "l": "eslint --fix .",
     "prod": "NODE_ENV=$NODE_ENV PORT=$PORT node .",
     "start:auth-db": "PORT=3000 MONGO_DB_USER=test_user MONGO_DB_PW=test_pw MONGO_DB_HOST=localhost MONGO_DB_PORT=27017 MONGO_DB_AUTH_DB=admin node .",
     "start:docker-dev": "PORT=3000 MONGO_DB_USER=test_user MONGO_DB_PW=test_pw MONGO_DB_HOST=mongobox MONGO_DB_PORT=27017 MONGO_DB_AUTH_DB=admin nodemon .",

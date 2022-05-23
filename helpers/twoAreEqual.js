@@ -1,3 +1,3 @@
-module.exports = function twoAreEqual(a,b){
-  return a === b
-}
+module.exports = function twoAreEqual(a, b) {
+  return a === b;
+};

@@ -12,6 +12,6 @@ services:
     build:
       context: .
       dockerfile: dev.Dockerfile
-    entrypoint: ["npm", "run", "start:docker-dev"]
+    entrypoint: ['npm', 'run', 'start:docker-dev']
     ports:
       - 3000:3000

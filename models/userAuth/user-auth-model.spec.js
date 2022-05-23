@@ -1,8 +1,7 @@
 const { UserAuth } = require('.');
 const { setupDB } = require('./../../server-setup');
 
-
-describe('UserAuth Model', () => { 
+describe('UserAuth Model', () => {
   const COLL_NAME = 'TestUsers';
   const DB_NAME = 'TestSayWhat';
   let TestMongoClient;
@@ -19,27 +18,32 @@ describe('UserAuth Model', () => {
     TestSayWhat = TestMongoClient.registerDB(DB_NAME);
     Cat = new UserAuth({ db: TestSayWhat, collection: COLL_NAME });
     await Cat.deleteOne({ id: 'horse@sauce.com' });
-  })
+  });
 
-  afterAll(async () => { 
+  afterAll(async () => {
     try {
-      await TestMongoClient.close()
-    } catch (e) { 
-      console.log('afterAll catch error')
-      console.log(e.message)
-      
+      await TestMongoClient.close();
+    } catch (e) {
+      console.log('afterAll catch error');
+      console.log(e.message);
     }
-  })
+  });
 
-  it('Crud.collectionName matches input param', () => { 
-    expect(Cat.collectionName).toBe(COLL_NAME)
-  })
+  it('Crud.collectionName matches input param', () => {
+    expect(Cat.collectionName).toBe(COLL_NAME);
+  });
 
-  const expectedKeys = [ 'connectionObj', 'client', 'db', 'collectionName', 'collection' ]
-  it.each(expectedKeys)(`%s key is present`, (xKey) => { 
-    const catKeys = Object.getOwnPropertyNames(Cat)
-    expect(catKeys.includes(xKey)).toBe(true)
-  })
+  const expectedKeys = [
+    'connectionObj',
+    'client',
+    'db',
+    'collectionName',
+    'collection',
+  ];
+  it.each(expectedKeys)(`%s key is present`, (xKey) => {
+    const catKeys = Object.getOwnPropertyNames(Cat);
+    expect(catKeys.includes(xKey)).toBe(true);
+  });
 
   describe('methods', () => {
     it('hashVal... returns a hash?!', () => {
@@ -54,7 +58,9 @@ describe('UserAuth Model', () => {
       try {
         await Cat.createOne({ email: 'horse' });
       } catch (e) {
-        expect(e.message).toBe(`Cannot call UserAuth createOne without a valid email address`);
+        expect(e.message).toBe(
+          `Cannot call UserAuth createOne without a valid email address`
+        );
       }
     });
 
@@ -81,8 +87,17 @@ describe('UserAuth Model', () => {
     });
 
     describe('isAnEmailString', () => {
-      const failArr = ['water@melon', '@melon.sauce', 'water.sauce', 'ice@water@melon.sause.com'];
-      const passingArr = ['juice@box.com', 'water@melon.com', 'water.melon@hotSauce.com'];
+      const failArr = [
+        'water@melon',
+        '@melon.sauce',
+        'water.sauce',
+        'ice@water@melon.sause.com',
+      ];
+      const passingArr = [
+        'juice@box.com',
+        'water@melon.com',
+        'water.melon@hotSauce.com',
+      ];
       describe('fails with...', () => {
         it.each(failArr)(`%s`, (str) => {
           expect(Cat.isAnEmailString(str)).toBe(null);
@@ -90,7 +105,9 @@ describe('UserAuth Model', () => {
       });
       describe('passes with...', () => {
         it.each(passingArr)(`%s`, (passingStr) => {
-          expect(Cat.isAnEmailString(passingStr)[0]).toBe(passingStr.toLowerCase());
+          expect(Cat.isAnEmailString(passingStr)[0]).toBe(
+            passingStr.toLowerCase()
+          );
         });
       });
     });
@@ -107,12 +124,19 @@ describe('UserAuth Model', () => {
           }
         });
 
-        const failArr = ['water@melon', '@melon.sauce', 'water.sauce', 'ice@water@melon.sause.com'];
+        const failArr = [
+          'water@melon',
+          '@melon.sauce',
+          'water.sauce',
+          'ice@water@melon.sause.com',
+        ];
         it.each(failArr)('valid email address %s', async (str) => {
           try {
             await Cat.registerEmail({ email: str });
           } catch (e) {
-            expect(e.message).toBe('Cannot call registerEmail without a valid email address');
+            expect(e.message).toBe(
+              'Cannot call registerEmail without a valid email address'
+            );
           }
         });
       });
@@ -161,11 +185,15 @@ describe('UserAuth Model', () => {
           try {
             let res = await Cat.validateEmail({ email: 'water@mel-uhn' });
           } catch (e) {
-            expect(e.message).toBe('Cannot call validateEmail without a valid email address');
+            expect(e.message).toBe(
+              'Cannot call validateEmail without a valid email address'
+            );
           }
         });
         it('user email is not present', async () => {
-          let res = await Cat.validateEmail({ email: 'thisUser@isnot.present' });
+          let res = await Cat.validateEmail({
+            email: 'thisUser@isnot.present',
+          });
           expect(res).toBe(false);
         });
         it('user email is present and registration has expired (hack for test)', async () => {
@@ -181,7 +209,9 @@ describe('UserAuth Model', () => {
           );
 
           // attempt
-          let emailValidated = await Cat.validateEmail({ email: validateEmailStr });
+          let emailValidated = await Cat.validateEmail({
+            email: validateEmailStr,
+          });
 
           // assert
           expect(emailValidated).toBe('expired');
@@ -191,7 +221,9 @@ describe('UserAuth Model', () => {
       it('returns true from email created now', async () => {
         // create user
         createUserRes = await Cat.registerEmail({ email: validateEmailStr });
-        let validateEmailRes = await Cat.validateEmail({ email: createUserRes.insertedId });
+        let validateEmailRes = await Cat.validateEmail({
+          email: createUserRes.insertedId,
+        });
         expect(validateEmailRes).toBe(true);
         // validate user
       });
@@ -206,7 +238,9 @@ describe('UserAuth Model', () => {
           try {
             await Cat.setPW({ pw: 'newPW' });
           } catch (e) {
-            expect(e.message).toBe('cannot call UserAuth.setPW without email or pw');
+            expect(e.message).toBe(
+              'cannot call UserAuth.setPW without email or pw'
+            );
           }
         });
 
@@ -214,14 +248,18 @@ describe('UserAuth Model', () => {
           try {
             await Cat.setPW({ email: 'dummy@email.com' });
           } catch (e) {
-            expect(e.message).toBe('cannot call UserAuth.setPW without email or pw');
+            expect(e.message).toBe(
+              'cannot call UserAuth.setPW without email or pw'
+            );
           }
         });
       });
 
       it('succeeds', async () => {
         createUserRes = await Cat.registerEmail({ email: validateEmailStr });
-        let validateEmailRes = await Cat.validateEmail({ email: createUserRes.insertedId });
+        let validateEmailRes = await Cat.validateEmail({
+          email: createUserRes.insertedId,
+        });
         let res = await Cat.setPW({
           email: createUserRes.insertedId,
           pw: 'new-pw-who-dis',
@@ -250,7 +288,9 @@ describe('UserAuth Model', () => {
           try {
             await Cat.validatePW({ pw: 'newPW' });
           } catch (e) {
-            expect(e.message).toBe('cannot call UserAuth.validatePW without email or pw');
+            expect(e.message).toBe(
+              'cannot call UserAuth.validatePW without email or pw'
+            );
           }
         });
 
@@ -258,7 +298,9 @@ describe('UserAuth Model', () => {
           try {
             await Cat.validatePW({ email: 'dummy@email.com' });
           } catch (e) {
-            expect(e.message).toBe('cannot call UserAuth.validatePW without email or pw');
+            expect(e.message).toBe(
+              'cannot call UserAuth.validatePW without email or pw'
+            );
           }
         });
       });
@@ -276,7 +318,10 @@ describe('UserAuth Model', () => {
             email: createUserRes.insertedId,
             pw: 'new-pw-who-dis',
           });
-          let validatePWRes = await Cat.validatePW({ email: validatePW, pw: 'failable-pw' });
+          let validatePWRes = await Cat.validatePW({
+            email: validatePW,
+            pw: 'failable-pw',
+          });
           expect(validatePWRes).toBe(false);
         });
 
@@ -286,38 +331,45 @@ describe('UserAuth Model', () => {
             email: createUserRes.insertedId,
             pw: 'new-pw-who-dis',
           });
-          let validatePWRes = await Cat.validatePW({ email: validatePW, pw: 'new-pw-who-dis' });
+          let validatePWRes = await Cat.validatePW({
+            email: validatePW,
+            pw: 'new-pw-who-dis',
+          });
           expect(validatePWRes).toBe(true);
         });
       });
     });
-    it('requestPwReset', () => { 
-      let res = Cat.requestPwReset()
-      expect(res).toBe('UserAuth requestPwReset Here')
-    })
-  })
+    it('requestPwReset', () => {
+      let res = Cat.requestPwReset();
+      expect(res).toBe('UserAuth requestPwReset Here');
+    });
+  });
 
-  it('ERR on registerEmail when no db connection', async () => { 
+  it('ERR on registerEmail when no db connection', async () => {
     try {
       await TestMongoClient.close();
-      await Cat.registerEmail({email:'failable@user.emailaddress'})
-    } catch (e) { 
-      expect(e.message).toBe('Error: MongoNotConnectedError: MongoClient must be connected to perform this operation')
+      await Cat.registerEmail({ email: 'failable@user.emailaddress' });
+    } catch (e) {
+      expect(e.message).toBe(
+        'Error: MongoNotConnectedError: MongoClient must be connected to perform this operation'
+      );
     } finally {
       await TestMongoClient.connect();
     }
-  })
-  it('ERR on setPW when no db connection', async () => { 
+  });
+  it('ERR on setPW when no db connection', async () => {
     try {
       await TestMongoClient.close();
       await Cat.setPW({
         email: 'water',
-        pw: 'new-pw-who-dis'
-      })
-    } catch (e) { 
-      expect(e.message).toBe('Error: MongoNotConnectedError: MongoClient must be connected to perform this operation')
+        pw: 'new-pw-who-dis',
+      });
+    } catch (e) {
+      expect(e.message).toBe(
+        'Error: MongoNotConnectedError: MongoClient must be connected to perform this operation'
+      );
     } finally {
       await TestMongoClient.connect();
     }
-  })
-})
+  });
+});

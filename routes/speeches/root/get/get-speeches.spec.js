@@ -1,15 +1,24 @@
 // dependencies
 const chai = require('chai');
-const chaiHttp= require('chai-http');
-const { routes: { SPEECHES: { ROOT } } } = require('./../../../../global/constants');
-const GLOBAL_STATE = require('./../../../../global/state')
-const { startServer, stopServer, expressObj, setupDB } = require('./../../../../server-setup');
+const chaiHttp = require('chai-http');
+const {
+  routes: {
+    SPEECHES: { ROOT },
+  },
+} = require('./../../../../global/constants');
+const GLOBAL_STATE = require('./../../../../global/state');
+const {
+  startServer,
+  stopServer,
+  expressObj,
+  setupDB,
+} = require('./../../../../server-setup');
 const { Crud } = require('../../../../models');
 describe(`${ROOT}: GET`, function () {
   chai.use(chaiHttp);
   let localServerObj;
   let TestMongoClient;
-  
+
   beforeAll(async function () {
     process.env.MONGO_AUTH = false;
     if (localServerObj && localServerObj.close) {
@@ -47,25 +56,25 @@ describe(`${ROOT}: GET`, function () {
 
   beforeEach(async function () {
     if (localServerObj && localServerObj.close) {
-      await stopServer(localServerObj) 
+      await stopServer(localServerObj);
     }
-    if (expressObj && expressObj.close) { 
-      await stopServer(expressObj)
+    if (expressObj && expressObj.close) {
+      await stopServer(expressObj);
     }
-    localServerObj = await startServer(expressObj)
+    localServerObj = await startServer(expressObj);
   });
 
   afterEach(async function () {
     if (localServerObj && localServerObj.close) {
-      await stopServer(localServerObj) 
+      await stopServer(localServerObj);
     }
-    if (expressObj && expressObj.close) { 
-      await stopServer(expressObj)
+    if (expressObj && expressObj.close) {
+      await stopServer(expressObj);
     }
   });
 
-  describe('succeeds', () => { 
-    it('returns 2 speeches after inserting 2 speeches', async () => { 
+  describe('succeeds', () => {
+    it('returns 2 speeches after inserting 2 speeches', async () => {
       let firstInsertedId, secondInsertedId;
       const mockOne = {
         orator: 'Test Talker',
@@ -82,28 +91,30 @@ describe(`${ROOT}: GET`, function () {
       const myArr = [mockOne, mockTwo];
       try {
         // insert
-        const { insertedId: firstSpeechId } = await TestSpeechCollection.createOne(mockOne);
-        const { insertedId: secondSpeechId } = await TestSpeechCollection.createOne(mockTwo);
-        
+        const { insertedId: firstSpeechId } =
+          await TestSpeechCollection.createOne(mockOne);
+        const { insertedId: secondSpeechId } =
+          await TestSpeechCollection.createOne(mockTwo);
+
         let { body } = await chai.request(localServerObj).get(ROOT);
-        
-        expect(typeof body).toBe('object')
-        
+
+        expect(typeof body).toBe('object');
+
         expect(body.length).toBe(2);
 
-        body.forEach((itm, idx) => {          
-          expect(itm.orator).toBe(myArr[idx].orator)
+        body.forEach((itm, idx) => {
+          expect(itm.orator).toBe(myArr[idx].orator);
           expect(itm.date).toBe(myArr[idx].date);
           expect(itm.text).toBe(myArr[idx].text);
-        })
+        });
       } catch (e) {
-        throw new Error(e)
+        throw new Error(e);
       } finally {
-        await TestSpeechCollection.remove()
+        await TestSpeechCollection.remove();
       }
-    })
-  })
-  describe('fails', () => { 
+    });
+  });
+  describe('fails', () => {
     it('returns err when collection is not stored in global state', async () => {
       GLOBAL_STATE.Collections.Speeches = null;
 
@@ -111,5 +122,5 @@ describe(`${ROOT}: GET`, function () {
       expect(res.status).toBe(500);
       expect(res.body.Error).toBe('get Speeches error');
     });
-  })
+  });
 });

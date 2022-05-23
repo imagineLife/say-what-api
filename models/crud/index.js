@@ -29,7 +29,9 @@ class Crud extends DB {
 
   async readOne(obj, optionalProjection = {}) {
     try {
-      return await this.collection.findOne(obj, { projection: optionalProjection });
+      return await this.collection.findOne(obj, {
+        projection: optionalProjection,
+      });
     } catch (e) {
       console.log(`${this.collectionName} readOne error`);
       throw new Error(e);
@@ -38,8 +40,10 @@ class Crud extends DB {
 
   async readMany(obj = {}, optionalProjection = {}) {
     try {
-      let findManyCursor = await this.collection.find(obj, { projection: optionalProjection });
-      return await findManyCursor.toArray()
+      let findManyCursor = await this.collection.find(obj, {
+        projection: optionalProjection,
+      });
+      return await findManyCursor.toArray();
     } catch (e) {
       console.log(`${this.collectionName} readMany error`);
       throw new Error(e);
@@ -62,10 +66,14 @@ class Crud extends DB {
 
   async deleteOne(deleteObj) {
     if (!deleteObj) {
-      throw new Error(`Cannot call ${this.collectionName}.deleteOne without an object param`);
+      throw new Error(
+        `Cannot call ${this.collectionName}.deleteOne without an object param`
+      );
     }
     if (!deleteObj.id) {
-      throw new Error(`Cannot call ${this.collectionName}.deleteOne without 'id' key`);
+      throw new Error(
+        `Cannot call ${this.collectionName}.deleteOne without 'id' key`
+      );
     }
     try {
       return await this.collection.deleteOne({ _id: deleteObj.id });
@@ -86,5 +94,5 @@ class Crud extends DB {
 }
 
 module.exports = {
-  Crud
-}
+  Crud,
+};

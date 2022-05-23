@@ -28,7 +28,7 @@ function assertParams(paramsObj) {
       for (let i = 0; i < requiredReqParts.length; i++) {
         let thisSource = requiredReqParts[i];
         let expectedKeys = paramsObj[thisSource];
-        
+
         /*
           loop through expected keys
           && assure the expected key is present in request source data
@@ -44,8 +44,8 @@ function assertParams(paramsObj) {
     } catch (error) {
       console.log('assertParams Error:');
       console.log(error.message);
-      console.log(error)
-      
+      console.log(error);
+
       throw new Error(error);
     }
   };

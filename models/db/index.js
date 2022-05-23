@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 const { GLOBAL_STATE } = require('./../../global');
-class DB{
+class DB {
   constructor({ connectionObj }) {
     this.connectionObj = connectionObj;
     this.client = null;
@@ -18,29 +18,35 @@ class DB{
 
     TODO: if multiple db connections get introduced,
       update GLOBAL_STATE.MONGO_CLIENT to be more accommodating
-  */ 
+  */
   async connect() {
-    try {      
+    try {
       // Connect
-      const uriStr = require('./../../database').makeConnectionString(this.connectionObj)
+      const uriStr = require('./../../database').makeConnectionString(
+        this.connectionObj
+      );
       this.client = new MongoClient(uriStr);
       await this.client.connect();
 
-      // store 
+      // store
       GLOBAL_STATE.MONGO_CONNECTED = true;
       GLOBAL_STATE.MONGO_CLIENT = this.client;
-      console.log(`SERVER: Connected to mongo db on ${this.connectionObj.host}:${this.connectionObj.port}`)
+      console.log(
+        `SERVER: Connected to mongo db on ${this.connectionObj.host}:${this.connectionObj.port}`
+      );
 
       return this.client;
     } catch (e) {
-      console.log(`DB Class connect method error:`)
+      console.log(`DB Class connect method error:`);
       console.log(e);
     }
   }
 
   async close() {
     await this.client.close();
-    console.log(`CLOSED db connection on ${this.connectionObj.host}:${this.connectionObj.port}`)
+    console.log(
+      `CLOSED db connection on ${this.connectionObj.host}:${this.connectionObj.port}`
+    );
   }
 
   // Create a new Db instance sharing the current socket connections
@@ -50,26 +56,28 @@ class DB{
   registerDB(dbName) {
     /*
       error-handling
-    */ 
-    if (!this.client) { 
-      throw new Error('attempted to registerDB without building a client: use setupDB or "new DB()" to connect to a mongo instance')
+    */
+    if (!this.client) {
+      throw new Error(
+        'attempted to registerDB without building a client: use setupDB or "new DB()" to connect to a mongo instance'
+      );
     }
-    if (!dbName) { 
-      throw new Error('missing db name string param')
+    if (!dbName) {
+      throw new Error('missing db name string param');
     }
 
-    this.db = this.client.db(dbName)
+    this.db = this.client.db(dbName);
     return this.db;
   }
 
   async getAndLogDBs() {
     let databasesList = await this.client.db().admin().listDatabases();
-    const { databases } = databasesList
-    console.table(databases)
+    const { databases } = databasesList;
+    console.table(databases);
     return databases;
-  };
+  }
 }
 
 module.exports = {
-  DB
-}
+  DB,
+};

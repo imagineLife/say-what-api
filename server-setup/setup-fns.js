@@ -1,32 +1,34 @@
-const { twoAreEqual } = require('./../helpers')
+const { twoAreEqual } = require('./../helpers');
 const { DB } = require('./../models');
-const { GLOBAL_STATE } = require('./../global')
+const { GLOBAL_STATE } = require('./../global');
 
 const PORT = process.env.PORT || 3000;
-console.log('----startup env vars----')
+console.log('----startup env vars----');
 console.table({
   NODE_ENV: process.env.NODE_ENV,
-  PORT: process.env.PORT
-})
+  PORT: process.env.PORT,
+});
 
-function logIfTrue(a,b, logString){
-  if (twoAreEqual(a,b)) {
-    console.log(logString)
+function logIfTrue(a, b, logString) {
+  if (twoAreEqual(a, b)) {
+    console.log(logString);
   }
 }
-async function stopServer(srvr){
-  console.log('CLOSING SERVER')  
-  return await srvr.close(logIfTrue(require.main, module, 'HTTP Graceful Shutdown'))
+async function stopServer(srvr) {
+  console.log('CLOSING SERVER');
+  return await srvr.close(
+    logIfTrue(require.main, module, 'HTTP Graceful Shutdown')
+  );
 }
 
-async function startServer(srvr){
+async function startServer(srvr) {
   process.on('SIGTERM', () => {
-    stopServer(srvr)
-  })
+    stopServer(srvr);
+  });
 
   return srvr.listen(PORT, () => {
-    console.log(`SERVER: http server listening on ${PORT}`)
-  })
+    console.log(`SERVER: http server listening on ${PORT}`);
+  });
 }
 
 /*
@@ -41,13 +43,13 @@ async function setupDB(params) {
     const MongoClient = new DB({
       connectionObj: {
         host: params.host,
-        port: params.port
-      }
-    })
-    await MongoClient.connect()
+        port: params.port,
+      },
+    });
+    await MongoClient.connect();
     return MongoClient;
   } catch (e) {
-    console.log(`setupDB fn error:`)
+    console.log(`setupDB fn error:`);
     console.log(e);
   }
 }
@@ -56,5 +58,5 @@ module.exports = {
   startServer,
   stopServer,
   logIfTrue,
-  setupDB
-}
+  setupDB,
+};

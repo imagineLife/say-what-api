@@ -15,9 +15,9 @@ jobs:
           mongodb-version: '4.2'
 
       # cache BEFORE npm i to leverage cache
-      # DOCS: 
+      # DOCS:
       #   https://github.com/actions/cache
-      # TODO: update to v2 
+      # TODO: update to v2
       - name: cache node-mods
         uses: actions/cache@v3
         with:
@@ -34,14 +34,14 @@ jobs:
           # first time it runs the cache, github wont find anything for the cache
           # prefix-only - the hash will be different each cache
           # must be regex matching or something
-          restore-keys:  | 
+          restore-keys: |
             ${{runner.os}}-server-node-mods-key-
-          # ONCE workflow is done, github caches the hashed package-lock with the key :) 
+          # ONCE workflow is done, github caches the hashed package-lock with the key :)
           #   a post cache step gets added to the workflow by this action lib
-      
+
       #  install deps
       - run: npm ci
-        
+
       - name: API Unit Tests
         run: npm run test:coverage
       # - uses: ArtiomTr/jest-coverage-report-action@v2
