@@ -11,6 +11,7 @@ module.exports = {
       files: ['**/*.spec.js'],
       rules: {
         'no-console': 'off',
+        'no-underscore-dangle': 'off'
       },
     },
   ],
