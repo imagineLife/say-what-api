@@ -11,7 +11,7 @@ const {
   expressObj,
   setupDB,
 } = require("../../server-setup");
-// const { MongoClient } = require('mongodb')
+
 describe(DB.ROOT, () => {
   chai.use(chaiHttp);
   let localServerObj;
@@ -26,11 +26,11 @@ describe(DB.ROOT, () => {
     }
     localServerObj = await startServer(expressObj);
 
-    const db_obj = {
+    const dbObj = {
       host: 'localhost',
       port: '27017',
     };
-    TestMongoClient = await setupDB({ ...db_obj });
+    TestMongoClient = await setupDB({ ...dbObj });
   });
 
   afterAll(async () => {
@@ -72,11 +72,11 @@ describe(`${DB.RESTART}`, () => {
     }
     localServerObj = await startServer(expressObj);
 
-    const db_obj = {
+    const dbObj = {
       host: 'localhost',
       port: '27017',
     };
-    TestMongoClient = await setupDB({ ...db_obj });
+    TestMongoClient = await setupDB({ ...dbObj });
   });
 
   afterEach(async () => {
