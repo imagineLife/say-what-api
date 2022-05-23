@@ -8,11 +8,11 @@ module.exports = {
   extends: ['airbnb', 'prettier'],
   overrides: [
     {
-      files: ["*.spec.js"],
+      files: ['**/*.spec.js'],
       rules: {
-        "no-console": "off"
-      }
-    }
+        'no-console': 'off',
+      },
+    },
   ],
   ignorePatterns: ['dist/index.js'],
   globals: {
@@ -25,5 +25,6 @@ module.exports = {
   plugins: ['prettier'],
   rules: {
     'spaced-comment': [0],
+    'no-console': [0],
   },
 };
