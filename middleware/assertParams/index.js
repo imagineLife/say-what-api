@@ -22,19 +22,19 @@
 function assertParams(paramsObj) {
   return function (req, res, next) {
     try {
-      let requiredReqParts = Object.keys(paramsObj);
+      const requiredReqParts = Object.keys(paramsObj);
 
-      //loop through params sources (body && params, both optional)
+      // loop through params sources (body && params, both optional)
       for (let i = 0; i < requiredReqParts.length; i++) {
-        let thisSource = requiredReqParts[i];
-        let expectedKeys = paramsObj[thisSource];
+        const thisSource = requiredReqParts[i];
+        const expectedKeys = paramsObj[thisSource];
 
         /*
           loop through expected keys
           && assure the expected key is present in request source data
         */
         for (let ek = 0; ek < expectedKeys.length; ek++) {
-          let thisExpectedKey = expectedKeys[ek];
+          const thisExpectedKey = expectedKeys[ek];
           if (!req[thisSource][thisExpectedKey]) {
             return res.status(422).json({ Error: 'missing required params' });
           }

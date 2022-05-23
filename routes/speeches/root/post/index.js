@@ -1,6 +1,6 @@
 const {
   GLOBAL_STATE: { Collections },
-} = require('./../../../../global');
+} = require("../../../../global");
 
 async function postASpeech(req, res, next) {
   try {
@@ -10,7 +10,7 @@ async function postASpeech(req, res, next) {
     console.log('Collections.Speeches');
     console.log(Collections.Speeches);
 
-    let dbRes = await Collections.Speeches.createOne({
+    const dbRes = await Collections.Speeches.createOne({
       orator,
       text,
       date,

@@ -1,7 +1,7 @@
 const router = require('express').Router({ mergeParams: true });
 const {
   routes: { SPEECHES },
-} = require('./../../global/constants');
+} = require("../../global/constants");
 const rootRouter = require('./root');
 const byIdRouter = require('./byId');
 

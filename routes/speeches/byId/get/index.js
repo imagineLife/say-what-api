@@ -1,7 +1,8 @@
 const {
   GLOBAL_STATE: { Collections },
-} = require('./../../../../global');
+} = require("../../../../global");
 const Oid = require('mongodb').ObjectId;
+
 async function getById(req, res, next) {
   try {
     const { speechId } = req.params;

@@ -4,7 +4,7 @@
 const router = require('express').Router({ mergeParams: true });
 const {
   routes: { USERS },
-} = require('./../../global/constants');
+} = require("../../global/constants");
 const rootRouter = require('./root');
 const byIdRouter = require('./byId');
 

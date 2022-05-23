@@ -5,21 +5,22 @@ const {
   routes: {
     SPEECHES: { ROOT },
   },
-} = require('./../../../../global/constants');
-const GLOBAL_STATE = require('./../../../../global/state');
+} = require("../../../../global/constants");
+const GLOBAL_STATE = require("../../../../global/state");
 const {
   startServer,
   stopServer,
   expressObj,
   setupDB,
-} = require('./../../../../server-setup');
+} = require("../../../../server-setup");
 const { Crud } = require('../../../../models');
-describe(`${ROOT}: GET`, function () {
+
+describe(`${ROOT}: GET`, () => {
   chai.use(chaiHttp);
   let localServerObj;
   let TestMongoClient;
 
-  beforeAll(async function () {
+  beforeAll(async () => {
     process.env.MONGO_AUTH = false;
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
@@ -43,7 +44,7 @@ describe(`${ROOT}: GET`, function () {
     GLOBAL_STATE.Collections.Speeches = TestSpeechCollection;
   });
 
-  afterAll(async function () {
+  afterAll(async () => {
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
     }
@@ -54,7 +55,7 @@ describe(`${ROOT}: GET`, function () {
     await TestMongoClient.close();
   });
 
-  beforeEach(async function () {
+  beforeEach(async () => {
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
     }
@@ -64,7 +65,7 @@ describe(`${ROOT}: GET`, function () {
     localServerObj = await startServer(expressObj);
   });
 
-  afterEach(async function () {
+  afterEach(async () => {
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
     }
@@ -75,7 +76,7 @@ describe(`${ROOT}: GET`, function () {
 
   describe('succeeds', () => {
     it('returns 2 speeches after inserting 2 speeches', async () => {
-      let firstInsertedId, secondInsertedId;
+      let firstInsertedId; let secondInsertedId;
       const mockOne = {
         orator: 'Test Talker',
         date: '14-23-2345',
@@ -96,7 +97,7 @@ describe(`${ROOT}: GET`, function () {
         const { insertedId: secondSpeechId } =
           await TestSpeechCollection.createOne(mockTwo);
 
-        let { body } = await chai.request(localServerObj).get(ROOT);
+        const { body } = await chai.request(localServerObj).get(ROOT);
 
         expect(typeof body).toBe('object');
 

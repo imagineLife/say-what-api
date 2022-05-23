@@ -40,7 +40,7 @@ class Crud extends DB {
 
   async readMany(obj = {}, optionalProjection = {}) {
     try {
-      let findManyCursor = await this.collection.find(obj, {
+      const findManyCursor = await this.collection.find(obj, {
         projection: optionalProjection,
       });
       return await findManyCursor.toArray();

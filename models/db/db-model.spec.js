@@ -1,6 +1,6 @@
-const { DB } = require('.');
 const { MongoClient } = require('mongodb');
-const { GLOBAL_STATE } = require('./../../global');
+const { DB } = require('.');
+const { GLOBAL_STATE } = require("../../global");
 
 describe('DB Model', () => {
   describe('ERR onconnect method', () => {
@@ -23,7 +23,7 @@ describe('DB Model', () => {
   });
 
   describe('methods', () => {
-    let MockDB = new DB({
+    const MockDB = new DB({
       connectionObj: {
         host: 'localhost',
         port: '27017',
@@ -34,7 +34,7 @@ describe('DB Model', () => {
       jest.spyOn(global.console, 'table');
     });
 
-    beforeEach(function () {
+    beforeEach(() => {
       process.env.MONGO_AUTH = false;
     });
 
@@ -53,7 +53,7 @@ describe('DB Model', () => {
 
     it('gets and logs dbs', async () => {
       await MockDB.connect();
-      let dbs = await MockDB.getAndLogDBs();
+      const dbs = await MockDB.getAndLogDBs();
       expect(console.table).toHaveBeenCalledTimes(1);
     });
 
@@ -84,7 +84,7 @@ describe('DB Model', () => {
         });
         const TEST_DB_STRING = 'TestDBObject';
         await WillPass.connect('TestDBHere');
-        let testDB = WillPass.registerDB(TEST_DB_STRING);
+        const testDB = WillPass.registerDB(TEST_DB_STRING);
         expect(testDB.s.namespace.db).toBe(TEST_DB_STRING);
       });
 

@@ -1,8 +1,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
-module.exports = (env) => {
-  return {
+module.exports = (env) => ({
     entry: './index.js',
     output: {
       filename: 'index.js',
@@ -14,5 +13,4 @@ module.exports = (env) => {
     target: 'node',
     externals: [nodeExternals()],
     mode: env?.mode || 'production',
-  };
-};
+  });

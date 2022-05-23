@@ -3,15 +3,15 @@
 */
 const {
   GLOBAL_STATE: { Collections },
-} = require('./../../../../global');
+} = require("../../../../global");
 
 async function postUsers(req, res, next) {
   try {
-    let {
+    const {
       body: { first, email },
     } = req;
-    let { Users } = Collections;
-    let createdUser = await Users.createOne({ email, first });
+    const { Users } = Collections;
+    const createdUser = await Users.createOne({ email, first });
     return res.status(200).json({ works: 'qwer' });
   } catch (e) {
     console.log('postUsers error:');

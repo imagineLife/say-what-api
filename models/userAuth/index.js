@@ -1,5 +1,6 @@
-const { Crud } = require('../crud');
 const crypto = require('crypto');
+const { Crud } = require('../crud');
+
 class UserAuth extends Crud {
   constructor(props) {
     super(props);
@@ -43,12 +44,13 @@ class UserAuth extends Crud {
   }
 
   registrationExpired(timeToCheck) {
-    let curTime = this.nowUTC();
+    const curTime = this.nowUTC();
     return (
       Date.parse(timeToCheck) <
       Date.parse(curTime) - this.registration_exp_duration
     );
   }
+
   /*
     Allow user-registration (see functionalities/USER_REGISTRATION.md) for more deets
     FIRST STEP in user-registration
@@ -65,7 +67,7 @@ class UserAuth extends Crud {
     }
 
     try {
-      let newUser = await this.createOne({
+      const newUser = await this.createOne({
         email,
         created_date: this.nowUTC(),
         registration_expires: this.oneHourFromNow(),
@@ -83,6 +85,7 @@ class UserAuth extends Crud {
   hashVal(str) {
     return crypto.createHash(this.hashType).update(str).digest('hex');
   }
+
   /*
     SECOND STEP in user-registration process
     - check token match
@@ -99,7 +102,7 @@ class UserAuth extends Crud {
       );
     }
 
-    let foundUser = await this.readOne(
+    const foundUser = await this.readOne(
       { _id: email },
       { registration_expires: 1 }
     );
@@ -112,9 +115,9 @@ class UserAuth extends Crud {
       this.registrationExpired(foundUser.registration_expires)
     ) {
       return 'expired';
-    } else {
+    } 
       return true;
-    }
+    
   }
 
   /*
@@ -164,7 +167,7 @@ class UserAuth extends Crud {
     }
 
     const userPW = this.hashVal(params.pw);
-    let res = await this.readOne({ _id: params.email }, { _id: 0, pw: 1 });
+    const res = await this.readOne({ _id: params.email }, { _id: 0, pw: 1 });
     return userPW == res.pw;
   }
 

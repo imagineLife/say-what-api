@@ -1,13 +1,11 @@
-const postUsers = require('./');
+const postUsers = require(".");
 
 describe('Users GET handler', () => {
   it('returns expected res', () => {
     const mockSend = jest.fn();
-    const mockStatus = (n) => {
-      return {
+    const mockStatus = (n) => ({
         send: mockSend,
-      };
-    };
+      });
     const a = {};
     const b = {
       status: mockStatus,

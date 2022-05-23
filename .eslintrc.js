@@ -3,12 +3,27 @@ module.exports = {
     browser: true,
     commonjs: true,
     es6: true,
+    jest: true,
   },
   extends: ['airbnb', 'prettier'],
-  plugins: ['prettier'],
+  overrides: [
+    {
+      files: ["*.spec.js"],
+      rules: {
+        "no-console": "off"
+      }
+    }
+  ],
+  ignorePatterns: ['dist/index.js'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  rules: {},
+  parserOptions: {
+    ecmaVersion: 2020,
+  },
+  plugins: ['prettier'],
+  rules: {
+    'spaced-comment': [0],
+  },
 };

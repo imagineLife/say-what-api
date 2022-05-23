@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
-const { GLOBAL_STATE } = require('./../../global');
+const { GLOBAL_STATE } = require("../../global");
+
 class DB {
   constructor({ connectionObj }) {
     this.connectionObj = connectionObj;
@@ -22,7 +23,7 @@ class DB {
   async connect() {
     try {
       // Connect
-      const uriStr = require('./../../database').makeConnectionString(
+      const uriStr = require("../../database").makeConnectionString(
         this.connectionObj
       );
       this.client = new MongoClient(uriStr);
@@ -71,7 +72,7 @@ class DB {
   }
 
   async getAndLogDBs() {
-    let databasesList = await this.client.db().admin().listDatabases();
+    const databasesList = await this.client.db().admin().listDatabases();
     const { databases } = databasesList;
     console.table(databases);
     return databases;

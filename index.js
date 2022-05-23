@@ -1,27 +1,27 @@
-//Dependencies
+// Dependencies
 const { twoAreEqual } = require('./helpers');
 const { expressObj, startServer, setupDB } = require('./server-setup');
 const { Crud } = require('./models');
-const { ServicesEmitter } = require('./global');
 const {
   db: {
     NAME: DB_NAME,
     collections: { USERS },
   },
 } = require('./global/constants');
-let globalContent = require('./global');
+const globalContent = require('./global');
+
 async function startApi() {
   try {
     if (!process.env.DB || process.env.DB === true) {
-      const db_obj = {
+      const dbObj = {
         username: process.env.MONGO_DB_USER,
         pw: process.env.MONGO_DB_PW,
         host: process.env.MONGO_DB_HOST,
         port: process.env.MONGO_DB_PORT,
         authDB: process.env.MONGO_DB_AUTH_DB,
       };
-      let SayWhatMongoClient = await setupDB({ ...db_obj });
-      let sayWhatDB = SayWhatMongoClient.registerDB(
+      const SayWhatMongoClient = await setupDB({ ...dbObj });
+      const sayWhatDB = SayWhatMongoClient.registerDB(
         process.env.DB_NAME || DB_NAME
       );
 
@@ -30,7 +30,7 @@ async function startApi() {
         - Users
       */
 
-      let UsersCollection = new Crud({
+      const UsersCollection = new Crud({
         db: sayWhatDB,
         collection: USERS,
       });
@@ -40,6 +40,7 @@ async function startApi() {
 
     startServer(expressObj);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
   }
 }

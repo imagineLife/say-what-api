@@ -1,7 +1,8 @@
 const { startServer, stopServer, logIfTrue } = require('./server-setup');
+const { twoAreEqual } = require('./helpers');
+
 describe('Server index & server fns', () => {
   jest.mock('./helpers');
-  const { twoAreEqual } = require('./helpers');
 
   describe('logIfTrue', () => {
     it('works with (2,2, "sauce")', () => {
@@ -21,7 +22,7 @@ describe('Server index & server fns', () => {
   describe('startServer ', () => {
     it('calls server.listen with default port', () => {
       const mockListen = jest.fn();
-      let mockServer = {
+      const mockServer = {
         listen: mockListen,
       };
       startServer(mockServer);
@@ -32,7 +33,7 @@ describe('Server index & server fns', () => {
   describe('stopServer ', () => {
     it('calls expressServer.close', () => {
       const mockCloseFn = jest.fn();
-      let closeServerMock = {
+      const closeServerMock = {
         close: mockCloseFn,
       };
       stopServer(closeServerMock);
@@ -42,7 +43,7 @@ describe('Server index & server fns', () => {
     it('logs "CLOSING SERVER" AND "HTTP Graceful Shutdown" when require.main === module', () => {
       global.console = { log: jest.fn() };
       const mockCloseFn = jest.fn();
-      let closeServerMock = {
+      const closeServerMock = {
         close: mockCloseFn,
       };
       twoAreEqual.mockImplementation(() => true);

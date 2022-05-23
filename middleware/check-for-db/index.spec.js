@@ -1,4 +1,4 @@
-const { checkForDbConnection } = require('./');
+const { checkForDbConnection } = require(".");
 
 describe('checkForDbConnection', () => {
   const mockResponse = () => {
@@ -16,7 +16,7 @@ describe('checkForDbConnection', () => {
       };
       const mockRes = mockResponse();
 
-      let res = checkForDbConnection(mockReq, mockRes, mockCB);
+      const res = checkForDbConnection(mockReq, mockRes, mockCB);
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.send).toHaveBeenCalledWith({
         Error: 'Server Error, try again shortly',

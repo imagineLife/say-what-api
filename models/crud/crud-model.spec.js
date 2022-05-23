@@ -1,5 +1,5 @@
 const { Crud } = require('.');
-const { setupDB } = require('./../../server-setup');
+const { setupDB } = require("../../server-setup");
 
 describe('Crud Model', () => {
   let TestMongoClient;
@@ -28,7 +28,7 @@ describe('Crud Model', () => {
   });
 
   it('returns an object from the nowUTC method', () => {
-    let res = Cat.nowUTC();
+    const res = Cat.nowUTC();
     expect(typeof res).toBe('object');
   });
 
@@ -50,7 +50,7 @@ describe('Crud Model', () => {
 
   describe('methods work with persistent object', () => {
     it('createOne', async () => {
-      let testObj = { dog: 'horse' };
+      const testObj = { dog: 'horse' };
       testCreatedObject = await Cat.createOne(testObj);
       expect(Object.keys(testCreatedObject).toString()).toBe(
         'acknowledged,insertedId'
@@ -58,7 +58,7 @@ describe('Crud Model', () => {
       expect(testCreatedObject.acknowledged).toBe(true);
     });
     it('readOne', async () => {
-      let testFoundObj = await Cat.readOne({
+      const testFoundObj = await Cat.readOne({
         _id: testCreatedObject.insertedId,
       });
       expect(testCreatedObject.insertedId.toString()).toBe(
@@ -69,12 +69,12 @@ describe('Crud Model', () => {
     it('readMany', async () => {
       const testSecondObj = { cat: 'ralph' };
       const testSecondCreatedObject = await Cat.createOne(testSecondObj);
-      let findManyRes = await Cat.readMany();
+      const findManyRes = await Cat.readMany();
       expect(await findManyRes.length).toBe(2);
     });
     describe('updateOne', () => {
       const updateObj = { $set: { water: 'melon' } };
-      let expectedResObjKeys = {
+      const expectedResObjKeys = {
         acknowledged: true,
         modifiedCount: 1,
         upsertedId: null,
@@ -103,7 +103,7 @@ describe('Crud Model', () => {
         expect(testUpdateRes.matchedCount).toBe(1);
       });
       it('find obj and asserts updated key/val is present', async () => {
-        let found = await await Cat.readOne({
+        const found = await await Cat.readOne({
           _id: testCreatedObject.insertedId,
         });
         expect(found.water).toBe('melon');
@@ -143,10 +143,10 @@ describe('Crud Model', () => {
       describe('works', () => {
         it('finds, deletes, can not find the record', async () => {
           // find one
-          let deleteFoundObj = await Cat.readOne();
+          const deleteFoundObj = await Cat.readOne();
           expect(deleteFoundObj._id).toBeTruthy();
 
-          let deletedObj = await Cat.deleteOne({ id: deleteFoundObj._id });
+          const deletedObj = await Cat.deleteOne({ id: deleteFoundObj._id });
           expect(JSON.stringify(deletedObj)).toBe(
             JSON.stringify({ acknowledged: true, deletedCount: 1 })
           );
@@ -161,7 +161,7 @@ describe('Crud Model', () => {
           .spyOn(Cat.collection, 'drop')
           .mockResolvedValueOnce(MOCK_RETURN);
         try {
-          let testRes = await Cat.remove();
+          const testRes = await Cat.remove();
           expect(testRes).toBe(MOCK_RETURN);
         } catch (e) {
           console.log('drop test err');
@@ -177,7 +177,7 @@ describe('Crud Model', () => {
     });
 
     it('createOne', async () => {
-      let testObj = { failable: 'obj' };
+      const testObj = { failable: 'obj' };
 
       try {
         await Cat.createOne(testObj);

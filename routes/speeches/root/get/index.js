@@ -1,4 +1,4 @@
-const { GLOBAL_STATE } = require('./../../../../global');
+const { GLOBAL_STATE } = require("../../../../global");
 
 async function getSpeeches(req, res, next) {
   try {

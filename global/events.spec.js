@@ -1,5 +1,6 @@
 const { ServicesEmitter } = require('./events');
 const GLOBAL_STATE = require('./state');
+
 describe('ServicesEmitter: ORDERED', () => {
   it('default GLOBAL_STATE val is fals', () => {
     expect(GLOBAL_STATE.MONGO_CONNECTED).toBe(false);

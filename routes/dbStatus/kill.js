@@ -1,5 +1,5 @@
-const { ServicesEmitter } = require('./../../global/events');
-const GLOBAL_STATE = require('./../../global/state');
+const { ServicesEmitter } = require("../../global/events");
+const GLOBAL_STATE = require("../../global/state");
 
 async function killHandler(req, res, nxt) {
   ServicesEmitter.emit('DB_DISCONNECT', false);

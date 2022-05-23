@@ -5,20 +5,20 @@ const {
   routes: {
     USERS: { ROOT, BY_ID },
   },
-} = require('./../../../../global/constants');
-const GLOBAL_STATE = require('./../../../../global/state');
+} = require("../../../../global/constants");
+const GLOBAL_STATE = require("../../../../global/state");
 const {
   startServer,
   stopServer,
   expressObj,
   setupDB,
-} = require('./../../../../server-setup');
+} = require("../../../../server-setup");
 // const { MongoClient } = require('mongodb')
-describe(`${ROOT}${BY_ID} - GET`, function () {
+describe(`${ROOT}${BY_ID} - GET`, () => {
   chai.use(chaiHttp);
   let localServerObj;
   // let TestMongoClient;
-  beforeEach(async function () {
+  beforeEach(async () => {
     process.env.MONGO_AUTH = false;
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
@@ -35,7 +35,7 @@ describe(`${ROOT}${BY_ID} - GET`, function () {
     TestMongoClient = await setupDB({ ...db_obj });
   });
 
-  afterEach(async function () {
+  afterEach(async () => {
     // await TestMongoClient.close()
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);

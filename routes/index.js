@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {
   routes: { DB, HEALTH_CHECK, SPEECHES, USERS },
-} = require('./../global/constants');
+} = require("../global/constants");
 const healthCheckHandler = require('./healthcheck');
 const dbStatusHandler = require('./dbStatus');
 const speechesHandler = require('./speeches');

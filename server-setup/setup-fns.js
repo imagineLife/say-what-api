@@ -1,6 +1,6 @@
-const { twoAreEqual } = require('./../helpers');
-const { DB } = require('./../models');
-const { GLOBAL_STATE } = require('./../global');
+const { twoAreEqual } = require("../helpers");
+const { DB } = require("../models");
+const { GLOBAL_STATE } = require("../global");
 
 const PORT = process.env.PORT || 3000;
 console.log('----startup env vars----');

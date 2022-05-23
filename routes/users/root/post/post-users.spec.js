@@ -1,19 +1,19 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { expectMissingParams } = require('./../../../../lib');
-const postUsers = require('./');
+const { expectMissingParams } = require("../../../../lib");
+const postUsers = require(".");
 const { Crud } = require('../../../../models');
 const {
   setupDB,
   startServer,
   stopServer,
   expressObj,
-} = require('./../../../../server-setup');
+} = require("../../../../server-setup");
 
 const {
   GLOBAL_STATE: { Collections },
   routes,
-} = require('./../../../../global');
+} = require("../../../../global");
 
 describe('Users POST handler', () => {
   chai.use(chaiHttp);

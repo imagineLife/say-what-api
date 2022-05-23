@@ -1,11 +1,11 @@
 (() => {
-  var e = {
+  const e = {
       372: (e, t, o) => {
-        const { MongoClient: r } = o(13),
-          { GLOBAL_STATE: s } = o(97),
-          { DB: n } = o(103);
+        const { MongoClient: r } = o(13);
+          const { GLOBAL_STATE: s } = o(97);
+          const { DB: n } = o(103);
         e.exports = {
-          makeConnectionString: function ({
+          makeConnectionString ({
             username: e,
             pw: t,
             host: o,
@@ -22,7 +22,7 @@
                 (console.log('Expected auth connection to db'),
                 'Cannot create db connection with missing param')
               );
-            return 'false' === process?.env?.MONGO_AUTH?.toString()
+            return process?.env?.MONGO_AUTH?.toString() === 'false'
               ? `mongodb://${o}:${r}/?connectTimeoutMS=2500`
               : `mongodb://${e}:${t}@${o}:${r}/?authSource=${s}`;
           },
@@ -48,8 +48,8 @@
         };
       },
       305: (e, t, o) => {
-        const { EventEmitter: r } = o(239),
-          s = o(607);
+        const { EventEmitter: r } = o(239);
+          const s = o(607);
         function n(e) {
           s.MONGO_CONNECTED = e;
         }
@@ -59,9 +59,9 @@
           (e.exports = { ServicesEmitter: c, setConnected: n });
       },
       97: (e, t, o) => {
-        const r = o(607),
-          s = o(305),
-          n = o(343);
+        const r = o(607);
+          const s = o(305);
+          const n = o(343);
         e.exports = { GLOBAL_STATE: r, ServicesEmitter: s, routes: n.routes };
       },
       607: (e) => {
@@ -83,17 +83,17 @@
       },
       10: (e, t, o) => {
         e = o.nmd(e);
-        const { twoAreEqual: r } = o(614),
-          { expressObj: s, startServer: n, setupDB: c } = o(687),
-          { Crud: a } = o(103),
-          { ServicesEmitter: i } = o(97),
-          {
+        const { twoAreEqual: r } = o(614);
+          const { expressObj: s, startServer: n, setupDB: c } = o(687);
+          const { Crud: a } = o(103);
+          const { ServicesEmitter: i } = o(97);
+          const {
             db: {
               NAME: l,
               collections: { USERS: u },
             },
           } = o(343);
-        let h = o(97);
+        const h = o(97);
         async function p() {
           try {
             if (!process.env.DB || !0 === process.env.DB) {
@@ -104,8 +104,8 @@
                 port: process.env.MONGO_DB_PORT,
                 authDB: process.env.MONGO_DB_AUTH_DB,
               };
-              let t = (await c({ ...e })).registerDB(process.env.DB_NAME || l),
-                o = new a({ db: t, collection: u });
+              const t = (await c({ ...e })).registerDB(process.env.DB_NAME || l);
+                const o = new a({ db: t, collection: u });
               h.GLOBAL_STATE.Collections.Users = o;
             }
             n(s);
@@ -117,15 +117,15 @@
       },
       778: (e) => {
         e.exports = {
-          assertParams: function (e) {
+          assertParams (e) {
             return function (t, o, r) {
               try {
-                let s = Object.keys(e);
+                const s = Object.keys(e);
                 for (let r = 0; r < s.length; r++) {
-                  let n = s[r],
-                    c = e[n];
+                  const n = s[r];
+                    const c = e[n];
                   for (let e = 0; e < c.length; e++) {
-                    let r = c[e];
+                    const r = c[e];
                     if (!t[n][r])
                       return o
                         .status(422)
@@ -156,17 +156,17 @@
         };
       },
       533: (e, t, o) => {
-        const r = o(653),
-          s = o(161);
+        const r = o(653);
+          const s = o(161);
         e.exports = { adminAuth: r, auth: s };
       },
       961: (e, t, o) => {
         const { GLOBAL_STATE: r } = o(97);
         e.exports = {
-          checkForDbConnection: function (e, t, o) {
-            const s = !e.path.match('^/db'),
-              n = !e.path.match('^/health-check'),
-              c = !0 !== r?.MONGO_CLIENT?.topology?.isConnected();
+          checkForDbConnection (e, t, o) {
+            const s = !e.path.match('^/db');
+              const n = !e.path.match('^/health-check');
+              const c = !0 !== r?.MONGO_CLIENT?.topology?.isConnected();
             if (s && n && c)
               return t
                 .status(500)
@@ -176,9 +176,9 @@
         };
       },
       546: (e, t, o) => {
-        const { assertParams: r } = o(778),
-          { auth: s, adminAuth: n } = o(533),
-          { checkForDbConnection: c } = o(961);
+        const { assertParams: r } = o(778);
+          const { auth: s, adminAuth: n } = o(533);
+          const { checkForDbConnection: c } = o(961);
         e.exports = {
           adminAuth: n,
           assertParams: r,
@@ -196,9 +196,11 @@
                 (this.collectionName = e.collection),
                 (this.collection = this.db.collection(e.collection));
             }
+
             nowUTC() {
               return new Date(new Date().toUTCString());
             }
+
             async createOne(e) {
               try {
                 return await this.collection.insertOne(e);
@@ -209,6 +211,7 @@
                 );
               }
             }
+
             async readOne(e, t = {}) {
               try {
                 return await this.collection.findOne(e, { projection: t });
@@ -219,9 +222,10 @@
                 );
               }
             }
+
             async readMany(e = {}, t = {}) {
               try {
-                let o = await this.collection.find(e, { projection: t });
+                const o = await this.collection.find(e, { projection: t });
                 return await o.toArray();
               } catch (e) {
                 throw (
@@ -230,6 +234,7 @@
                 );
               }
             }
+
             async updateOne(e, t) {
               if (!e || !t)
                 throw new Error(
@@ -244,6 +249,7 @@
                 );
               }
             }
+
             async deleteOne(e) {
               if (!e)
                 throw new Error(
@@ -262,6 +268,7 @@
                 );
               }
             }
+
             async remove() {
               try {
                 return await this.collection.drop();
@@ -276,13 +283,14 @@
         };
       },
       135: (e, t, o) => {
-        const { MongoClient: r } = o(13),
-          { GLOBAL_STATE: s } = o(97);
+        const { MongoClient: r } = o(13);
+          const { GLOBAL_STATE: s } = o(97);
         e.exports = {
           DB: class {
             constructor({ connectionObj: e }) {
               (this.connectionObj = e), (this.client = null), (this.db = null);
             }
+
             async connect() {
               try {
                 const e = o(372).makeConnectionString(this.connectionObj);
@@ -300,12 +308,14 @@
                 console.log('DB Class connect method error:'), console.log(e);
               }
             }
+
             async close() {
               await this.client.close(),
                 console.log(
                   `CLOSED db connection on ${this.connectionObj.host}:${this.connectionObj.port}`
                 );
             }
+
             registerDB(e) {
               if (!this.client)
                 throw new Error(
@@ -314,8 +324,9 @@
               if (!e) throw new Error('missing db name string param');
               return (this.db = this.client.db(e)), this.db;
             }
+
             async getAndLogDBs() {
-              let e = await this.client.db().admin().listDatabases();
+              const e = await this.client.db().admin().listDatabases();
               const { databases: t } = e;
               return console.table(t), t;
             }
@@ -323,14 +334,14 @@
         };
       },
       103: (e, t, o) => {
-        const { DB: r } = o(135),
-          { Crud: s } = o(180),
-          { UserAuth: n } = o(917);
+        const { DB: r } = o(135);
+          const { Crud: s } = o(180);
+          const { UserAuth: n } = o(917);
         e.exports = { DB: r, Crud: s, UserAuth: n };
       },
       917: (e, t, o) => {
-        const { Crud: r } = o(180),
-          s = o(113);
+        const { Crud: r } = o(180);
+          const s = o(113);
         e.exports = {
           UserAuth: class extends r {
             constructor(e) {
@@ -340,6 +351,7 @@
                 (this.registration_exp_duration = 36e5),
                 (this.hashType = 'sha512');
             }
+
             async createOne(e) {
               if (!this.isAnEmailString(e.email))
                 throw new Error(
@@ -354,6 +366,7 @@
                 );
               }
             }
+
             isAnEmailString(e) {
               return String(e)
                 .toLowerCase()
@@ -361,17 +374,20 @@
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 );
             }
+
             oneHourFromNow() {
-              const e = this.nowUTC(),
-                t = Date.parse(e) + this.registration_exp_duration;
+              const e = this.nowUTC();
+                const t = Date.parse(e) + this.registration_exp_duration;
               return new Date(t);
             }
+
             registrationExpired(e) {
-              let t = this.nowUTC();
+              const t = this.nowUTC();
               return (
                 Date.parse(e) < Date.parse(t) - this.registration_exp_duration
               );
             }
+
             async registerEmail({ email: e }) {
               if (!this.isAnEmailString(e))
                 throw new Error(
@@ -392,15 +408,17 @@
                 );
               }
             }
+
             hashVal(e) {
               return s.createHash(this.hashType).update(e).digest('hex');
             }
+
             async validateEmail({ email: e }) {
               if (!this.isAnEmailString(e))
                 throw new Error(
                   'Cannot call validateEmail without a valid email address'
                 );
-              let t = await this.readOne(
+              const t = await this.readOne(
                 { _id: e },
                 { registration_expires: 1 }
               );
@@ -411,15 +429,16 @@
                   'expired')
               );
             }
+
             async setPW(e) {
               if (!e.email || !e.pw)
                 throw new Error(
                   'cannot call UserAuth.setPW without email or pw'
                 );
-              const t = this.nowUTC(),
-                o = this.hashVal(e.pw),
-                r = { _id: e.email },
-                s = [
+              const t = this.nowUTC();
+                const o = this.hashVal(e.pw);
+                const r = { _id: e.email };
+                const s = [
                   { $set: { lats_updated: t, pw: o } },
                   { $unset: 'registration_expired' },
                 ];
@@ -429,6 +448,7 @@
                 throw (console.log('UserAuth setPW Error'), new Error(e));
               }
             }
+
             async validatePW(e) {
               if (!e.email || !e.pw)
                 throw new Error(
@@ -439,6 +459,7 @@
                 (await this.readOne({ _id: e.email }, { _id: 0, pw: 1 })).pw
               );
             }
+
             requestPwReset() {
               return 'UserAuth requestPwReset Here';
             }
@@ -446,11 +467,11 @@
         };
       },
       225: (e, t, o) => {
-        const r = o(45),
-          s = o(319),
-          n = o(805),
-          c = o(860).Router(),
-          {
+        const r = o(45);
+          const s = o(319);
+          const n = o(805);
+          const c = o(860).Router();
+          const {
             routes: {
               DB: { KILL: a, RESTART: i, STATUS: l },
             },
@@ -458,8 +479,8 @@
         c.get(l, n), c.get(a, r), c.get(i, s), (e.exports = c);
       },
       45: (e, t, o) => {
-        const { ServicesEmitter: r } = o(305),
-          s = o(607);
+        const { ServicesEmitter: r } = o(305);
+          const s = o(607);
         e.exports = async function (e, t, o) {
           r.emit('DB_DISCONNECT', !1),
             await s.MONGO_CLIENT.topology.close(),
@@ -469,8 +490,8 @@
         };
       },
       319: (e, t, o) => {
-        const { ServicesEmitter: r } = o(305),
-          s = o(607);
+        const { ServicesEmitter: r } = o(305);
+          const s = o(607);
         e.exports = async function (e, t) {
           try {
             await s.MONGO_CLIENT.connect(),
@@ -479,7 +500,7 @@
                 .status(200)
                 .send({
                   MONGO_CONNECTED:
-                    'connected' === s.MONGO_CLIENT.topology.s.state,
+                    s.MONGO_CLIENT.topology.s.state === 'connected',
                 });
           } catch (e) {
             console.log('restart handler err:'),
@@ -497,21 +518,21 @@
         };
       },
       820: (e, t, o) => {
-        var r = o(860).Router();
-        r.get('/', function (e, t) {
+        const r = o(860).Router();
+        r.get('/', (e, t) => {
           t.status(200).send('server is up & running!');
         }),
           (e.exports = r);
       },
       310: (e, t, o) => {
-        const r = o(860).Router(),
-          {
+        const r = o(860).Router();
+          const {
             routes: { DB: s, HEALTH_CHECK: n, SPEECHES: c, USERS: a },
-          } = o(343),
-          i = o(820),
-          l = o(225),
-          u = o(342),
-          h = o(408);
+          } = o(343);
+          const i = o(820);
+          const l = o(225);
+          const u = o(342);
+          const h = o(408);
         r.use(s.ROOT, l),
           r.use(n, i),
           r.use(c.ROOT, u),
@@ -521,12 +542,12 @@
       626: (e, t, o) => {
         const {
             GLOBAL_STATE: { Collections: r },
-          } = o(97),
-          s = o(13).ObjectId;
+          } = o(97);
+          const s = o(13).ObjectId;
         e.exports = async function (e, t, o) {
           try {
-            const { speechId: o } = e.params,
-              n = await r.Speeches.readOne({ _id: s(o) });
+            const { speechId: o } = e.params;
+              const n = await r.Speeches.readOne({ _id: s(o) });
             return delete n._id, t.status(200).json(n);
           } catch (e) {
             return (
@@ -538,17 +559,17 @@
         };
       },
       249: (e, t, o) => {
-        const r = o(860).Router({ mergeParams: !0 }),
-          s = o(626);
+        const r = o(860).Router({ mergeParams: !0 });
+          const s = o(626);
         r.get('/', s), (e.exports = r);
       },
       342: (e, t, o) => {
-        const r = o(860).Router({ mergeParams: !0 }),
-          {
+        const r = o(860).Router({ mergeParams: !0 });
+          const {
             routes: { SPEECHES: s },
-          } = o(343),
-          n = o(695),
-          c = o(249);
+          } = o(343);
+          const n = o(695);
+          const c = o(249);
         r.use('/:speechId', c), r.use('/?', n), (e.exports = r);
       },
       734: (e, t, o) => {
@@ -567,10 +588,10 @@
         };
       },
       695: (e, t, o) => {
-        const r = o(860).Router(),
-          s = o(734),
-          n = o(12),
-          { assertParams: c } = o(546);
+        const r = o(860).Router();
+          const s = o(734);
+          const n = o(12);
+          const { assertParams: c } = o(546);
         r.get('/', s),
           r.post('/', c({ body: ['orator', 'date', 'text'] }), n),
           (e.exports = r);
@@ -585,7 +606,7 @@
             console.log({ orator: o, text: s, date: n }),
               console.log('Collections.Speeches'),
               console.log(r.Speeches);
-            let c = await r.Speeches.createOne({ orator: o, text: s, date: n });
+            const c = await r.Speeches.createOne({ orator: o, text: s, date: n });
             return (
               console.log('dbRes'),
               console.log(c),
@@ -606,9 +627,9 @@
         };
       },
       7: (e, t, o) => {
-        const r = o(860).Router({ mergeParams: !0 }),
-          s = o(210),
-          n = o(363);
+        const r = o(860).Router({ mergeParams: !0 });
+          const s = o(210);
+          const n = o(363);
         r.get('/', s), r.patch('/', n), (e.exports = r);
       },
       363: (e) => {
@@ -617,12 +638,12 @@
         };
       },
       408: (e, t, o) => {
-        const r = o(860).Router({ mergeParams: !0 }),
-          {
+        const r = o(860).Router({ mergeParams: !0 });
+          const {
             routes: { USERS: s },
-          } = o(343),
-          n = o(475),
-          c = o(7);
+          } = o(343);
+          const n = o(475);
+          const c = o(7);
         r.use(s.BY_ID, c), r.use('/?', n), (e.exports = r);
       },
       398: (e) => {
@@ -631,10 +652,10 @@
         };
       },
       475: (e, t, o) => {
-        const r = o(860).Router({ mergeParams: !0 }),
-          s = o(398),
-          n = o(171),
-          { assertParams: c } = o(546);
+        const r = o(860).Router({ mergeParams: !0 });
+          const s = o(398);
+          const n = o(171);
+          const { assertParams: c } = o(546);
         r.get('/', s),
           r.post('/', c({ body: ['email', 'first'] }), n),
           (e.exports = r);
@@ -645,10 +666,10 @@
         } = o(97);
         e.exports = async function (e, t, o) {
           try {
-            let {
+            const {
                 body: { first: o, email: s },
-              } = e,
-              { Users: n } = r;
+              } = e;
+              const { Users: n } = r;
             return (
               await n.createOne({ email: s, first: o }),
               t.status(200).json({ works: 'qwer' })
@@ -661,12 +682,12 @@
         };
       },
       937: (e, t, o) => {
-        const r = o(860),
-          s = o(310),
-          n = o(986),
-          { GLOBAL_STATE: c, ServicesEmitter: a } = o(97),
-          { checkForDbConnection: i } = o(546),
-          l = (r.Router(), r());
+        const r = o(860);
+          const s = o(310);
+          const n = o(986);
+          const { GLOBAL_STATE: c, ServicesEmitter: a } = o(97);
+          const { checkForDbConnection: i } = o(546);
+          const l = (r.Router(), r());
         l.use(r.static('./../static')),
           l.use(n.urlencoded({ extended: !1 })),
           l.use(n.json()),
@@ -675,8 +696,8 @@
           (e.exports = { expressObj: l });
       },
       687: (e, t, o) => {
-        const { expressObj: r } = o(937),
-          { startServer: s, stopServer: n, logIfTrue: c, setupDB: a } = o(442);
+        const { expressObj: r } = o(937);
+          const { startServer: s, stopServer: n, logIfTrue: c, setupDB: a } = o(442);
         e.exports = {
           expressObj: r,
           startServer: s,
@@ -687,10 +708,10 @@
       },
       442: (e, t, o) => {
         e = o.nmd(e);
-        const { twoAreEqual: r } = o(614),
-          { DB: s } = o(103),
-          { GLOBAL_STATE: n } = o(97),
-          c = process.env.PORT || 3e3;
+        const { twoAreEqual: r } = o(614);
+          const { DB: s } = o(103);
+          const { GLOBAL_STATE: n } = o(97);
+          const c = process.env.PORT || 3e3;
         function a(e, t, o) {
           r(e, t) && console.log(o);
         }
@@ -703,7 +724,7 @@
         console.log('----startup env vars----'),
           console.table({ NODE_ENV: 'production', PORT: process.env.PORT }),
           (e.exports = {
-            startServer: async function (e) {
+            async startServer (e) {
               return (
                 process.on('SIGTERM', () => {
                   i(e);
@@ -715,7 +736,7 @@
             },
             stopServer: i,
             logIfTrue: a,
-            setupDB: async function (e) {
+            async setupDB (e) {
               try {
                 const t = new s({
                   connectionObj: { host: e.host, port: e.port },
@@ -728,31 +749,31 @@
           });
       },
       986: (e) => {
-        'use strict';
+        
         e.exports = require('body-parser');
       },
       239: (e) => {
-        'use strict';
+        
         e.exports = require('events');
       },
       860: (e) => {
-        'use strict';
+        
         e.exports = require('express');
       },
       13: (e) => {
-        'use strict';
+        
         e.exports = require('mongodb');
       },
       113: (e) => {
-        'use strict';
+        
         e.exports = require('crypto');
       },
-    },
-    t = {};
+    };
+    const t = {};
   function o(r) {
-    var s = t[r];
+    const s = t[r];
     if (void 0 !== s) return s.exports;
-    var n = (t[r] = { id: r, loaded: !1, exports: {} });
+    const n = (t[r] = { id: r, loaded: !1, exports: {} });
     return e[r](n, n.exports, o), (n.loaded = !0), n.exports;
   }
   (o.c = t),

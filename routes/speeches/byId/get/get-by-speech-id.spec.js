@@ -5,23 +5,24 @@ const {
   routes: {
     SPEECHES: { ROOT },
   },
-} = require('./../../../../global/constants');
-const { GLOBAL_STATE } = require('./../../../../global');
+} = require("../../../../global/constants");
+const { GLOBAL_STATE } = require("../../../../global");
 const {
   startServer,
   stopServer,
   expressObj,
   setupDB,
-} = require('./../../../../server-setup');
+} = require("../../../../server-setup");
 const { Crud } = require('../../../../models');
-describe(`${ROOT}:/speechId : GET`, function () {
+
+describe(`${ROOT}:/speechId : GET`, () => {
   chai.use(chaiHttp);
   let TestMongoClient;
   let localServerObj;
   let TestSpeechCollection;
   let insertedSpeech;
   let reqURL;
-  beforeAll(async function () {
+  beforeAll(async () => {
     process.env.MONGO_AUTH = false;
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
@@ -45,7 +46,7 @@ describe(`${ROOT}:/speechId : GET`, function () {
     GLOBAL_STATE.Collections.Speeches = TestSpeechCollection;
   });
 
-  afterAll(async function () {
+  afterAll(async () => {
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
     }

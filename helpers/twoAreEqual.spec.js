@@ -1,4 +1,5 @@
-const { twoAreEqual } = require('./');
+const { twoAreEqual } = require(".");
+
 describe('Server', () => {
   describe('twoAreEqual', () => {
     it('true with 2 & 2', () => {

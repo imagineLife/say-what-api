@@ -1,4 +1,4 @@
-const GLOBAL_STATE = require('./../../global/state');
+const GLOBAL_STATE = require("../../global/state");
 
 function statusHandler(req, res, nxt) {
   res

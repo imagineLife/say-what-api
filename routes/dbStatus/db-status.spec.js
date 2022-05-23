@@ -3,20 +3,20 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const {
   routes: { DB },
-} = require('./../../global/constants');
-const GLOBAL_STATE = require('./../../global/state');
+} = require("../../global/constants");
+const GLOBAL_STATE = require("../../global/state");
 const {
   startServer,
   stopServer,
   expressObj,
   setupDB,
-} = require('./../../server-setup');
+} = require("../../server-setup");
 // const { MongoClient } = require('mongodb')
-describe(DB.ROOT, function () {
+describe(DB.ROOT, () => {
   chai.use(chaiHttp);
   let localServerObj;
   let TestMongoClient;
-  beforeAll(async function () {
+  beforeAll(async () => {
     process.env.MONGO_AUTH = false;
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
@@ -33,7 +33,7 @@ describe(DB.ROOT, function () {
     TestMongoClient = await setupDB({ ...db_obj });
   });
 
-  afterAll(async function () {
+  afterAll(async () => {
     await TestMongoClient.close();
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
@@ -44,13 +44,13 @@ describe(DB.ROOT, function () {
     await TestMongoClient.close();
   });
 
-  it(`${DB.STATUS} returns db Status obj`, async function () {
+  it(`${DB.STATUS} returns db Status obj`, async () => {
     const res = await chai
       .request(localServerObj)
       .get(`${DB.ROOT}${DB.STATUS}`);
     expect(Object.keys(res.body)[0]).toBe('MONGO_CONNECTED');
   });
-  it(`${DB.KILL} returns down val`, async function () {
+  it(`${DB.KILL} returns down val`, async () => {
     const res = await chai.request(localServerObj).get(`${DB.ROOT}${DB.KILL}`);
     expect(JSON.stringify(res.body)).toBe(
       JSON.stringify({ MONGO_CONNECTED: false })
@@ -62,7 +62,7 @@ describe(`${DB.RESTART}`, () => {
   chai.use(chaiHttp);
   let localServerObj;
   let TestMongoClient;
-  beforeEach(async function () {
+  beforeEach(async () => {
     process.env.MONGO_AUTH = false;
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
@@ -79,7 +79,7 @@ describe(`${DB.RESTART}`, () => {
     TestMongoClient = await setupDB({ ...db_obj });
   });
 
-  afterEach(async function () {
+  afterEach(async () => {
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
     }
@@ -89,7 +89,7 @@ describe(`${DB.RESTART}`, () => {
 
     await TestMongoClient.close();
   });
-  it(`returns up val`, async function () {
+  it(`returns up val`, async () => {
     const res = await chai
       .request(localServerObj)
       .get(`${DB.ROOT}${DB.RESTART}`);
@@ -99,7 +99,7 @@ describe(`${DB.RESTART}`, () => {
   });
 
   it('throws err when GLOBAL mongo client is missing', async () => {
-    let tempClient = GLOBAL_STATE.MONGO_CLIENT;
+    const tempClient = GLOBAL_STATE.MONGO_CLIENT;
     GLOBAL_STATE.MONGO_CLIENT = null;
     const res = await chai
       .request(localServerObj)

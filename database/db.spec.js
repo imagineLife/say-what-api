@@ -1,9 +1,6 @@
 const {
   makeConnectionString,
-  getAndLogDBs,
-  // setupCollection
 } = require('.');
-const { MongoClient } = require('mongodb');
 
 /*
   username,
@@ -17,14 +14,14 @@ describe('DB Setup', () => {
     describe('fails without', () => {
       describe('host & port, required always', () => {
         it('port', () => {
-          let these = {};
+          const these = {};
           these.host = 'localhost';
           expect(() => {
             makeConnectionString(these);
           }).toThrow();
         });
         it('host', () => {
-          let these = {};
+          const these = {};
           these.port = '27017';
           expect(() => {
             makeConnectionString(these);
@@ -32,7 +29,8 @@ describe('DB Setup', () => {
         });
       });
       const mockProps = {};
-      (mockProps.username = 'water'), (mockProps.pw = 'melon');
+      mockProps.username = 'water';
+      mockProps.pw = 'melon';
       mockProps.host = 'chicken';
       mockProps.port = 'gritz';
       it('authDB', () => {
@@ -41,7 +39,7 @@ describe('DB Setup', () => {
         }).toThrow();
       });
       it('pw', () => {
-        let these = { ...mockProps };
+        const these = { ...mockProps };
         these.authDB = 'sauce';
         delete these.pw;
         expect(() => {
@@ -49,7 +47,7 @@ describe('DB Setup', () => {
         }).toThrow();
       });
       it('username', () => {
-        let these = { ...mockProps };
+        const these = { ...mockProps };
         these.authDB = 'sauce';
         delete these.username;
         expect(() => {
@@ -60,11 +58,12 @@ describe('DB Setup', () => {
     describe('succeeds', () => {
       it('AUTH with all props', () => {
         const mockProps = {};
-        (mockProps.username = 'water'), (mockProps.pw = 'melon');
+        mockProps.username = 'water';
+        mockProps.pw = 'melon';
         mockProps.host = 'chicken';
         mockProps.port = 'greitz';
         mockProps.authDB = 'qwer';
-        let EXPECTED_STR = `mongodb://${mockProps.username}:${mockProps.pw}@${mockProps.host}:${mockProps.port}/?authSource=${mockProps.authDB}`;
+        const EXPECTED_STR = `mongodb://${mockProps.username}:${mockProps.pw}@${mockProps.host}:${mockProps.port}/?authSource=${mockProps.authDB}`;
         expect(makeConnectionString(mockProps)).toBe(EXPECTED_STR);
       });
       describe('UNAUTHD with no un/pw/authDB', () => {
@@ -75,7 +74,7 @@ describe('DB Setup', () => {
           const mockProps = {};
           mockProps.host = 'chicken';
           mockProps.port = 'gritz';
-          let EXPECTED_STR = `mongodb://${mockProps.host}:${mockProps.port}/?connectTimeoutMS=2500`;
+          const EXPECTED_STR = `mongodb://${mockProps.host}:${mockProps.port}/?connectTimeoutMS=2500`;
           expect(makeConnectionString(mockProps)).toBe(EXPECTED_STR);
         });
       });

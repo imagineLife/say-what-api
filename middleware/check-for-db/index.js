@@ -1,4 +1,4 @@
-const { GLOBAL_STATE } = require('./../../global');
+const { GLOBAL_STATE } = require("../../global");
 
 function checkForDbConnection(req, res, nxt) {
   const notDB = !req.path.match('^/db');

@@ -1,4 +1,5 @@
 const { Users } = require('.');
+
 describe('User model CRUD', () => {
   let dbClient;
   // beforeAll(async () => {
@@ -18,7 +19,7 @@ describe('User model CRUD', () => {
   };
 
   it('Creates a user', async () => {
-    let userObj = await Users.createOne({ ...mockUser });
+    const userObj = await Users.createOne({ ...mockUser });
     console.log('userObj');
     console.log(userObj);
 

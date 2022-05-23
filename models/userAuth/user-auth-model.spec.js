@@ -1,5 +1,5 @@
 const { UserAuth } = require('.');
-const { setupDB } = require('./../../server-setup');
+const { setupDB } = require("../../server-setup");
 
 describe('UserAuth Model', () => {
   const COLL_NAME = 'TestUsers';
@@ -50,7 +50,7 @@ describe('UserAuth Model', () => {
       const input = 'testString';
       const output =
         'c48af5a7f6d4a851fc8a434eed638ab1a6ef68e19dbcae894ac67c9fbc5bcb0182b8e7123b3df3c9e4dcb7690c23103f03dc17f54352071ceb2a4eb204b26b91';
-      let res = Cat.hashVal(input);
+      const res = Cat.hashVal(input);
       expect(res).toBe(output);
     });
 
@@ -71,17 +71,17 @@ describe('UserAuth Model', () => {
 
     describe('registrationExpired', () => {
       it('returns false with timestamps is now', () => {
-        let now = new Date();
-        let nowInMS = Date.parse(now);
-        let overAnHourAgo = nowInMS - Cat.registration_exp_duration - 10;
-        let hourAgoDate = new Date(overAnHourAgo);
-        let expired = Cat.registrationExpired(hourAgoDate);
+        const now = new Date();
+        const nowInMS = Date.parse(now);
+        const overAnHourAgo = nowInMS - Cat.registration_exp_duration - 10;
+        const hourAgoDate = new Date(overAnHourAgo);
+        const expired = Cat.registrationExpired(hourAgoDate);
         expect(expired).toBe(true);
       });
 
       it('returns true with timestamps is 1 hour - 10 ms ago', () => {
-        let now = new Date();
-        let expired = Cat.registrationExpired(now);
+        const now = new Date();
+        const expired = Cat.registrationExpired(now);
         expect(expired).toBe(false);
       });
     });
@@ -160,7 +160,7 @@ describe('UserAuth Model', () => {
         });
 
         it('GETS user from db by id && assures expected fields exist', async () => {
-          let foundUser = await Cat.readOne({ _id: res.insertedId });
+          const foundUser = await Cat.readOne({ _id: res.insertedId });
           expect(foundUser._id).toBe(registerEmailStr);
           expect(typeof foundUser.created_date).toBe('object');
           expect(typeof foundUser.registration_expires).toBe('object');
@@ -183,7 +183,7 @@ describe('UserAuth Model', () => {
         it('bad user email address', async () => {
           createUserRes = await Cat.registerEmail({ email: validateEmailStr });
           try {
-            let res = await Cat.validateEmail({ email: 'water@mel-uhn' });
+            const res = await Cat.validateEmail({ email: 'water@mel-uhn' });
           } catch (e) {
             expect(e.message).toBe(
               'Cannot call validateEmail without a valid email address'
@@ -191,7 +191,7 @@ describe('UserAuth Model', () => {
           }
         });
         it('user email is not present', async () => {
-          let res = await Cat.validateEmail({
+          const res = await Cat.validateEmail({
             email: 'thisUser@isnot.present',
           });
           expect(res).toBe(false);
@@ -199,17 +199,17 @@ describe('UserAuth Model', () => {
         it('user email is present and registration has expired (hack for test)', async () => {
           // set the registration_expires to several hours ago
           createUserRes = await Cat.registerEmail({ email: validateEmailStr });
-          let now = new Date();
-          let nowMS = Date.parse(now);
-          let severalHoursAgo = nowMS - Cat.registration_exp_duration * 7;
-          let parsedOlderDate = new Date(severalHoursAgo);
-          let updateRes = await Cat.updateOne(
+          const now = new Date();
+          const nowMS = Date.parse(now);
+          const severalHoursAgo = nowMS - Cat.registration_exp_duration * 7;
+          const parsedOlderDate = new Date(severalHoursAgo);
+          const updateRes = await Cat.updateOne(
             { _id: validateEmailStr },
             { $set: { registration_expires: parsedOlderDate } }
           );
 
           // attempt
-          let emailValidated = await Cat.validateEmail({
+          const emailValidated = await Cat.validateEmail({
             email: validateEmailStr,
           });
 
@@ -221,7 +221,7 @@ describe('UserAuth Model', () => {
       it('returns true from email created now', async () => {
         // create user
         createUserRes = await Cat.registerEmail({ email: validateEmailStr });
-        let validateEmailRes = await Cat.validateEmail({
+        const validateEmailRes = await Cat.validateEmail({
           email: createUserRes.insertedId,
         });
         expect(validateEmailRes).toBe(true);
@@ -257,10 +257,10 @@ describe('UserAuth Model', () => {
 
       it('succeeds', async () => {
         createUserRes = await Cat.registerEmail({ email: validateEmailStr });
-        let validateEmailRes = await Cat.validateEmail({
+        const validateEmailRes = await Cat.validateEmail({
           email: createUserRes.insertedId,
         });
-        let res = await Cat.setPW({
+        const res = await Cat.setPW({
           email: createUserRes.insertedId,
           pw: 'new-pw-who-dis',
         });
@@ -314,11 +314,11 @@ describe('UserAuth Model', () => {
         });
         it('returns false when pw is incorrect', async () => {
           createUserRes = await Cat.registerEmail({ email: validatePW });
-          let setPWRes = await Cat.setPW({
+          const setPWRes = await Cat.setPW({
             email: createUserRes.insertedId,
             pw: 'new-pw-who-dis',
           });
-          let validatePWRes = await Cat.validatePW({
+          const validatePWRes = await Cat.validatePW({
             email: validatePW,
             pw: 'failable-pw',
           });
@@ -327,11 +327,11 @@ describe('UserAuth Model', () => {
 
         it('returns true when pw is correct', async () => {
           createUserRes = await Cat.registerEmail({ email: validatePW });
-          let setPWRes = await Cat.setPW({
+          const setPWRes = await Cat.setPW({
             email: createUserRes.insertedId,
             pw: 'new-pw-who-dis',
           });
-          let validatePWRes = await Cat.validatePW({
+          const validatePWRes = await Cat.validatePW({
             email: validatePW,
             pw: 'new-pw-who-dis',
           });
@@ -340,7 +340,7 @@ describe('UserAuth Model', () => {
       });
     });
     it('requestPwReset', () => {
-      let res = Cat.requestPwReset();
+      const res = Cat.requestPwReset();
       expect(res).toBe('UserAuth requestPwReset Here');
     });
   });

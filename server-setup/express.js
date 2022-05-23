@@ -4,10 +4,11 @@
 
 */
 const express = require('express');
-const rootRouter = require('./../routes');
 const bodyParser = require('body-parser');
-const { GLOBAL_STATE, ServicesEmitter } = require('./../global');
-const { checkForDbConnection } = require('./../middleware');
+const rootRouter = require("../routes");
+const { GLOBAL_STATE, ServicesEmitter } = require("../global");
+const { checkForDbConnection } = require("../middleware");
+
 const STATIC_DIR = './../static';
 
 /*

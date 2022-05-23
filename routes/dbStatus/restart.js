@@ -1,5 +1,6 @@
-const { ServicesEmitter } = require('./../../global/events');
-const GLOBAL_STATE = require('./../../global/state');
+const { ServicesEmitter } = require("../../global/events");
+const GLOBAL_STATE = require("../../global/state");
+
 async function restartHandler(req, res) {
   try {
     await GLOBAL_STATE.MONGO_CLIENT.connect();

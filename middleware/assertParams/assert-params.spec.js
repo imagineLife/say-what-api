@@ -19,7 +19,7 @@ describe('assertParams middleware', () => {
     const mockBody = {
       horse: 'cat',
     };
-    let asserted = assertParams({ body: 'dog' });
+    const asserted = assertParams({ body: 'dog' });
     asserted({ body: mockBody }, mockResponse, mockNext);
     expect(mockStatusHandler).toHaveBeenCalledWith(422);
     expect(mockOne).toHaveBeenCalledWith({ Error: 'missing required params' });
@@ -44,7 +44,7 @@ describe('assertParams middleware', () => {
     const mockObj = {
       horse: 'cat',
     };
-    let asserted = assertParams({ query: 'dog' });
+    const asserted = assertParams({ query: 'dog' });
     asserted({ query: mockObj }, mockResponse, mockNext);
     expect(mockStatusHandler).toHaveBeenCalledWith(422);
     expect(mockOne).toHaveBeenCalledWith({ Error: 'missing required params' });
@@ -69,7 +69,7 @@ describe('assertParams middleware', () => {
     const mockObj = {
       horse: 'cat',
     };
-    let asserted = assertParams({ body: ['horse'] });
+    const asserted = assertParams({ body: ['horse'] });
     asserted({ body: { horse: 'cat' } }, mockResponse, mockNext);
     expect(mockNext).toHaveBeenCalled();
   });
@@ -94,7 +94,7 @@ describe('assertParams middleware', () => {
     };
 
     try {
-      let asserted = assertParams({ water: ['horse'] });
+      const asserted = assertParams({ water: ['horse'] });
       asserted({ body: { horse: 'cat' } }, mockResponse, mockNext);
     } catch (error) {
       expect(

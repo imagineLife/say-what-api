@@ -1,17 +1,12 @@
-const { MongoClient } = require('mongodb');
-const { GLOBAL_STATE } = require('../global');
-const { DB } = require('../models');
-
 function makeConnectionString({ username, pw, host, port, authDB }) {
   // Error Handling
   if (typeof host === 'undefined' || typeof port === 'undefined') {
-    console.log(`missing vars: host: ${host}, port: ${port}`);
-
-    throw 'Cannot create db connection with missing param';
+    throw new Error(
+      `Cannot create db connection with missing param: host: ${host}, port: ${port}`
+    );
   }
   if (!process.env.MONGO_AUTH && (!username || !pw || !authDB)) {
-    console.log(`Expected auth connection to db`);
-    throw 'Cannot create db connection with missing param';
+    throw new Error('Cannot create db connection with missing param');
   }
 
   // no auth?!
@@ -25,6 +20,4 @@ function makeConnectionString({ username, pw, host, port, authDB }) {
 
 module.exports = {
   makeConnectionString,
-  // setupStores,
-  // setupCollection
 };
