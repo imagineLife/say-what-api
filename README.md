@@ -1,7 +1,9 @@
 Here is a developing http server.  
 This server will serve data to a client & act as a "middle-man" between the requesting client and some data.    
 
-This API, and this project at large, will intend to follow the [12-Factor App](https://12factor.net/) methodology.
+This API, and this project at large, will intend to follow the [12-Factor App](https://12factor.net/) methodology.  
+
+[![Code-Coverage Badge](https://img.shields.io/codecov/c/github/imagineLife/say-what-api?logo=codecov)](github.com/imagineLife/say-what-api)  
 
 - [Goals](#goals)
   - [DB Dependent](#db-dependent)
