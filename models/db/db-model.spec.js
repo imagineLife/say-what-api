@@ -1,23 +1,28 @@
-const { MongoClient } = require('mongodb');
-const { DB } = require('.');
-const { GLOBAL_STATE } = require("../../global");
+const { DB } = require('.')
 
 describe('DB Model', () => {
   describe('ERR onconnect method', () => {
     describe('logs error strings without expected connection param', () => {
       it('authDB', async () => {
-        jest.spyOn(global.console, 'log');
-        MockDB = new DB({
-          connectionObj: {
-            host: 'localhost',
-            // port: '27017'
-          },
-          db: 'TestSayWhat',
-        });
-        await MockDB.connect();
-        expect(console.log).toHaveBeenCalledWith(
-          'Cannot create db connection with missing param'
-        );
+        try {
+          const MockDB = new DB({
+            connectionObj: {
+              host: 'localhost',
+              // port: '27017'
+            },
+            db: 'TestSayWhat',
+          });
+          await MockDB.connect(); 
+          console.log('')
+          
+        } catch (e) {
+          console.log('HERE?!')
+          console.log(e.message)
+          
+          expect(e.message).toBe(
+            "Error: Cannot create db connection with missing param: host: localhost, port: undefined"
+          );
+        }
       });
     });
   });

@@ -23,6 +23,7 @@ class DB {
   async connect() {
     try {
       // Connect
+      // eslint-disable-next-line global-require
       const uriStr = require("../../database").makeConnectionString(
         this.connectionObj
       );
@@ -40,6 +41,7 @@ class DB {
     } catch (e) {
       console.log(`DB Class connect method error:`);
       console.log(e);
+      throw new Error(e)
     }
   }
 
