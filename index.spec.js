@@ -1,5 +1,4 @@
 const { startServer, stopServer, logIfTrue } = require('./server-setup');
-const { twoAreEqual } = require('./helpers');
 
 describe('Server index & server fns', () => {
   jest.mock('./helpers');
@@ -13,6 +12,8 @@ describe('Server index & server fns', () => {
   });
 
   describe('mocking twoAreEqual (jest mock test)', () => {
+    // eslint-disable-next-line global-require
+    const { twoAreEqual } = require('./helpers');
     twoAreEqual.mockImplementation(() => true);
     it('returns tru from (false,true)', () => {
       expect(twoAreEqual(false, true)).toBe(true);
@@ -46,6 +47,8 @@ describe('Server index & server fns', () => {
       const closeServerMock = {
         close: mockCloseFn,
       };
+      // eslint-disable-next-line global-require
+      const { twoAreEqual } = require('./helpers');
       twoAreEqual.mockImplementation(() => true);
       stopServer(closeServerMock);
       expect(mockCloseFn).toHaveBeenCalledTimes(1);
