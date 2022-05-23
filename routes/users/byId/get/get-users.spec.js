@@ -6,7 +6,6 @@ const {
     USERS: { ROOT, BY_ID },
   },
 } = require("../../../../global/constants");
-const GLOBAL_STATE = require("../../../../global/state");
 const {
   startServer,
   stopServer,
@@ -17,7 +16,7 @@ const {
 describe(`${ROOT}${BY_ID} - GET`, () => {
   chai.use(chaiHttp);
   let localServerObj;
-  // let TestMongoClient;
+  let TestMongoClient;
   beforeEach(async () => {
     process.env.MONGO_AUTH = false;
     if (localServerObj && localServerObj.close) {
@@ -28,11 +27,11 @@ describe(`${ROOT}${BY_ID} - GET`, () => {
     }
     localServerObj = await startServer(expressObj);
 
-    const db_obj = {
+    const dbObj = {
       host: 'localhost',
       port: '27017',
     };
-    TestMongoClient = await setupDB({ ...db_obj });
+    TestMongoClient = await setupDB({ ...dbObj });
   });
 
   afterEach(async () => {

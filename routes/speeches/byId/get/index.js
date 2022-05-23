@@ -1,12 +1,13 @@
+const Oid = require('mongodb').ObjectId;
 const {
   GLOBAL_STATE: { Collections },
-} = require("../../../../global");
-const Oid = require('mongodb').ObjectId;
+} = require('../../../../global');
 
-async function getById(req, res, next) {
+async function getById(req, res) {
   try {
     const { speechId } = req.params;
     const dbRes = await Collections.Speeches.readOne({ _id: Oid(speechId) });
+    // eslint-disable-next-line no-underscore-dangle
     delete dbRes._id;
     return res.status(200).json(dbRes);
   } catch (e) {

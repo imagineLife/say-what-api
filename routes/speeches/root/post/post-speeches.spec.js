@@ -27,11 +27,11 @@ describe(`${ROOT}: POST`, () => {
 
   beforeAll(async () => {
     process.env.MONGO_AUTH = false;
-    const db_obj = {
+    const dbObj = {
       host: 'localhost',
       port: '27017',
     };
-    TestMongoClient = await setupDB({ ...db_obj });
+    TestMongoClient = await setupDB({ ...dbObj });
     if (localServerObj && localServerObj.close) {
       await stopServer(localServerObj);
     }
