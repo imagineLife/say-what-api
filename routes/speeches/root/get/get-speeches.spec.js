@@ -19,7 +19,7 @@ describe(`${ROOT}: GET`, () => {
   chai.use(chaiHttp);
   let localServerObj;
   let TestMongoClient;
-
+  let TestSpeechCollection;
   beforeAll(async () => {
     process.env.MONGO_AUTH = false;
     if (localServerObj && localServerObj.close) {
@@ -30,13 +30,13 @@ describe(`${ROOT}: GET`, () => {
     }
     localServerObj = await startServer(expressObj);
 
-    const db_obj = {
+    const dbObj = {
       host: 'localhost',
       port: '27017',
     };
-    TestMongoClient = await setupDB({ ...db_obj });
+    TestMongoClient = await setupDB({ ...dbObj });
 
-    TestSayWhat = TestMongoClient.registerDB('TestSayWhat');
+    const TestSayWhat = TestMongoClient.registerDB('TestSayWhat');
     TestSpeechCollection = new Crud({
       db: TestSayWhat,
       collection: 'TestSpeeches',
@@ -76,7 +76,7 @@ describe(`${ROOT}: GET`, () => {
 
   describe('succeeds', () => {
     it('returns 2 speeches after inserting 2 speeches', async () => {
-      let firstInsertedId; let secondInsertedId;
+      // let firstInsertedId; let secondInsertedId;
       const mockOne = {
         orator: 'Test Talker',
         date: '14-23-2345',
@@ -92,10 +92,8 @@ describe(`${ROOT}: GET`, () => {
       const myArr = [mockOne, mockTwo];
       try {
         // insert
-        const { insertedId: firstSpeechId } =
-          await TestSpeechCollection.createOne(mockOne);
-        const { insertedId: secondSpeechId } =
-          await TestSpeechCollection.createOne(mockTwo);
+        await TestSpeechCollection.createOne(mockOne);
+        await TestSpeechCollection.createOne(mockTwo);
 
         const { body } = await chai.request(localServerObj).get(ROOT);
 
