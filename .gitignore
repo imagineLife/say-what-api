@@ -4,5 +4,5 @@ node_modules
 
 # Coverage directories & files
 coverage
-coverage/lcov-report
+coverage/**/*.html
 *.lcov
