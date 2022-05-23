@@ -2,7 +2,7 @@ const {
   GLOBAL_STATE: { Collections },
 } = require("../../../../global");
 
-async function postASpeech(req, res, next) {
+async function postASpeech(req, res) {
   try {
     const { orator, text, date } = req.body;
     console.log({ orator, text, date });

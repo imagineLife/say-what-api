@@ -1,6 +1,6 @@
 const { GLOBAL_STATE } = require("../../../../global");
 
-async function getSpeeches(req, res, next) {
+async function getSpeeches(req, res) {
   try {
     const dbRes = await GLOBAL_STATE.Collections.Speeches.readMany();
     return res.status(200).json(dbRes);

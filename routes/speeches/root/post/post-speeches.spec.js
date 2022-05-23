@@ -22,6 +22,7 @@ describe(`${ROOT}: POST`, () => {
   let localServerObj;
   let TestMongoClient;
   let TestSpeechesCollection;
+  let TestSayWhat;
   const DB_NAME = 'TestSayWhat';
   const COLL_NAME = 'TestPostSpeeches';
 

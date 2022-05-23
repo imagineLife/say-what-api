@@ -3,7 +3,7 @@ const postUsers = require(".");
 describe('Users GET handler', () => {
   it('returns expected res', () => {
     const mockSend = jest.fn();
-    const mockStatus = (n) => ({
+    const mockStatus = () => ({
         send: mockSend,
       });
     const a = {};

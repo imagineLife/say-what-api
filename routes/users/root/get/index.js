@@ -1,4 +1,4 @@
-function getUsers(req, res, next) {
+function getUsers(req, res) {
   return res.status(200).send('get users');
 }
 

@@ -1,4 +1,4 @@
-function getById(req, res, next) {
+function getById(req, res) {
   return res.status(200).json(`getById: ${req.params.userId}`);
 }
 
