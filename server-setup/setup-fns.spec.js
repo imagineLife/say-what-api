@@ -8,8 +8,16 @@ describe('server-setup setup-fns', () => {
       process.env.MONGO_AUTH = false;
     });
     afterEach(async () => {
-      await mongoConnection.close();
+      if (mongoConnection) await mongoConnection.close();
     });
+
+    it('logs and returns null on error', async () => { 
+      jest.spyOn(global.console, 'log');
+      const res = await setupDB({
+        host:'1234'
+      })
+      expect(res).toBe(null);
+    })
 
     it('calls DB model with success', async () => {
       process.env.MONGO_AUTH = false;

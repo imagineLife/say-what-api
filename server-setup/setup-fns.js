@@ -1,6 +1,5 @@
 const { twoAreEqual } = require("../helpers");
 const { DB } = require("../models");
-const { GLOBAL_STATE } = require("../global");
 
 const PORT = process.env.PORT || 3000;
 console.log('----startup env vars----');
@@ -16,7 +15,7 @@ function logIfTrue(a, b, logString) {
 }
 async function stopServer(srvr) {
   console.log('CLOSING SERVER');
-  return await srvr.close(
+  await srvr.close(
     logIfTrue(require.main, module, 'HTTP Graceful Shutdown')
   );
 }
@@ -49,8 +48,7 @@ async function setupDB(params) {
     await MongoClient.connect();
     return MongoClient;
   } catch (e) {
-    console.log(`setupDB fn error:`);
-    console.log(e);
+    return null;
   }
 }
 
