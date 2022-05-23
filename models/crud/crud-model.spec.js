@@ -8,19 +8,19 @@ describe('Crud Model', () => {
   let testCreatedObject;
   const DB_NAME = 'TestSayWhat';
   const COLL_NAME = 'TestCollection';
-  const db_obj = {
+  const dbObj = {
     host: 'localhost',
     port: '27017',
   };
   beforeAll(async () => {
     process.env.MONGO_AUTH = false;
-    TestMongoClient = await setupDB({ ...db_obj });
+    TestMongoClient = await setupDB({ ...dbObj });
     TestSayWhat = TestMongoClient.registerDB(DB_NAME);
     Cat = new Crud({ db: TestSayWhat, collection: COLL_NAME });
   });
 
   afterAll(async () => {
-    TestMongoClient = await setupDB({ ...db_obj });
+    TestMongoClient = await setupDB({ ...dbObj });
     TestSayWhat = TestMongoClient.registerDB(DB_NAME);
     Cat = new Crud({ db: TestSayWhat, collection: COLL_NAME });
     await Cat.remove();
@@ -68,19 +68,12 @@ describe('Crud Model', () => {
     });
     it('readMany', async () => {
       const testSecondObj = { cat: 'ralph' };
-      const testSecondCreatedObject = await Cat.createOne(testSecondObj);
+      await Cat.createOne(testSecondObj);
       const findManyRes = await Cat.readMany();
       expect(await findManyRes.length).toBe(2);
     });
     describe('updateOne', () => {
       const updateObj = { $set: { water: 'melon' } };
-      const expectedResObjKeys = {
-        acknowledged: true,
-        modifiedCount: 1,
-        upsertedId: null,
-        upsertedCount: 0,
-        matchedCount: 1,
-      };
       let testUpdateRes;
 
       it('acknowledged === true', async () => {
@@ -157,7 +150,7 @@ describe('Crud Model', () => {
     describe('drop', () => {
       it('calls "drop" on remove', async () => {
         const MOCK_RETURN = 'this is a dummy string';
-        const dropSpy = jest
+        jest
           .spyOn(Cat.collection, 'drop')
           .mockResolvedValueOnce(MOCK_RETURN);
         try {

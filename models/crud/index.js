@@ -6,11 +6,7 @@ class Crud extends DB {
     this.db = props.db;
     this.collectionName = props.collection;
     this.collection = this.db.collection(props.collection);
-  }
-
-  // for recording the current date
-  nowUTC() {
-    return new Date(new Date().toUTCString());
+    this.nowUTC = () => new Date(new Date().toUTCString());
   }
 
   /*
