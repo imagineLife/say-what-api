@@ -8,7 +8,7 @@ function checkForDbConnection(req, res, nxt) {
   if (notDB && notHealthCheck && DB_NOT_CONNECTED) {
     return res.status(500).send({ Error: 'Server Error, try again shortly' });
   }
-  nxt();
+  return nxt();
 }
 
 module.exports = {
