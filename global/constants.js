@@ -1,4 +1,4 @@
-const state = {
+const constants = {
   routes: {
     HEALTH_CHECK: '/health-check',
     DB: {
@@ -24,6 +24,9 @@ const state = {
       SPEECHES: 'Speeches',
     },
   },
+  events: {
+    LOG_USER_DEETS: 'log-user-details'
+  }
 };
 
-module.exports = state;
+module.exports = constants;
