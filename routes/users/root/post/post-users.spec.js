@@ -49,7 +49,8 @@ describe('Users POST handler', () => {
   });
 
   afterAll(async () => {
-    // await TestUserCollection.remove();
+    await TestUserCollection.remove();
+    
     Collections.Users = null;
     await TestMongoClient.close();
 
