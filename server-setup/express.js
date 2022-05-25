@@ -6,7 +6,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const rootRouter = require("../routes");
-const { checkForDbConnection } = require("../middleware");
+const { checkForDbConnection, logMW } = require("../middleware");
 
 const STATIC_DIR = './../static';
 
@@ -29,6 +29,7 @@ expressObj.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 expressObj.use(bodyParser.json());
 expressObj.use(checkForDbConnection);
+expressObj.use(logMW);
 
 /*
 
