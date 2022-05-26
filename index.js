@@ -5,7 +5,7 @@ const { Crud } = require('./models');
 const {
   db: {
     NAME: DB_NAME,
-    collections: { USERS },
+    collections: { USERS, SERVER_LOGS },
   },
 } = require('./global/constants');
 const globalContent = require('./global');
@@ -28,14 +28,23 @@ async function startApi() {
       /* 
         Register Collections 
         - Users
+        - client
       */
 
+      const ServerLogsCollection = new Crud({
+        db: sayWhatDB,
+        collection: SERVER_LOGS,
+      });
+      
+      globalContent.GLOBAL_STATE.Collections.ServerLogs = ServerLogsCollection;
+      
       const UsersCollection = new Crud({
         db: sayWhatDB,
         collection: USERS,
       });
 
       globalContent.GLOBAL_STATE.Collections.Users = UsersCollection;
+      
     }
 
     startServer(expressObj);

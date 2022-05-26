@@ -16,9 +16,6 @@ describe('DB Model', () => {
           console.log('')
           
         } catch (e) {
-          console.log('HERE?!')
-          console.log(e.message)
-          
           expect(e.message).toBe(
             "Error: Cannot create db connection with missing param: host: localhost, port: undefined"
           );
