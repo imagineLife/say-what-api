@@ -1,10 +1,16 @@
 const GLOBAL_STATE = require('../state');
+const {
+  Collections
+} = require('../state');
 
-function logUserDetails(params) {
-  console.log('HERE?!');
-  console.log('logUserDetails params:');
-  console.log(params);
-  console.log('- - - ');
+async function logUserDetails(params) {
+  try { 
+    await Collections.ServerLogs.createOne(params);
+    return true;
+  } catch (e) {
+    console.warn(`logUserDetails Error: ${e.message}`);
+    return `logUserDetails Error: ${e.message}`;
+  }
 }
 
 function setConnected(val) {

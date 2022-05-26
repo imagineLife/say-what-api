@@ -9,6 +9,8 @@ const {
 } = require('../constants');
 const { logUserDetails, setConnected } = require('./handlers')
 
+console.log('SERVER: registering global events')
+
 const ServicesEmitter = new EventEmitter();
 ServicesEmitter.on('DB_DISCONNECT', setConnected);
 ServicesEmitter.on('DB_CONNECT', setConnected);
