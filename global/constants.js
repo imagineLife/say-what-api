@@ -22,11 +22,12 @@ const constants = {
     collections: {
       USERS: 'Users',
       SPEECHES: 'Speeches',
+      SERVER_LOGS: 'ServerLogs'
     },
   },
   events: {
-    LOG_USER_DEETS: 'log-user-details'
-  }
+    LOG_USER_DEETS: 'log-user-details',
+  },
 };
 
 module.exports = constants;

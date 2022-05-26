@@ -7,6 +7,7 @@ const GLOBAL_STATE = {
   Collections: {
     Users: false,
     Speeches: false,
+    ServerLogs: false
   },
 };
 

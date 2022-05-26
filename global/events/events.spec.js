@@ -1,5 +1,5 @@
-const { ServicesEmitter } = require('./events');
-const GLOBAL_STATE = require('./state');
+const { ServicesEmitter } = require(".");
+const GLOBAL_STATE = require('../state');
 
 describe('ServicesEmitter: ORDERED', () => {
   it('default GLOBAL_STATE val is fals', () => {
