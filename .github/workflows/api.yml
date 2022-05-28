@@ -50,6 +50,12 @@ jobs:
       - name: Upload CodeCov Report
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: npx codecov
+
+      - name: Create Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_KEY }}
   # build-and-deploy:
   #   runs-on: ubuntu-latest
   #   needs: ["api-coverage"]
