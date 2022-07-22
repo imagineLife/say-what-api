@@ -176,7 +176,7 @@ describe('Crud Model', () => {
         await Cat.createOne(testObj);
       } catch (e) {
         expect(e.message).toBe(
-          'MongoNotConnectedError: MongoClient must be connected to perform this operation'
+          'MongoNotConnectedError: Client must be connected before running operations'
         );
       }
     });
@@ -186,7 +186,7 @@ describe('Crud Model', () => {
         await Cat.readOne({ _id: testCreatedObject.insertedId });
       } catch (e) {
         expect(e.message).toBe(
-          'MongoNotConnectedError: MongoClient must be connected to perform this operation'
+          'MongoNotConnectedError: Client must be connected before running operations'
         );
       }
     });
@@ -195,7 +195,7 @@ describe('Crud Model', () => {
         await Cat.readMany();
       } catch (e) {
         expect(e.message).toBe(
-          'MongoNotConnectedError: MongoClient must be connected to perform this operation'
+          'MongoNotConnectedError: Client must be connected before running operations'
         );
       }
     });
@@ -207,7 +207,7 @@ describe('Crud Model', () => {
         );
       } catch (e) {
         expect(e.message).toBe(
-          'MongoNotConnectedError: MongoClient must be connected to perform this operation'
+          'MongoNotConnectedError: Client must be connected before running operations'
         );
       }
     });
@@ -216,7 +216,7 @@ describe('Crud Model', () => {
         await Cat.deleteOne({ id: 'horse' });
       } catch (e) {
         expect(e.message).toBe(
-          'MongoNotConnectedError: MongoClient must be connected to perform this operation'
+          'MongoNotConnectedError: Client must be connected before running operations'
         );
       }
     });
@@ -225,7 +225,7 @@ describe('Crud Model', () => {
         await Cat.remove();
       } catch (e) {
         expect(e.message).toBe(
-          'MongoNotConnectedError: MongoClient must be connected to perform this operation'
+          'MongoNotConnectedError: Client must be connected before running operations'
         );
       }
     });
