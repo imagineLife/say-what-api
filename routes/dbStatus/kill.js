@@ -7,7 +7,7 @@ async function killHandler(req, res) {
   res
     .status(200)
     .send({
-      MONGO_CONNECTED: GLOBAL_STATE.MONGO_CLIENT.topology.isConnected(),
+      MONGO_CONNECTED: GLOBAL_STATE.MONGO_CONNECTED,
     });
 }
 
