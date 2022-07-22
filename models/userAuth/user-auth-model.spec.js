@@ -350,7 +350,7 @@ describe('UserAuth Model', () => {
       await Cat.registerEmail({ email: 'failable@user.emailaddress' });
     } catch (e) {
       expect(e.message).toBe(
-        'Error: MongoNotConnectedError: MongoClient must be connected to perform this operation'
+        'Error: MongoNotConnectedError: Client must be connected before running operations'
       );
     } finally {
       await TestMongoClient.connect();
@@ -365,7 +365,7 @@ describe('UserAuth Model', () => {
       });
     } catch (e) {
       expect(e.message).toBe(
-        'Error: MongoNotConnectedError: MongoClient must be connected to perform this operation'
+        'Error: MongoNotConnectedError: Client must be connected before running operations'
       );
     } finally {
       await TestMongoClient.connect();
