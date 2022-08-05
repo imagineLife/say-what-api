@@ -5,9 +5,9 @@ describe('global event handlers', () => {
   const mockCreateOne = jest.fn(() => true);
   beforeAll(() => {
     Collections.ServerLogs = {
-      createOne: mockCreateOne
-    }
-  })
+      createOne: mockCreateOne,
+    };
+  });
   describe('logUserDetails', () => {
     it('calls Collections.ServerLogs.createOne async fn and returns true', async () => {
       await logUserDetails({ test: 'obj' });
@@ -15,7 +15,7 @@ describe('global event handlers', () => {
     });
     it('throws when Collections.ServerLogs.createOne not there', async () => {
       Collections.ServerLogs = {
-        createOne: null
+        createOne: null,
       };
       const res = await logUserDetails({ test: 'obj' });
       expect(res).toBe(

@@ -5,8 +5,8 @@
 */
 const express = require('express');
 const bodyParser = require('body-parser');
-const rootRouter = require("../routes");
-const { checkForDbConnection, logMW } = require("../middleware");
+const rootRouter = require('../routes');
+const { checkForDbConnection, logMW } = require('../middleware');
 
 const STATIC_DIR = './../static';
 

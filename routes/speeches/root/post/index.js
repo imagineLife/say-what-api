@@ -1,6 +1,6 @@
 const {
   GLOBAL_STATE: { Collections },
-} = require("../../../../global");
+} = require('../../../../global');
 
 async function postASpeech(req, res) {
   try {

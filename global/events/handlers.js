@@ -1,10 +1,8 @@
 const GLOBAL_STATE = require('../state');
-const {
-  Collections
-} = require('../state');
+const { Collections } = require('../state');
 
 async function logUserDetails(params) {
-  try { 
+  try {
     await Collections.ServerLogs.createOne(params);
     return true;
   } catch (e) {

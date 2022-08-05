@@ -8,5 +8,5 @@ module.exports = {
   assertParams,
   auth,
   checkForDbConnection,
-  logMW
+  logMW,
 };

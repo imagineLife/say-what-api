@@ -1,4 +1,4 @@
-const { twoAreEqual } = require(".");
+const { twoAreEqual } = require('.');
 
 describe('Server', () => {
   describe('twoAreEqual', () => {

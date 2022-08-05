@@ -1,18 +1,18 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { expectMissingParams } = require("../../../../lib");
+const { expectMissingParams } = require('../../../../lib');
 const { Crud } = require('../../../../models');
 const {
   setupDB,
   startServer,
   stopServer,
   expressObj,
-} = require("../../../../server-setup");
+} = require('../../../../server-setup');
 
 const {
   GLOBAL_STATE: { Collections },
   routes,
-} = require("../../../../global");
+} = require('../../../../global');
 
 describe('Users POST handler', () => {
   chai.use(chaiHttp);
@@ -50,7 +50,7 @@ describe('Users POST handler', () => {
 
   afterAll(async () => {
     await TestUserCollection.remove();
-    
+
     Collections.Users = null;
     await TestMongoClient.close();
 

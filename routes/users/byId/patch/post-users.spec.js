@@ -4,8 +4,8 @@ describe('Users:id POST', () => {
   it('returns expected res', () => {
     const mockSend = jest.fn();
     const mockStatus = () => ({
-        send: mockSend,
-      });
+      send: mockSend,
+    });
     const a = {};
     const b = {
       status: mockStatus,

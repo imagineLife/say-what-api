@@ -5,17 +5,17 @@ const {
   routes: {
     SPEECHES: { ROOT },
   },
-} = require("../../../../global/constants");
+} = require('../../../../global/constants');
 const {
   GLOBAL_STATE: { Collections },
-} = require("../../../../global");
+} = require('../../../../global');
 const {
   startServer,
   stopServer,
   expressObj,
   setupDB,
-} = require("../../../../server-setup");
-const { Crud } = require("../../../../models");
+} = require('../../../../server-setup');
+const { Crud } = require('../../../../models');
 
 describe(`${ROOT}: POST`, () => {
   chai.use(chaiHttp);

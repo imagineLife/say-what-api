@@ -3,7 +3,7 @@
 */
 const {
   GLOBAL_STATE: { Collections },
-} = require("../../../../global");
+} = require('../../../../global');
 
 async function postUsers(req, res) {
   try {

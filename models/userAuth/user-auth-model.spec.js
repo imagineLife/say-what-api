@@ -1,5 +1,5 @@
 const { UserAuth } = require('.');
-const { setupDB } = require("../../server-setup");
+const { setupDB } = require('../../server-setup');
 
 describe('UserAuth Model', () => {
   const COLL_NAME = 'TestUsers';

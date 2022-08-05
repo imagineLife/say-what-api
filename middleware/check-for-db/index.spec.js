@@ -1,4 +1,4 @@
-const { checkForDbConnection } = require(".");
+const { checkForDbConnection } = require('.');
 
 describe('checkForDbConnection', () => {
   const mockResponse = () => {

@@ -1,9 +1,9 @@
-const { auth, adminAuth } = require(".");
+const { auth, adminAuth } = require('.');
 
 describe('Auth Middleware', () => {
   const mockReq = {};
-    const mockRes = {};
-    const mockNxt = jest.fn();
+  const mockRes = {};
+  const mockNxt = jest.fn();
   describe('auth', () => {
     it('calls next fn', () => {
       auth(mockReq, mockRes, mockNxt);

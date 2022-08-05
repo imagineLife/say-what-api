@@ -1,11 +1,9 @@
-const GLOBAL_STATE = require("../../global/state");
+const GLOBAL_STATE = require('../../global/state');
 
 function statusHandler(req, res) {
-  res
-    .status(200)
-    .send({
-      MONGO_CONNECTED: GLOBAL_STATE.MONGO_CLIENT.topology.isConnected(),
-    });
+  res.status(200).send({
+    MONGO_CONNECTED: GLOBAL_STATE.MONGO_CLIENT.topology.isConnected(),
+  });
 }
 
 module.exports = statusHandler;

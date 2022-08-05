@@ -5,13 +5,13 @@ const {
   routes: {
     USERS: { ROOT, BY_ID },
   },
-} = require("../../../../global/constants");
+} = require('../../../../global/constants');
 const {
   startServer,
   stopServer,
   expressObj,
   setupDB,
-} = require("../../../../server-setup");
+} = require('../../../../server-setup');
 // const { MongoClient } = require('mongodb')
 describe(`${ROOT}${BY_ID} - GET`, () => {
   chai.use(chaiHttp);

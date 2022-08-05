@@ -5,14 +5,14 @@ const {
   routes: {
     SPEECHES: { ROOT },
   },
-} = require("../../../../global/constants");
-const GLOBAL_STATE = require("../../../../global/state");
+} = require('../../../../global/constants');
+const GLOBAL_STATE = require('../../../../global/state');
 const {
   startServer,
   stopServer,
   expressObj,
   setupDB,
-} = require("../../../../server-setup");
+} = require('../../../../server-setup');
 const { Crud } = require('../../../../models');
 
 describe(`${ROOT}: GET`, () => {

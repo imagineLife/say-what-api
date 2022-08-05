@@ -1,5 +1,5 @@
-const { twoAreEqual } = require("../helpers");
-const { DB } = require("../models");
+const { twoAreEqual } = require('../helpers');
+const { DB } = require('../models');
 
 const PORT = process.env.PORT || 3000;
 console.log('----startup env vars----');
@@ -15,9 +15,7 @@ function logIfTrue(a, b, logString) {
 }
 async function stopServer(srvr) {
   console.log('CLOSING SERVER');
-  await srvr.close(
-    logIfTrue(require.main, module, 'HTTP Graceful Shutdown')
-  );
+  await srvr.close(logIfTrue(require.main, module, 'HTTP Graceful Shutdown'));
 }
 
 async function startServer(srvr) {

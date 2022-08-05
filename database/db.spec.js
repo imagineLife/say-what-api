@@ -1,6 +1,4 @@
-const {
-  makeConnectionString,
-} = require('.');
+const { makeConnectionString } = require('.');
 
 /*
   username,

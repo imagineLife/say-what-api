@@ -1,4 +1,4 @@
-const { DB } = require('.')
+const { DB } = require('.');
 
 describe('DB Model', () => {
   describe('ERR onconnect method', () => {
@@ -12,12 +12,11 @@ describe('DB Model', () => {
             },
             db: 'TestSayWhat',
           });
-          await MockDB.connect(); 
-          console.log('')
-          
+          await MockDB.connect();
+          console.log('');
         } catch (e) {
           expect(e.message).toBe(
-            "Error: Cannot create db connection with missing param: host: localhost, port: undefined"
+            'Error: Cannot create db connection with missing param: host: localhost, port: undefined'
           );
         }
       });

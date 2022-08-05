@@ -1,4 +1,4 @@
-const { ServicesEmitter } = require(".");
+const { ServicesEmitter } = require('.');
 const GLOBAL_STATE = require('../state');
 
 describe('ServicesEmitter: ORDERED', () => {

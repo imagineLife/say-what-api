@@ -1,5 +1,5 @@
 const { Crud } = require('.');
-const { setupDB } = require("../../server-setup");
+const { setupDB } = require('../../server-setup');
 
 describe('Crud Model', () => {
   let TestMongoClient;
@@ -150,9 +150,7 @@ describe('Crud Model', () => {
     describe('drop', () => {
       it('calls "drop" on remove', async () => {
         const MOCK_RETURN = 'this is a dummy string';
-        jest
-          .spyOn(Cat.collection, 'drop')
-          .mockResolvedValueOnce(MOCK_RETURN);
+        jest.spyOn(Cat.collection, 'drop').mockResolvedValueOnce(MOCK_RETURN);
         try {
           const testRes = await Cat.remove();
           expect(testRes).toBe(MOCK_RETURN);

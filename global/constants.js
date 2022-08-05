@@ -22,7 +22,7 @@ const constants = {
     collections: {
       USERS: 'Users',
       SPEECHES: 'Speeches',
-      SERVER_LOGS: 'ServerLogs'
+      SERVER_LOGS: 'ServerLogs',
     },
   },
   events: {

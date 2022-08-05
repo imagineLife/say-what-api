@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb');
-const { GLOBAL_STATE } = require("../../global");
+const { GLOBAL_STATE } = require('../../global');
 
 class DB {
   constructor({ connectionObj }) {
@@ -24,7 +24,7 @@ class DB {
     try {
       // Connect
       // eslint-disable-next-line global-require
-      const uriStr = require("../../database").makeConnectionString(
+      const uriStr = require('../../database').makeConnectionString(
         this.connectionObj
       );
       this.client = new MongoClient(uriStr);
@@ -41,7 +41,7 @@ class DB {
     } catch (e) {
       console.log(`DB Class connect method error:`);
       console.log(e);
-      throw new Error(e)
+      throw new Error(e);
     }
   }
 

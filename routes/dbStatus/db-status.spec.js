@@ -3,14 +3,14 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const {
   routes: { DB },
-} = require("../../global/constants");
-const GLOBAL_STATE = require("../../global/state");
+} = require('../../global/constants');
+const GLOBAL_STATE = require('../../global/state');
 const {
   startServer,
   stopServer,
   expressObj,
   setupDB,
-} = require("../../server-setup");
+} = require('../../server-setup');
 
 describe(DB.ROOT, () => {
   chai.use(chaiHttp);

@@ -2,12 +2,11 @@
 const router = require('express').Router();
 const {
   routes: { DB, HEALTH_CHECK, SPEECHES, USERS },
-} = require("../global/constants");
+} = require('../global/constants');
 const healthCheckHandler = require('./healthcheck');
 const dbStatusHandler = require('./dbStatus');
 const speechesHandler = require('./speeches');
 const usersHandler = require('./users');
-
 
 const routesArr = [
   {
@@ -28,8 +27,8 @@ const routesArr = [
   },
 ];
 
-for (let i = 0; i < routesArr.length; i += 1) { 
-  router.use(routesArr[i].path, routesArr[i].handler)
+for (let i = 0; i < routesArr.length; i += 1) {
+  router.use(routesArr[i].path, routesArr[i].handler);
 }
 
 module.exports = router;
