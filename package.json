@@ -36,7 +36,7 @@
   "dependencies": {
     "body-parser": "^1.20.0",
     "express": "^4.17.3",
-    "mongodb": "^4.8.1"
+    "mongodb": "^4.9.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",
@@ -44,7 +44,7 @@
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.21.0",
+    "eslint": "^8.22.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^8.5.0",
