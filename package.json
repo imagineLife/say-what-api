@@ -39,8 +39,8 @@
     "mongodb": "^4.12.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.4",
-    "@commitlint/config-conventional": "^16.2.4",
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "chai": "^4.3.7",
     "chai-http": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
