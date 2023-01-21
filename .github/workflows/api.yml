@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Use NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.7.0
         with:
